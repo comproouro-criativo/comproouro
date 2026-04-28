@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compro Ouro | Estúdio Criativo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <section class="video-destaque fade-in">
+        <header class="header-center">
+            <nav>
+                <a href="#portfolio">Projetos</a>
+                <a href="#contato">Contato</a>
+                <a href="#servicos">Serviços</a>
+                <a href="#quem-somos">Sobre nós</a>
+            </nav>
+        </header>
+       <video playsinline muted autoplay loop preload="auto" disablepictureinpicture disableremoteplayback>
+    <source src="videos/meuvideo.mp4" type="video/mp4">
+</video>
+        <div class="video-info esquerda">Florianópolis <span class="middot-maior">&middot;</span> Brasil</div>
+        <div class="video-info direita">COMPRO OURO<sup class="registro">&reg;</sup></div>
+    </section>
+
+    <section id="portfolio" class="secao fade-in">
+        <h2>Projetos</h2>
+        <div class="sub-header-portfolio">
+            <a href="#">Arquitetura / Design</a>
+            <a href="#">Mercado Musical</a>
+            <a href="#">Gastronomia</a>
+            <a href="#">Marca Pessoal</a>
+            <a href="#">Esportes</a>
+        </div>
+        <div class="galeria-feed">
+            <img src="imagens/dd4.jpg"  alt="Projeto" loading="lazy" class="tall">
+            <img src="imagens/ee5.jpg"  alt="Projeto" loading="lazy">
+            <img src="imagens/cc3.jpg"  alt="Projeto" loading="lazy">
+            <img src="imagens/bb4.jpg"  alt="Projeto" loading="lazy">
+            <img src="imagens/dd2.jpg"  alt="Projeto" loading="lazy">
+            <img src="imagens/cc3.jpg"  alt="Projeto" loading="lazy" class="wide">
+            <img src="imagens/dd6.webp" alt="Projeto" loading="lazy" class="tall">
+            <img src="imagens/dd3.png"  alt="Projeto" loading="lazy">
+            <img src="imagens/bb3.jpg"  alt="Projeto" loading="lazy">
+            <img src="imagens/aa1.jpg"  alt="Projeto" loading="lazy">
+            <img src="imagens/bb2.jpg"  alt="Projeto" loading="lazy" class="wide">
+        </div>
+    </section>
+
+    <section id="contato" class="secao fade-in">
+        <h2>Contato</h2>
+        <p>Seja para desenvolver uma nova ideia, iniciar um projeto ou simplesmente conhecer melhor nosso trabalho, estamos à disposição para conversar. Envie agora sua mensagem.</p>
+        <span class="botao" id="emailCopiar" onclick="abrirEmail(this)">comproouro.criativo@gmail.com</span>
+<p class="ou">ou pelo <a href="https://wa.me/5548991367500?text=Tenho%20uma%20ideia%20incr%C3%ADvel!" class="telefone" target="_blank">WhatsApp</a></p>
+        <div class="social-links">
+            <a href="https://www.instagram.com/comproouro__" target="_blank" aria-label="Instagram">
+                <svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/" target="_blank" aria-label="YouTube">
+                <svg class="social-icon" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+            <a href="https://vimeo.com/home" target="_blank" aria-label="Vimeo">
+                <svg class="social-icon" viewBox="0 0 24 24"><path d="M23.977 6.416c-.105 2.338-1.739 5.543-4.894 9.609-3.268 4.247-6.026 6.37-8.29 6.37-1.409 0-2.578-1.294-3.553-3.881L5.322 11.4C4.603 8.816 3.834 7.522 3.01 7.522c-.179 0-.806.378-1.881 1.132L0 7.197c1.185-1.044 2.351-2.084 3.501-3.128C5.08 2.701 6.266 1.984 7.055 1.91c1.867-.18 3.016 1.1 3.447 3.838.465 2.953.789 4.789.971 5.507.539 2.45 1.131 3.674 1.776 3.674.502 0 1.256-.796 2.265-2.385 1.004-1.589 1.54-2.797 1.612-3.628.144-1.371-.395-2.061-1.614-2.061-.574 0-1.167.121-1.777.391 1.186-3.868 3.434-5.757 6.762-5.637 2.473.06 3.628 1.664 3.493 4.797z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/feed/" target="_blank" aria-label="LinkedIn">
+                <svg class="social-icon" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- ========== SERVIÇOS & FAQ ========== -->
+    <section id="servicos" class="secao servicos-faq fade-in">
+        <div class="sf-container">
+
+            <!-- COLUNA ESQUERDA: SERVIÇOS -->
+            <div class="sf-servicos">
+                <h2 class="sf-titulo">Serviços</h2>
+                <ul class="lista-servicos">
+                    <li>Direção Criativa &amp; Conceito Visual</li>
+                    <li>Produção Audiovisual Completa</li>
+                    <li>Filmes Publicitários &amp; Branded Content</li>
+                    <li>Fashion Films &amp; Editoriais</li>
+                    <li>Videoclipes Musicais</li>
+                    <li>Spots Publicitários — TV, Digital &amp; OOH</li>
+                    <li>Documentários &amp; Narrativas de Marca</li>
+                    <li>Transmissões ao Vivo &amp; Live Streaming</li>
+                    <li>Edição &amp; Montagem</li>
+                    <li>Colorização &amp; Finalização</li>
+                    <li>Motion Graphics &amp; VFX</li>
+                    <li>Sound Design &amp; Mixagem</li>
+                    <li>Fotografia Still &amp; Campanhas</li>
+                    <li>Captação Aérea com Drone</li>
+                    <li>Identidade Visual &amp; Branding</li>
+                </ul>
+            </div>
+
+            <!-- COLUNA DIREITA: FAQ -->
+            <div class="sf-faq">
+                <h2 class="sf-titulo">Perguntas Frequentes</h2>
+
+                <div class="faq-item">
+                    <button class="faq-pergunta" aria-expanded="false">
+                        <span>Que tipo de projetos vocês produzem?</span>
+                        <span class="faq-icone" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-resposta" role="region">
+                        <p>Trabalhamos com direção criativa, branded content, filmes de moda, videoclipes, spots publicitários, transmissões ao vivo, documentários e fotografia. Cada projeto é pensado sob medida, com direção de arte consistente e finalização cinematográfica.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-pergunta" aria-expanded="false">
+                        <span>Onde vocês estão e atendem fora?</span>
+                        <span class="faq-icone" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-resposta" role="region">
+                        <p>Nosso estúdio está em Florianópolis, com atuação nacional e internacional. Viajamos para onde a história precisar — do Brasil a qualquer lugar do mundo.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-pergunta" aria-expanded="false">
+                        <span>Como começar um projeto com a Compro Ouro?</span>
+                        <span class="faq-icone" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-resposta" role="region">
+                        <p>Basta entrar em contato pelo e-mail ou WhatsApp. Agendamos uma conversa rápida para entender suas ideias e sugerir o melhor caminho criativo para sua marca ou projeto.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-pergunta" aria-expanded="false">
+                        <span>Vocês desenvolvem conceito e direção criativa?</span>
+                        <span class="faq-icone" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-resposta" role="region">
+                        <p>Sim. Entramos em qualquer etapa — da concepção da ideia e roteiro até a execução completa. Também podemos lapidiar um conceito já existente e transformá-lo em produção.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-pergunta" aria-expanded="false">
+                        <span>É possível pedir um estilo visual específico?</span>
+                        <span class="faq-icone" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-resposta" role="region">
+                        <p>Com certeza. A linguagem visual é o centro do nosso trabalho. Adaptamo-nos ao tom da sua marca ou criamos algo do zero — sempre com personalidade e sofisticação.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-pergunta" aria-expanded="false">
+                        <span>Como funciona o orçamento?</span>
+                        <span class="faq-icone" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-resposta" role="region">
+                        <p>Os valores dependem do escopo, equipe, locações e pós-produção. Após um briefing inicial, enviamos uma proposta personalizada e transparente, sem surpresas.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-pergunta" aria-expanded="false">
+                        <span>Vocês atendem agências, marcas e criadores independentes?</span>
+                        <span class="faq-icone" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-resposta" role="region">
+                        <p>Sim — colaboramos com agências, produtoras, times de marketing e diretamente com artistas e criadores. Do institucional ao experimental, o cuidado é o mesmo.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-pergunta" aria-expanded="false">
+                        <span>Qual o prazo médio de produção?</span>
+                        <span class="faq-icone" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-resposta" role="region">
+                        <p>Depende da complexidade, mas trabalhamos com agilidade. Após o alinhamento criativo, definimos cronogramas claros — da pré-produção à entrega final.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-pergunta" aria-expanded="false">
+                        <span>Vocês entregam os arquivos brutos da filmagem?</span>
+                        <span class="faq-icone" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-resposta" role="region">
+                        <p>Por padrão entregamos os arquivos finalizados e aprovados. A entrega dos arquivos brutos (raw/log) pode ser incluída mediante acordo prévio e consta na proposta comercial.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-pergunta" aria-expanded="false">
+                        <span>É possível acompanhar o processo de produção?</span>
+                        <span class="faq-icone" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-resposta" role="region">
+                        <p>Sim. Mantemos o cliente informado em cada etapa — briefing, pré-produção, gravação e pós. Compartilhamos cortes e versões intermediárias para aprovação antes da entrega final.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-pergunta" aria-expanded="false">
+                        <span>Vocês adaptam o conteúdo para diferentes formatos?</span>
+                        <span class="faq-icone" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-resposta" role="region">
+                        <p>Com certeza. Produzimos versões para diferentes plataformas e proporções — horizontal para YouTube e TV, vertical para Reels e Stories, quadrado para feed. Cada corte é pensado para o canal, não apenas recortado.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-pergunta" aria-expanded="false">
+                        <span>Como funciona a aprovação do conteúdo final?</span>
+                        <span class="faq-icone" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-resposta" role="region">
+                        <p>Enviamos uma versão de revisão para o cliente avaliar. O processo inclui rodadas de ajuste — quantidade definida na proposta — até chegarmos na entrega que todos estejam satisfeitos.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-pergunta" aria-expanded="false">
+                        <span>Vocês têm estúdio físico para gravações internas?</span>
+                        <span class="faq-icone" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-resposta" role="region">
+                        <p>Trabalhamos tanto em locações externas quanto em estúdios parceiros em Florianópolis. Para projetos que exigem cenário controlado, indicamos e gerenciamos o espaço ideal para cada produção.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-pergunta" aria-expanded="false">
+                        <span>Vocês cuidam da trilha sonora e do áudio?</span>
+                        <span class="faq-icone" aria-hidden="true">+</span>
+                    </button>
+                    <div class="faq-resposta" role="region">
+                        <p>Sim. Nossa equipe cuida de sound design, mixagem e seleção musical — com licenciamento adequado para uso comercial e plataformas digitais. Para projetos autorais, também produzimos trilhas originais sob demanda.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="quem-somos" class="secao quem-somos-split fade-in">
+        <div class="split-container">
+            <div class="split-texto">
+                <h2>Sobre nós</h2>
+                <p>A Compro Ouro é um estúdio criativo especializado em produção audiovisual de alta qualidade. Unimos direção de arte, design e inovação para criar narrativas atemporais que comunicam, envolvem e permanecem.</p>
+                <p>Acreditamos que grandes projetos nascem de ideias bem construídas. Por isso, mergulhamos na essência de cada criação para desenvolver conceitos sólidos, experiências autênticas e resultados que realmente se conectam com o público.</p>
+                <p>Nosso trabalho combina sensibilidade criativa, precisão técnica e extrema atenção aos detalhes. Do primeiro encontro à entrega final, transformamos ideias em produções com personalidade, impacto e valor duradouro.</p>
+            </div>
+            <div class="split-img">
+                <img src="imagens/nos.jpg" alt="Equipe Compro Ouro">
+            </div>
+        </div>
+    </section>
+
+    <footer class="rodape fade-in">
+<p class="copyright">Compro Ouro | Estúdio Criativo <span class="middot-maior">&middot;</span> 2026 <span class="middot-maior">&middot;</span> <span class="copyright-linha2">Todos os direitos (e alguns deveres) reservados.</span></p>    </footer>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox">
+    <span class="lightbox-fechar">&times;</span>
+    <div class="lightbox-conteudo">
+        <button class="lightbox-seta lightbox-seta-esquerda" aria-label="Imagem anterior">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path d="M16 5 L8 12 L16 19" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="square"/>
+            </svg>
+        </button>
+        <img class="lightbox-imagem" src="" alt="Visualização ampliada">
+        <button class="lightbox-seta lightbox-seta-direita" aria-label="Próxima imagem">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path d="M8 5 L16 12 L8 19" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="square"/>
+            </svg>
+        </button>
+    </div>
+</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
