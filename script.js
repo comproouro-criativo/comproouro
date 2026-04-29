@@ -33,7 +33,7 @@ window.addEventListener('load', () => {
     }
 })();
 
-/* ========== Scroll com blur imediato ========== */
+/* ========== Scroll com blur instantâneo (desktop + mobile) ========== */
 document.querySelectorAll('.header-center nav a[href^="#"]').forEach(link => {
     link.addEventListener('click', function (e) {
         e.preventDefault();
@@ -47,6 +47,7 @@ document.querySelectorAll('.header-center nav a[href^="#"]').forEach(link => {
             window.removeEventListener('scroll', window.scrollHandler);
             window.scrollHandler = null;
         }
+        if (window._scrollAnimation) cancelAnimationFrame(window._scrollAnimation);
 
         const topo = secao.getBoundingClientRect().top + window.pageYOffset;
         let destino;
@@ -70,48 +71,50 @@ document.querySelectorAll('.header-center nav a[href^="#"]').forEach(link => {
             }
         }
 
-        // 1. Ativa o blur IMEDIATAMENTE
+        // Ativa o blur IMEDIATAMENTE
         document.body.classList.add('scroll-transitioning', 'blur-ativo');
 
-        // 2. Inicia o scroll suave nativo (sem delay)
+        // Inicia o scroll suave nativo (sem delay)
         window.scrollTo({ top: destino, behavior: 'smooth' });
 
-        // 3. Aguarda o fim do scroll para desativar o blur e ativar o foco
-        const finalizar = () => {
-            document.body.classList.remove('blur-ativo');
-            document.body.classList.add('scroll-resolving');
+        // Verifica a posição do scroll até chegar ao destino (remove blur no exato momento)
+        const checkScrollEnd = () => {
+            const posicaoAtual = window.pageYOffset;
+            // Margem de 5px para considerar que chegou (seguro para subpixel)
+            if (Math.abs(posicaoAtual - destino) <= 5) {
+                // Chegou: remove blur e ativa foco
+                document.body.classList.remove('blur-ativo');
+                document.body.classList.add('scroll-resolving');
 
-            // Transição do blur de volta (0.6s) e depois limpa tudo
-            setTimeout(() => {
-                document.body.classList.remove('scroll-transitioning', 'scroll-resolving');
+                setTimeout(() => {
+                    document.body.classList.remove('scroll-transitioning', 'scroll-resolving');
+                    document.body.classList.add('foco');
+                    window.secaoAtiva = secao;
+                    window.scrollHandler = () => {
+                        if (!window.secaoAtiva) return;
+                        const rect = window.secaoAtiva.getBoundingClientRect();
+                        const alturaVisivel = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+                        const visivel = alturaVisivel / window.secaoAtiva.offsetHeight;
+                        if (visivel < 0.8) {
+                            document.body.classList.remove('foco');
+                            window.removeEventListener('scroll', window.scrollHandler);
+                            window.scrollHandler = null;
+                            window.secaoAtiva = null;
+                        }
+                    };
+                    window.addEventListener('scroll', window.scrollHandler, { passive: true });
+                }, 400); // fade-out do blur (pode manter 0.4s)
 
-                // Ativa o modo foco
-                document.body.classList.add('foco');
-                window.secaoAtiva = secao;
-                window.scrollHandler = () => {
-                    if (!window.secaoAtiva) return;
-                    const rect = window.secaoAtiva.getBoundingClientRect();
-                    const alturaVisivel = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
-                    const visivel = alturaVisivel / window.secaoAtiva.offsetHeight;
-                    if (visivel < 0.8) {
-                        document.body.classList.remove('foco');
-                        window.removeEventListener('scroll', window.scrollHandler);
-                        window.scrollHandler = null;
-                        window.secaoAtiva = null;
-                    }
-                };
-                window.addEventListener('scroll', window.scrollHandler, { passive: true });
-            }, 600); // Duração do fade-out do blur
+                return; // encerra o loop
+            }
+            // Continua monitorando a posição
+            window._scrollAnimation = requestAnimationFrame(checkScrollEnd);
         };
 
-        if ('onscrollend' in window) {
-            window.addEventListener('scrollend', finalizar, { once: true });
-        } else {
-            // Fallback: estima o tempo do scroll (~300ms + distância)
-            const distancia = Math.abs(destino - window.pageYOffset);
-            const duracaoEstimada = Math.min(300 + distancia * 0.3, 1200);
-            setTimeout(finalizar, duracaoEstimada);
-        }
+        // Pequeno delay inicial para garantir que o scroll começou
+        requestAnimationFrame(() => {
+            requestAnimationFrame(checkScrollEnd);
+        });
     });
 });
 

@@ -785,7 +785,7 @@ body.scroll-transitioning.blur-ativo .quem-somos-split,
 body.scroll-transitioning.blur-ativo .servicos-faq,
 body.scroll-transitioning.blur-ativo .galeria-feed,
 body.scroll-transitioning.blur-ativo .rodape {
-    filter: blur(5px);
+    filter: blur(3px);
     transition: filter 0.3s ease;
 }
 
@@ -796,8 +796,18 @@ body.scroll-resolving .servicos-faq,
 body.scroll-resolving .galeria-feed,
 body.scroll-resolving .rodape {
     filter: blur(0px);
-    transition: filter 0.6s ease;
+    transition: filter 0.5s ease;
 }
+
+/* Mostrar/ocultar versões desktop e mobile */
+.desktop-only { display: inline; }
+.mobile-only  { display: none; }
+
+@media (max-width: 480px) {
+    .desktop-only { display: none; }
+    .mobile-only  { display: inline; }
+}
+
 /* ============================================================
    RESPONSIVO – TABLET (≤ 768px)
    ============================================================ */
@@ -943,29 +953,58 @@ body.scroll-resolving .rodape {
    ============================================================ */
 @media (max-width: 480px) {
 
-    /* ---------- Header mobile: centro-direita, pilha vertical ---------- */
-.header-center {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    align-items: flex-start;      /* sobe os itens */
-    justify-content: flex-end;
-    padding: 23vh 5% 0 0;        /* 18vh do topo – ajuste fino aqui */
-    z-index: 20;
+      /* ---------- Reposicionamento dos textos do vídeo ---------- */
+    .video-info {
+        position: absolute;
+        z-index: 15;
+        pointer-events: none;
+        text-transform: uppercase;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        white-space: nowrap;
+        font-size: 0.6rem;
+        letter-spacing: 2px;
+        color: #ffffffb5;
+    }
+
+    .video-info.direita {
+    top: 2rem;
+    bottom: auto;
+    right: auto;
+    font-size: 0.65rem;          /* Tamanho do COMPRO OURO® */
 }
+
+.video-info.esquerda {
+    top: 3.5rem;
+    bottom: auto;
+    right: auto;
+    font-size: 0.50rem;         /* Tamanho do Florianópolis */
+}
+
+    /* ---------- Header mobile: CENTRALIZADO na tela ---------- */
+    .header-center {
+        position: absolute;
+        top: 230px;
+        bottom: 0px;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;          /* centraliza verticalmente */
+        justify-content: center;      /* centraliza horizontalmente */
+        padding: 0 0%;                /* pequeno respiro lateral */
+        z-index: 20;
+    }
 
     .header-center nav {
         display: flex;
         flex-direction: column;
-        align-items: flex-end;
-        gap: 2rem;                         /* maior espaçamento vertical */
+        align-items: center;          /* centraliza os itens no container */
+        gap: 2.5rem;
     }
 
     .header-center nav a {
-        font-size: 0.8rem;                 /* bem maior, fácil de tocar */
+        font-size: 0.86rem;
         letter-spacing: 3px;
         font-weight: 500;
         color: #ffffffcc;
@@ -974,7 +1013,7 @@ body.scroll-resolving .rodape {
         padding-bottom: 6px;
         white-space: nowrap;
         line-height: 1.2;
-        text-align: right;
+        text-align: center;           /* texto centralizado */
         position: relative;
     }
 
@@ -982,12 +1021,12 @@ body.scroll-resolving .rodape {
         content: '';
         position: absolute;
         bottom: 0;
-        right: 0;
+        left: 50%;
+        transform: translateX(-50%); /* sublinhado surge do centro */
         width: 0;
         height: 1.6px;
         background-color: currentColor;
         transition: width 0.4s ease;
-        left: auto;
     }
 
     .header-center nav a:hover {
@@ -996,9 +1035,8 @@ body.scroll-resolving .rodape {
     }
 
     .header-center nav a:hover::after {
-        width: 100%;
+        width: 100%;                  /* sublinhado expande para os lados */
     }
-
 
     /* ---------- Demais ajustes mantidos ---------- */
     .galeria-feed {
@@ -1023,14 +1061,6 @@ body.scroll-resolving .rodape {
 
     .split-texto h2 {
         margin-top: -3rem;
-    }
-
-    .video-info {
-        font-size: 0.6rem;
-        bottom: 1.8rem;
-        letter-spacing: 2.0px;
-        font-weight: 500;
-        color: #ffffffa3;
     }
 
     .secao h2 {
