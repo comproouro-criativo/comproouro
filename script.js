@@ -33,7 +33,7 @@ window.addEventListener('load', () => {
     }
 })();
 
-/* ========== Scroll centralizado + Modo Foco ========== */
+/* ========== Scroll com blur imediato ========== */
 document.querySelectorAll('.header-center nav a[href^="#"]').forEach(link => {
     link.addEventListener('click', function (e) {
         e.preventDefault();
@@ -41,6 +41,7 @@ document.querySelectorAll('.header-center nav a[href^="#"]').forEach(link => {
         const secao = document.getElementById(id);
         if (!secao) return;
 
+        // Limpa estado anterior
         document.body.classList.remove('foco');
         if (window.scrollHandler) {
             window.removeEventListener('scroll', window.scrollHandler);
@@ -60,29 +61,57 @@ document.querySelectorAll('.header-center nav a[href^="#"]').forEach(link => {
             }
         } else {
             const alturaSecao = secao.offsetHeight;
-            const centralizar = (window.innerHeight - alturaSecao) / 2;
-            destino = topo - centralizar;
+            const alturaJanela = window.innerHeight;
+            if (alturaSecao > alturaJanela) {
+                destino = id === 'quem-somos' ? topo - 50 : topo;
+            } else {
+                const centralizar = (alturaJanela - alturaSecao) / 2;
+                destino = topo - centralizar;
+            }
         }
 
+        // 1. Ativa o blur IMEDIATAMENTE
+        document.body.classList.add('scroll-transitioning', 'blur-ativo');
+
+        // 2. Inicia o scroll suave nativo (sem delay)
         window.scrollTo({ top: destino, behavior: 'smooth' });
 
-        setTimeout(() => {
-            document.body.classList.add('foco');
-            window.secaoAtiva = secao;
-            window.scrollHandler = () => {
-                if (!window.secaoAtiva) return;
-                const rect = window.secaoAtiva.getBoundingClientRect();
-                const alturaVisivel = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
-                const visivel = alturaVisivel / window.secaoAtiva.offsetHeight;
-                if (visivel < 0.8) {
-                    document.body.classList.remove('foco');
-                    window.removeEventListener('scroll', window.scrollHandler);
-                    window.scrollHandler = null;
-                    window.secaoAtiva = null;
-                }
-            };
-            window.addEventListener('scroll', window.scrollHandler, { passive: true });
-        }, 400);
+        // 3. Aguarda o fim do scroll para desativar o blur e ativar o foco
+        const finalizar = () => {
+            document.body.classList.remove('blur-ativo');
+            document.body.classList.add('scroll-resolving');
+
+            // Transição do blur de volta (0.6s) e depois limpa tudo
+            setTimeout(() => {
+                document.body.classList.remove('scroll-transitioning', 'scroll-resolving');
+
+                // Ativa o modo foco
+                document.body.classList.add('foco');
+                window.secaoAtiva = secao;
+                window.scrollHandler = () => {
+                    if (!window.secaoAtiva) return;
+                    const rect = window.secaoAtiva.getBoundingClientRect();
+                    const alturaVisivel = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+                    const visivel = alturaVisivel / window.secaoAtiva.offsetHeight;
+                    if (visivel < 0.8) {
+                        document.body.classList.remove('foco');
+                        window.removeEventListener('scroll', window.scrollHandler);
+                        window.scrollHandler = null;
+                        window.secaoAtiva = null;
+                    }
+                };
+                window.addEventListener('scroll', window.scrollHandler, { passive: true });
+            }, 600); // Duração do fade-out do blur
+        };
+
+        if ('onscrollend' in window) {
+            window.addEventListener('scrollend', finalizar, { once: true });
+        } else {
+            // Fallback: estima o tempo do scroll (~300ms + distância)
+            const distancia = Math.abs(destino - window.pageYOffset);
+            const duracaoEstimada = Math.min(300 + distancia * 0.3, 1200);
+            setTimeout(finalizar, duracaoEstimada);
+        }
     });
 });
 
@@ -269,31 +298,41 @@ function configurarExpandir(itens, container) {
     btn.innerHTML = `<span class="btn-expandir-icone">+</span><span class="btn-expandir-texto">Ver todos (${itens.length})</span>`;
     container.appendChild(btn);
 
-    btn.addEventListener('click', () => {
-        const expandido = btn.classList.contains('expandido');
+btn.addEventListener('click', () => {
+    const expandido = btn.classList.contains('expandido');
 
-        if (!expandido) {
-            wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
-            btn.classList.add('expandido');
-            btn.querySelector('.btn-expandir-texto').textContent = 'Recolher';
-        } else {
-            wrapper.querySelectorAll('.faq-item.ativo').forEach(aberto => {
-                aberto.classList.remove('ativo');
-                aberto.querySelector('.faq-pergunta').setAttribute('aria-expanded', 'false');
-                aberto.querySelector('.faq-icone').textContent = '+';
-            });
+    if (!expandido) {
+        wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+        btn.classList.add('expandido');
+        btn.querySelector('.btn-expandir-texto').textContent = 'Recolher';
 
-            wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+        // Rolagem suave simultânea, posicionando o botão a 20% da altura da tela
+        requestAnimationFrame(() => {
+            const btnRect = btn.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const targetY = btnRect.top + window.pageYOffset - windowHeight * 0.2;
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+        });
+    } else {
+        // Recolher (mantido como antes)
+        wrapper.querySelectorAll('.faq-item.ativo').forEach(aberto => {
+            aberto.classList.remove('ativo');
+            aberto.querySelector('.faq-pergunta').setAttribute('aria-expanded', 'false');
+            aberto.querySelector('.faq-icone').textContent = '+';
+        });
+
+        wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+        requestAnimationFrame(() => {
             requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    wrapper.style.maxHeight = '0';
-                });
+                wrapper.style.maxHeight = '0';
             });
+        });
 
-            btn.classList.remove('expandido');
-            btn.querySelector('.btn-expandir-texto').textContent = `Ver todos (${itens.length})`;
-        }
-    });
+        btn.classList.remove('expandido');
+        btn.querySelector('.btn-expandir-texto').textContent = `Ver todos (${itens.length})`;
+    }
+});
+        
 }
 
 // Aplica nos serviços
