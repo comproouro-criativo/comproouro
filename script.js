@@ -64,7 +64,7 @@ document.querySelectorAll('.header-center nav a[href^="#"]').forEach(link => {
             const alturaSecao = secao.offsetHeight;
             const alturaJanela = window.innerHeight;
             if (alturaSecao > alturaJanela) {
-                destino = id === 'quem-somos' ? topo - 55 : topo;
+                destino = id === 'quem-somos' ? topo - 0 : topo;
             } else {
                 const centralizar = (alturaJanela - alturaSecao) / 2;
                 destino = topo - centralizar;
@@ -183,6 +183,7 @@ function atualizarImagem(instant = false) {
         lightboxImg.style.opacity = '1';
         return;
     }
+
     lightboxImg.style.opacity = '0';
     setTimeout(() => {
         const img = imagensGaleria[imagemAtualIndex];
@@ -386,3 +387,24 @@ document.addEventListener('touchstart', function() {
         }, 0);
     });
 }, { passive: true });
+
+/* ========== Rodapé – Ticker contínuo (ajuste de loop) ========== */
+(function() {
+    const track = document.querySelector('.rodape-ticker-track');
+    const items = track.querySelectorAll('.ticker-item');
+    if (!items.length) return;
+
+    // Mede a largura de um item (com padding/margem)
+    const itemWidth = items[0].getBoundingClientRect().width;
+    const totalItems = items.length;
+
+    // Queremos que a animação mova exatamente a largura de um "conjunto"
+    // O conjunto é metade dos itens (porque duplicamos tudo)
+    const setWidth = (itemWidth * totalItems) / 2;  
+
+    // Aplica a distância calculada como variável CSS
+    track.style.setProperty('--scroll-distance', `-${setWidth}px`);
+
+    // Ajusta a animação para usar essa distância
+track.style.animation = `rodape-ticker 286s linear infinite`;   // velocidade mais suave
+})();
