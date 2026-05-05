@@ -41,7 +41,6 @@ document.querySelectorAll('.header-center nav a[href^="#"]').forEach(link => {
         const secao = document.getElementById(id);
         if (!secao) return;
 
-        // Limpa estado anterior
         document.body.classList.remove('foco');
         if (window.scrollHandler) {
             window.removeEventListener('scroll', window.scrollHandler);
@@ -71,17 +70,14 @@ document.querySelectorAll('.header-center nav a[href^="#"]').forEach(link => {
             }
         }
 
-        // Só ativa o blur em telas pequenas (mobile)
         const isMobile = window.innerWidth <= 480;
 
         if (isMobile) {
             document.body.classList.add('scroll-transitioning', 'blur-ativo');
         }
 
-        // Inicia o scroll suave nativo (sem delay)
         window.scrollTo({ top: destino, behavior: 'smooth' });
 
-        // Desktop: sem blur, apenas ativa o foco após um tempo
         if (!isMobile) {
             setTimeout(() => {
                 document.body.classList.add('foco');
@@ -103,7 +99,6 @@ document.querySelectorAll('.header-center nav a[href^="#"]').forEach(link => {
             return;
         }
 
-        // Mobile: monitora o scroll para remover o blur no momento exato
         const checkScrollEnd = () => {
             const posicaoAtual = window.pageYOffset;
             if (Math.abs(posicaoAtual - destino) <= 5) {
@@ -272,6 +267,27 @@ function abrirEmail(botao) {
     }, 1500);
 }
 
+/* ========== Animação suave para troca de ícones (+ / −) ========== */
+function animarIcone(icone, novoSimbolo) {
+    if (!icone) return;
+
+    icone.style.transition = 'opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), filter 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+    icone.style.opacity = '0';
+    icone.style.filter = 'blur(3px)';
+
+    setTimeout(() => {
+        icone.style.transition = 'none';
+        icone.textContent = novoSimbolo;
+
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            icone.style.transition = 'opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), filter 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+            icone.style.opacity = '1';
+            icone.style.filter = 'blur(0px)';
+            icone.style.transform = 'translateY(0)';
+        }));
+    }, 300);
+}
+
 /* ========== Acordeão FAQ ========== */
 document.addEventListener('click', (e) => {
     const btn = e.target.closest('.faq-pergunta');
@@ -281,16 +297,17 @@ document.addEventListener('click', (e) => {
     const icone = btn.querySelector('.faq-icone');
     const jaAberto = item.classList.contains('ativo');
 
+    // Fecha os outros itens (com animação no ícone)
     document.querySelectorAll('.faq-item.ativo').forEach(aberto => {
         aberto.classList.remove('ativo');
         aberto.querySelector('.faq-pergunta').setAttribute('aria-expanded', 'false');
-        aberto.querySelector('.faq-icone').textContent = '+';
+        animarIcone(aberto.querySelector('.faq-icone'), '+');
     });
 
     if (!jaAberto) {
         item.classList.add('ativo');
         btn.setAttribute('aria-expanded', 'true');
-        icone.textContent = '−';
+        animarIcone(icone, '−');
     }
 
     const wrapper = item.closest('.expandir-wrapper');
@@ -323,41 +340,81 @@ function configurarExpandir(itens, container) {
     btn.innerHTML = `<span class="btn-expandir-icone">+</span><span class="btn-expandir-texto">Ver todos (${itens.length})</span>`;
     container.appendChild(btn);
 
-btn.addEventListener('click', () => {
-    const expandido = btn.classList.contains('expandido');
+    btn.addEventListener('click', () => {
+        const expandido = btn.classList.contains('expandido');
 
-    if (!expandido) {
-        wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
-        btn.classList.add('expandido');
-        btn.querySelector('.btn-expandir-texto').textContent = 'Recolher';
+        if (!expandido) {
+            wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+            btn.classList.add('expandido');
+const textoEl = btn.querySelector('.btn-expandir-texto');
+const iconeEl = btn.querySelector('.btn-expandir-icone');
 
-        // Rolagem suave simultânea, posicionando o botão a 20% da altura da tela
-        requestAnimationFrame(() => {
-            const btnRect = btn.getBoundingClientRect();
-            const windowHeight = window.innerHeight;
-            const targetY = btnRect.top + window.pageYOffset - windowHeight * 0.2;
-            window.scrollTo({ top: targetY, behavior: 'smooth' });
-        });
-    } else {
-        // Recolher (mantido como antes)
-        wrapper.querySelectorAll('.faq-item.ativo').forEach(aberto => {
-            aberto.classList.remove('ativo');
-            aberto.querySelector('.faq-pergunta').setAttribute('aria-expanded', 'false');
-            aberto.querySelector('.faq-icone').textContent = '+';
-        });
+textoEl.style.opacity = '0';
+textoEl.style.filter = 'blur(3px)';
+textoEl.style.transform = 'translateY(-7px)';
+iconeEl.style.opacity = '0';
+iconeEl.style.filter = 'blur(3px)';
 
-        wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
-        requestAnimationFrame(() => {
+setTimeout(() => {
+    textoEl.style.transition = 'none';
+    textoEl.style.transform = 'translateY(7px)';
+    textoEl.textContent = 'Recolher';
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        textoEl.style.transition = '';
+        textoEl.style.opacity = '1';
+        textoEl.style.filter = 'blur(0px)';
+        textoEl.style.transform = 'translateY(0)';
+        iconeEl.style.opacity = '1';
+        iconeEl.style.filter = 'blur(0px)';
+    }));
+}, 450);
             requestAnimationFrame(() => {
-                wrapper.style.maxHeight = '0';
+                const btnRect = btn.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                const targetY = btnRect.top + window.pageYOffset - windowHeight * 0.2;
+                window.scrollTo({ top: targetY, behavior: 'smooth' });
             });
-        });
+        } else {
+            // Recolher (agora com animação nos ícones das perguntas abertas)
+            wrapper.querySelectorAll('.faq-item.ativo').forEach(aberto => {
+                aberto.classList.remove('ativo');
+                aberto.querySelector('.faq-pergunta').setAttribute('aria-expanded', 'false');
+                animarIcone(aberto.querySelector('.faq-icone'), '+');
+            });
 
-        btn.classList.remove('expandido');
-        btn.querySelector('.btn-expandir-texto').textContent = `Ver todos (${itens.length})`;
-    }
-});
-        
+            wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    wrapper.style.maxHeight = '0';
+                });
+            });
+
+            btn.classList.remove('expandido');
+const textoEl = btn.querySelector('.btn-expandir-texto');
+const iconeEl = btn.querySelector('.btn-expandir-icone');
+
+textoEl.style.opacity = '0';
+textoEl.style.filter = 'blur(3px)';
+textoEl.style.transform = 'translateY(-7px)';
+iconeEl.style.opacity = '0';
+iconeEl.style.filter = 'blur(3px)';
+
+setTimeout(() => {
+    textoEl.style.transition = 'none';
+    textoEl.style.transform = 'translateY(7px)';
+    textoEl.textContent = `Ver todos (${itens.length})`;
+
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+        textoEl.style.transition = '';
+        textoEl.style.opacity = '1';
+        textoEl.style.filter = 'blur(0px)';
+        textoEl.style.transform = 'translateY(0)';
+        iconeEl.style.opacity = '1';
+        iconeEl.style.filter = 'blur(0px)';
+    }));
+}, 450);      }
+    });
 }
 
 // Aplica nos serviços
@@ -394,17 +451,10 @@ document.addEventListener('touchstart', function() {
     const items = track.querySelectorAll('.ticker-item');
     if (!items.length) return;
 
-    // Mede a largura de um item (com padding/margem)
     const itemWidth = items[0].getBoundingClientRect().width;
     const totalItems = items.length;
-
-    // Queremos que a animação mova exatamente a largura de um "conjunto"
-    // O conjunto é metade dos itens (porque duplicamos tudo)
     const setWidth = (itemWidth * totalItems) / 2;  
 
-    // Aplica a distância calculada como variável CSS
     track.style.setProperty('--scroll-distance', `-${setWidth}px`);
-
-    // Ajusta a animação para usar essa distância
-track.style.animation = `rodape-ticker 286s linear infinite`;   // velocidade mais suave
+    track.style.animation = `rodape-ticker 286s linear infinite`;
 })();
