@@ -1505,14 +1505,14 @@ body.scroll-resolving .rodape {
         text-align: left;
     }
 
-    .split-texto h2 {
-        text-align: left;
-        font-size: 1.75rem;      /* um pouco menor que desktop para telas baixas */
-        margin-top: 0;
+   .split-texto h2 {
+        font-size: 1.3rem;        /* era 1.75rem, agora igual ao mobile vertical */
+        letter-spacing: 2.5px;    /* idem */
+        text-align: left;         /* mantido */
     }
 
     .split-texto p {
-        font-size: 1rem;
+        font-size: 0.9rem;        /* era 1rem, agora igual ao mobile vertical */
     }
 
     /* Serviços e FAQ lado a lado */
