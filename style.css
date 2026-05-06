@@ -1386,6 +1386,10 @@ body.scroll-resolving .rodape {
    LANDSCAPE MOBILE — comportamento igual ao desktop
    Ativa quando a tela está deitada e a altura é pequena (celular)
    ============================================================ */
+/* ============================================================
+   LANDSCAPE MOBILE — comportamento igual ao desktop
+   Ativa quando a tela está deitada e a altura é pequena (celular)
+   ============================================================ */
 @media (orientation: landscape) and (max-height: 500px) {
 
     /* Header volta ao topo, horizontal */
@@ -1406,21 +1410,6 @@ body.scroll-resolving .rodape {
         flex-direction: row;
         gap: 0;
     }
-
-    .split-img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: visible;
-    max-height: 380px;
-}
-
-.split-img img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    max-height: 380px;
-}
 
     .header-center nav a {
         font-size: 0.8rem;
@@ -1481,7 +1470,7 @@ body.scroll-resolving .rodape {
         font-size: 1rem;
     }
 
-    /* Split volta a ser lado a lado */
+    /* ---------- Split (Sobre nós) lado a lado ---------- */
     .split-container {
         flex-direction: row;
         min-height: 70vh;
@@ -1492,8 +1481,21 @@ body.scroll-resolving .rodape {
         width: 50%;
     }
 
+    /* Remove qualquer altura fixa, deixa o container se ajustar ao conteúdo */
     .split-img {
-        height: auto;
+        height: auto;            /* anula qualquer height vindo do mobile */
+        max-height: none;        /* anula max-height que cortava a imagem */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;        /* volta ao overflow original do desktop */
+    }
+
+    .split-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;       /* comportamento original (cobre o container) */
+        max-height: none;        /* remove limite que forçava altura menor */
     }
 
     .split-texto {
@@ -1503,7 +1505,7 @@ body.scroll-resolving .rodape {
 
     .split-texto h2 {
         text-align: left;
-        font-size: 2rem;
+        font-size: 1.75rem;      /* um pouco menor que desktop para telas baixas */
         margin-top: 0;
     }
 
