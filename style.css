@@ -1021,7 +1021,7 @@ body.scroll-resolving .rodape {
     }
 
     .split-texto {
-        padding: 2rem 6% 0;
+        padding: 2rem 0 0;
         text-align: center;
     }
 
@@ -1248,7 +1248,7 @@ body.scroll-resolving .rodape {
     }
 
     .split-texto {
-        padding: 1.5rem 5% 0;
+        padding: 1.5rem 0 0;
     }
 
     .split-texto h2 {
