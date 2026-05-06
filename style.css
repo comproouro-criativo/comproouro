@@ -513,6 +513,8 @@ video,
     max-width: 100%;
     padding-top: 6rem;
     padding-bottom: 6rem;
+        padding-left: 5%;
+    padding-right: 5%;
      margin: 6rem 0 4rem; 
 }
 
@@ -528,7 +530,7 @@ video,
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 3rem 5%;
+    padding: 3rem 5% 0 1%;
 }
 
 .split-texto h2 {
@@ -922,7 +924,7 @@ body.scroll-resolving .rodape {
     opacity: 0;
     width: 0;
     overflow: hidden;
-    transition: all 0.95s ease;
+    transition: all 0.65s ease;
     font-size: 0.5rem;
     letter-spacing: 0.8px;
     text-transform: uppercase;
@@ -1015,11 +1017,11 @@ body.scroll-resolving .rodape {
     }
 
     .split-img {
-        height: 45vh;
+        height: auto;
     }
 
     .split-texto {
-        padding: 2rem 6%;
+        padding: 2rem 6% 0;
         text-align: center;
     }
 
@@ -1242,11 +1244,11 @@ body.scroll-resolving .rodape {
     }
 
     .split-img {
-        height: 40vh;
+        height: auto;
     }
 
     .split-texto {
-        padding: 1.5rem 5%;
+        padding: 1.5rem 5% 0;
     }
 
     .split-texto h2 {
@@ -1499,7 +1501,7 @@ body.scroll-resolving .rodape {
     }
 
     .split-texto {
-        padding: 3rem 5%;
+        padding: 3rem 5% 0;
         text-align: left;
     }
 
@@ -1708,7 +1710,7 @@ body.scroll-resolving .rodape {
     }
 
     .split-texto {
-        padding: 2rem 4%;
+        padding: 2rem 4% 0;
         text-align: left;
     }
 
