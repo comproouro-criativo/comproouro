@@ -2020,9 +2020,8 @@ body.scroll-resolving .rodape {
     }
 
     .lightbox-fechar {
-        top: 15px;
-        right: 20px;
-        font-size: 32px;
+            display: none;
+
     }
 }
 

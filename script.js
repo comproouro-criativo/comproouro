@@ -336,18 +336,54 @@ document.addEventListener('keydown', (e) => {
     else if (e.key === 'ArrowLeft') imagemAnterior();
 });
 
-// Touch/swipe
-let touchStartX = 0;
+
+/* ========== Swipe vertical (fechar) + horizontal (navegar) ========== */
+let touchStartX = 0,
+    touchStartY = 0;
+let isSwipingVertical = false;
+const VERTICAL_THRESHOLD = 70; // pixels mínimos para fechar
+
 lightbox?.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
+    const touch = e.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+    isSwipingVertical = false;
 }, { passive: true });
+
+lightbox?.addEventListener('touchmove', (e) => {
+    if (!lightbox.classList.contains('ativa')) return;
+    const touch = e.touches[0];
+    const deltaY = touch.clientY - touchStartY;
+    const deltaX = touch.clientX - touchStartX;
+
+    // Se o movimento vertical for claramente maior que o horizontal, ativa o swipe vertical
+    if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 10) {
+        isSwipingVertical = true;
+        e.preventDefault(); // evita que a página role atrás
+    }
+}, { passive: false });
 
 lightbox?.addEventListener('touchend', (e) => {
     if (!lightbox.classList.contains('ativa')) return;
-    const diff = touchStartX - e.changedTouches[0].screenX;
-    if (diff > 50) proximaImagem();
-    else if (diff < -50) imagemAnterior();
+    const touch = e.changedTouches[0];
+
+    if (isSwipingVertical) {
+        const deltaY = touch.clientY - touchStartY;
+        if (Math.abs(deltaY) >= VERTICAL_THRESHOLD) {
+            fecharLightbox();
+        }
+        return; // não processa horizontal se foi vertical
+    }
+
+    // Swipe horizontal normal (navegação)
+    const deltaX = touchStartX - touch.clientX;
+    if (deltaX > 50) {
+        proximaImagem();
+    } else if (deltaX < -50) {
+        imagemAnterior();
+    }
 }, { passive: true });
+
 /* ========== Copiar telefone ========== */
 function copiarTelefone() {
     const numero = document.getElementById('telefoneCopiar')?.textContent.trim();
