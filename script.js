@@ -239,9 +239,12 @@ function criarMiniaturas(imagens, indexAtivo) {
             thumb.classList.add('active');
         }
         
+        // CORRIGIDO: Agora usa instant=false para ter animação
         thumb.addEventListener('click', () => {
+            if (idx === imagemAtualIndex) return; // Não faz nada se clicar na mesma
+            
             imagemAtualIndex = idx;
-            atualizarImagemLightbox(true);
+            atualizarImagemLightbox(false); // ← MUDOU DE true PARA false
             sincronizarMiniaturas();
         });
         
