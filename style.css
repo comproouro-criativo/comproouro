@@ -33,7 +33,8 @@ html {
 
 body {
     font-family: 'Acherus Grotesque', sans-serif;
-    background-color: #1c1c1c;   /* NOVO – fundo preto padrão */
+    background-color: #1c1c1c;
+    /* NOVO – fundo preto padrão */
     color: #2c2c2c;
     line-height: 1.9;
     overflow-x: clip;
@@ -79,25 +80,30 @@ video,
 /* ========== LOGO CENTRAL NO VÍDEO (DESKTOP) ========== */
 .video-logo {
     position: absolute;
-    bottom: 35px;              /* Ajuste: altura acima dos textos */
+    bottom: 35px;
+    /* Ajuste: altura acima dos textos */
     left: 50%;
     transform: translateX(-50%);
     z-index: 5;
-    pointer-events: none;       /* opcional: mantém clicável o que estiver atrás */
+    pointer-events: none;
+    /* opcional: mantém clicável o que estiver atrás */
 }
 
 .video-logo img {
-    height: 55px;               /* Ajuste o tamanho do seu logo */
+    height: 55px;
+    /* Ajuste o tamanho do seu logo */
     width: auto;
     display: block;
     opacity: 0.35;
     transition: opacity 0.3s ease;
-    filter: brightness(0) invert(1); /* Força o logo a ficar branco */
+    filter: brightness(0) invert(1);
+    /* Força o logo a ficar branco */
 }
 
 .video-logo img:hover {
     opacity: 1;
 }
+
 /* ============================================================ */
 
 /* ============================================================
@@ -197,7 +203,8 @@ video,
    ============================================================ */
 #portfolio {
     max-width: 100%;
-    padding: 4rem 0 3rem 0;   /* topo 4rem, embaixo 4rem, sem margem */
+    padding: 4rem 0 3rem 0;
+    /* topo 4rem, embaixo 4rem, sem margem */
     background: #fffcf6;
 }
 
@@ -253,7 +260,8 @@ video,
 .secao {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 1rem 5% 0 5%;   /* topo 1rem, resto igual */
+    padding: 1rem 5% 0 5%;
+    /* topo 1rem, resto igual */
     text-align: center;
     background: #fffcf6;
 }
@@ -335,7 +343,8 @@ video,
     display: block;
     filter: brightness(1) contrast(1.1);
     transition: filter 0.3s ease, transform 0.3s ease;
-    cursor: pointer;               /* ← adicione esta linha */
+    cursor: pointer;
+    /* ← adicione esta linha */
 }
 
 .galeria-feed img:hover {
@@ -402,7 +411,8 @@ video,
    RODAPÉ – BARRA COM TEXTO ROLANTE
    ============================================================ */
 .rodape {
-    background: #1c1c1c;          /* preto padrão do site */
+    background: #1c1c1c;
+    /* preto padrão do site */
     padding: 0.3rem 0;
     margin-top: -5rem;
     width: 100%;
@@ -426,12 +436,18 @@ video,
     font-size: 0.55rem;
     font-weight: 400;
     letter-spacing: 0.9px;
-    padding-right: 4rem;          /* espaço entre as cópias */
+    padding-right: 4rem;
+    /* espaço entre as cópias */
 }
 
 @keyframes rodape-ticker {
-    0%   { transform: translateX(0%); }
-    100% { transform: translateX(var(--scroll-distance, -50%)); }
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(var(--scroll-distance, -50%));
+    }
 }
 
 /* ---------- Seção "Sobre nós" split ---------- */
@@ -439,9 +455,9 @@ video,
     max-width: 100%;
     padding-top: 6rem;
     padding-bottom: 6rem;
-        padding-left: 5%;
+    padding-left: 5%;
     padding-right: 5%;
-     margin: 6rem 0 4rem; 
+    margin: 6rem 0 4rem;
 }
 
 .split-container {
@@ -661,8 +677,8 @@ video,
 .btn-expandir-texto {
     display: inline-block;
     transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-                filter  0.45s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        filter 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-expandir-icone {
@@ -670,8 +686,8 @@ video,
     font-weight: 300;
     line-height: 1;
     transition: transform 0.4s ease,
-                opacity  0.45s cubic-bezier(0.16, 1, 0.3, 1),
-                filter   0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-expandir.expandido .btn-expandir-icone {
@@ -741,12 +757,17 @@ video,
    SEÇÃO CONTATO – FULL WIDTH
    ============================================================ */
 #contato {
-    max-width: none;            /* ocupa toda a largura */
+    max-width: none;
+    /* ocupa toda a largura */
     width: 100%;
-    margin-top: 0rem;           /* margem superior aumentada – ajuste o valor (ex: 10rem, 12rem…) */
-    margin-bottom: 2rem;        /* margem inferior mantida como estava (padrão da .secao) */
-    padding: 4rem 5%;           /* respiro interno */
-    background: #fffcf6;        /* fundo branco */
+    margin-top: 0rem;
+    /* margem superior aumentada – ajuste o valor (ex: 10rem, 12rem…) */
+    margin-bottom: 2rem;
+    /* margem inferior mantida como estava (padrão da .secao) */
+    padding: 4rem 5%;
+    /* respiro interno */
+    background: #fffcf6;
+    /* fundo branco */
 }
 
 /* ---------- Blur durante scroll de navegação ---------- */
@@ -787,22 +808,49 @@ body.scroll-resolving .rodape {
 
 
 /* Mostrar/ocultar versões desktop e mobile */
-.desktop-only { display: inline; }
-.mobile-only  { display: none; }
+.desktop-only {
+    display: inline;
+}
+
+.mobile-only {
+    display: none;
+}
 
 @media (max-width: 480px) {
-    .desktop-only { display: none; }
-    .mobile-only  { display: inline; }
+    .desktop-only {
+        display: none;
+    }
+
+    .mobile-only {
+        display: inline;
+    }
 }
 
 
 /* Animação: fade in → visível → fade out → invisível */
 @keyframes alternarMarcas {
-    0%   { opacity: 0; }
-    10%  { opacity: 1; }      /* 0,4s para aparecer */
-    40%  { opacity: 1; }      /* permanece visível 1,2s */
-    50%  { opacity: 0; }      /* 0,4s para sumir */
-    100% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    /* 0,4s para aparecer */
+    40% {
+        opacity: 1;
+    }
+
+    /* permanece visível 1,2s */
+    50% {
+        opacity: 0;
+    }
+
+    /* 0,4s para sumir */
+    100% {
+        opacity: 0;
+    }
 }
 
 /* Animação: move a track exatamente 50% (metade do conteúdo duplicado) */
@@ -810,8 +858,10 @@ body.scroll-resolving .rodape {
     0% {
         transform: translateX(0);
     }
+
     100% {
-        transform: translateX(calc(-50% - 2rem)); /* desconta metade do gap total? Ajuste fino: -50% do width total */
+        transform: translateX(calc(-50% - 2rem));
+        /* desconta metade do gap total? Ajuste fino: -50% do width total */
     }
 }
 
@@ -820,7 +870,8 @@ body.scroll-resolving .rodape {
    ============================================================ */
 .scroll-top-container {
     text-align: center;
-    margin: 1.5rem 0 -3.5rem;          /* margem inferior bem reduzida */
+    margin: 1.5rem 0 -3.5rem;
+    /* margem inferior bem reduzida */
 }
 
 .scroll-top-btn {
@@ -837,7 +888,8 @@ body.scroll-resolving .rodape {
     transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1.2);
     overflow: hidden;
     white-space: nowrap;
-    max-width: 2.8rem;               /* inicialmente só mostra o ícone */
+    max-width: 2.8rem;
+    /* inicialmente só mostra o ícone */
 }
 
 .scroll-top-icon {
@@ -859,7 +911,8 @@ body.scroll-resolving .rodape {
 
 .scroll-top-btn:hover {
     opacity: 1;
-    max-width: 15rem;                /* expande para mostrar o texto */
+    max-width: 15rem;
+    /* expande para mostrar o texto */
     padding-right: 1.2rem;
     gap: 0.6rem;
     background: #2c2c2c;
@@ -1026,7 +1079,7 @@ body.scroll-resolving .rodape {
    ============================================================ */
 @media (max-width: 480px) {
 
-      /* ---------- Reposicionamento dos textos do vídeo ---------- */
+    /* ---------- Reposicionamento dos textos do vídeo ---------- */
     .video-info {
         position: absolute;
         z-index: 15;
@@ -1042,18 +1095,20 @@ body.scroll-resolving .rodape {
     }
 
     .video-info.direita {
-    top: 2rem;
-    bottom: auto;
-    right: auto;
-    font-size: 0.65rem;          /* Tamanho do COMPRO OURO® */
-}
+        top: 2rem;
+        bottom: auto;
+        right: auto;
+        font-size: 0.65rem;
+        /* Tamanho do COMPRO OURO® */
+    }
 
-.video-info.esquerda {
-    top: 3.5rem;
-    bottom: auto;
-    right: auto;
-    font-size: 0.50rem;         /* Tamanho do Florianópolis */
-}
+    .video-info.esquerda {
+        top: 3.5rem;
+        bottom: auto;
+        right: auto;
+        font-size: 0.50rem;
+        /* Tamanho do Florianópolis */
+    }
 
     /* ---------- Header mobile: CENTRALIZADO na tela ---------- */
     .header-center {
@@ -1063,27 +1118,34 @@ body.scroll-resolving .rodape {
         left: 0;
         right: 0;
         display: flex;
-        align-items: center;          /* centraliza verticalmente */
-        justify-content: center;      /* centraliza horizontalmente */
-        padding: 0 0%;                /* pequeno respiro lateral */
+        align-items: center;
+        /* centraliza verticalmente */
+        justify-content: center;
+        /* centraliza horizontalmente */
+        padding: 0 0%;
+        /* pequeno respiro lateral */
         z-index: 20;
     }
 
     /* ---------- Rodapé menor no mobile ---------- */
-.rodape {
-    padding: 0.25rem 0;           /* barra mais fina */
-}
+    .rodape {
+        padding: 0.25rem 0;
+        /* barra mais fina */
+    }
 
-.ticker-item {
-    font-size: 0.43rem;           /* texto menor */
-    letter-spacing: 0.6px;
-    padding-right: 2.5rem;        /* espaço reduzido entre as repetições */
-}
+    .ticker-item {
+        font-size: 0.43rem;
+        /* texto menor */
+        letter-spacing: 0.6px;
+        padding-right: 2.5rem;
+        /* espaço reduzido entre as repetições */
+    }
 
     .header-center nav {
         display: flex;
         flex-direction: column;
-        align-items: center;          /* centraliza os itens no container */
+        align-items: center;
+        /* centraliza os itens no container */
         gap: 2.5rem;
     }
 
@@ -1097,7 +1159,8 @@ body.scroll-resolving .rodape {
         padding-bottom: 6px;
         white-space: nowrap;
         line-height: 1.2;
-        text-align: center;           /* texto centralizado */
+        text-align: center;
+        /* texto centralizado */
         position: relative;
     }
 
@@ -1106,7 +1169,8 @@ body.scroll-resolving .rodape {
         position: absolute;
         bottom: 0;
         left: 50%;
-        transform: translateX(-50%); /* sublinhado surge do centro */
+        transform: translateX(-50%);
+        /* sublinhado surge do centro */
         width: 0;
         height: 1.6px;
         background-color: currentColor;
@@ -1119,7 +1183,8 @@ body.scroll-resolving .rodape {
     }
 
     .header-center nav a:hover::after {
-        width: 100%;                  /* sublinhado expande para os lados */
+        width: 100%;
+        /* sublinhado expande para os lados */
     }
 
     /* ---------- Demais ajustes mantidos ---------- */
@@ -1241,642 +1306,574 @@ body.scroll-resolving .rodape {
     }
 
     /* Remove a margem preta do portfólio no mobile e usa padding branco */
-#portfolio {
-    margin-bottom: 0;
-    padding-top: 3rem;        /* ← novo: reduz o espaço acima do título "Projetos" */
-    padding-bottom: 3rem;     /* mantém o respiro inferior branco */
-}
+    #portfolio {
+        margin-bottom: 0;
+        padding-top: 3rem;
+        /* ← novo: reduz o espaço acima do título "Projetos" */
+        padding-bottom: 3rem;
+        /* mantém o respiro inferior branco */
+    }
 
-#contato {
-    padding-top: 2rem;        /* antes era 4rem (herdado) */
-    padding-bottom: 1.5rem;     /* antes era 4rem */
-    margin-bottom: 2rem;      /* antes era 2rem */
-}
+    #contato {
+        padding-top: 2rem;
+        /* antes era 4rem (herdado) */
+        padding-bottom: 1.5rem;
+        /* antes era 4rem */
+        margin-bottom: 2rem;
+        /* antes era 2rem */
+    }
 
 
-.quem-somos-split {
-    padding-top: 4rem;
-     padding-bottom: 2rem;
-    margin-top: -3em;      /* menor no celular */
-    margin-bottom: -1rem;
-}
+    .quem-somos-split {
+        padding-top: 4rem;
+        padding-bottom: 2rem;
+        margin-top: -3em;
+        /* menor no celular */
+        margin-bottom: -1rem;
+    }
 
-/* Rodapé geral (vale para todos os tamanhos, mas o mobile já tem suas próprias regras) */
-.rodape {
-    background: #1c1c1c;
-    padding: 0.3rem 0;
-    margin-top: 0;
-    width: 100%;
-    overflow: hidden;
-}
-
-/* Regras específicas para desktop (acima de 768px) */
-@media (min-width: 769px) {
+    /* Rodapé geral (vale para todos os tamanhos, mas o mobile já tem suas próprias regras) */
     .rodape {
-        padding: 0.15rem 0;      /* barra mais fina só no desktop */
-        margin-top: 0;           /* ajuste se necessário */
+        background: #1c1c1c;
+        padding: 0.3rem 0;
+        margin-top: 0;
+        width: 100%;
+        overflow: hidden;
     }
-    .rodape-ticker-track {
-        animation: rodape-ticker 12s linear infinite; /* opcional: velocidade diferente */
+
+    /* Regras específicas para desktop (acima de 768px) */
+    @media (min-width: 769px) {
+        .rodape {
+            padding: 0.15rem 0;
+            /* barra mais fina só no desktop */
+            margin-top: 0;
+            /* ajuste se necessário */
+        }
+
+        .rodape-ticker-track {
+            animation: rodape-ticker 12s linear infinite;
+            /* opcional: velocidade diferente */
+        }
+
+        .ticker-item {
+            font-size: 0.5rem;
+            /* texto menor, se quiser */
+        }
     }
-    .ticker-item {
-        font-size: 0.5rem;       /* texto menor, se quiser */
+
+    /* Botão voltar ao topo sempre visível no mobile */
+    .scroll-top-btn {
+        opacity: 1;
+        max-width: 15rem;
+        /* expande o botão */
+        padding-right: 1.2rem;
+        gap: 0.6rem;
+        background: #2c2c2c;
+        color: #fffcf6;
+        border-color: #2c2c2c;
     }
-}
 
-/* Botão voltar ao topo sempre visível no mobile */
-.scroll-top-btn {
-    opacity: 1;
-    max-width: 15rem;          /* expande o botão */
-    padding-right: 1.2rem;
-    gap: 0.6rem;
-    background: #2c2c2c;
-    color: #fffcf6;
-    border-color: #2c2c2c;
-}
+    .scroll-top-container {
+        margin-bottom: 0.5rem;
+        margin-top: 1.5rem;
+        /* diminua para o valor que desejar */
+    }
 
-.scroll-top-container {
-    margin-bottom: 0.5rem;  
-    margin-top: 1.5rem;          /* diminua para o valor que desejar */
-}
+    .scroll-top-btn .scroll-top-label {
+        opacity: 1;
+        width: auto;
+        margin-left: 0.2rem;
+    }
 
-.scroll-top-btn .scroll-top-label {
-    opacity: 1;
-    width: auto;
-    margin-left: 0.2rem;
-}
-
-.scroll-top-btn .scroll-top-icon {
-    transform: translateY(-2px);
-}
+    .scroll-top-btn .scroll-top-icon {
+        transform: translateY(-2px);
+    }
 
 
-/* ============================================================
+    /* ============================================================
    LANDSCAPE MOBILE — comportamento igual ao desktop
    Ativa quando a tela está deitada e a altura é pequena (celular)
    ============================================================ */
-@media (orientation: landscape) and (max-height: 500px) {
+    @media (orientation: landscape) and (max-height: 500px) {
 
-    /* Header volta ao topo, horizontal */
-    .header-center {
-        position: absolute;
-        top: 0;
-        bottom: auto;
-        left: 0;
-        right: auto;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
-        padding: 2.5rem 5% 1rem;
+        /* Header volta ao topo, horizontal */
+        .header-center {
+            position: absolute;
+            top: 0;
+            bottom: auto;
+            left: 0;
+            right: auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            padding: 2.5rem 5% 1rem;
+        }
+
+        .header-center nav {
+            flex-direction: row;
+            gap: 0;
+        }
+
+        .header-center nav a {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            font-weight: 400;
+            color: #ffffffb5;
+            text-align: left;
+        }
+
+        /* Sublinhado nasce da esquerda, como no desktop */
+        .header-center nav a::after {
+            left: 0;
+            transform: none;
+        }
+
+        /* Textos do vídeo voltam às posições desktop */
+        .video-info {
+            position: absolute;
+            bottom: 2.5rem;
+            left: auto;
+            top: auto;
+            transform: none;
+            text-align: left;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .video-info.esquerda {
+            left: 5%;
+            top: auto;
+            bottom: 2.5rem;
+            font-size: 0.8rem;
+        }
+
+        .video-info.direita {
+            right: 5%;
+            left: auto;
+            top: auto;
+            bottom: 2.5rem;
+            font-size: 0.8rem;
+        }
+
+        /* Galeria volta a 3 colunas */
+        .galeria-feed {
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 280px;
+            gap: 0.6rem;
+            padding: 0 0.6rem;
+        }
+
+        /* Seções com tamanhos desktop */
+        .secao h2 {
+            font-size: 2rem;
+            letter-spacing: 4px;
+        }
+
+        .secao p {
+            font-size: 1rem;
+        }
+
+        /* ---------- Split (Sobre nós) lado a lado ---------- */
+        .split-container {
+            flex-direction: row;
+            min-height: 70vh;
+        }
+
+        .split-texto,
+        .split-img {
+            width: 50%;
+        }
+
+        .split-img {
+            height: auto;
+            max-height: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .split-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            max-height: none;
+        }
+
+        .split-texto {
+            padding: 3rem 5% 0;
+            text-align: left;
+        }
+
+        .split-texto h2 {
+            font-size: 1.3rem;
+            letter-spacing: 2.5px;
+            text-align: left;
+        }
+
+        .split-texto p {
+            font-size: 0.9rem;
+        }
+
+        .sf-container {
+            flex-direction: row;
+            align-items: flex-start;
+            text-align: left;
+            gap: 4rem;
+        }
+
+        .sf-servicos,
+        .sf-faq {
+            width: auto;
+            max-width: none;
+            margin: 0;
+        }
+
+        .lista-servicos li {
+            justify-content: flex-start;
+            font-size: 0.88rem;
+            min-height: 50px;
+        }
+
+        .sf-titulo {
+            font-size: 2rem;
+            letter-spacing: 4px;
+        }
+
+        .faq-pergunta span:first-child {
+            font-size: 0.85rem;
+        }
+
+        .faq-resposta p {
+            font-size: 0.82rem;
+        }
+
+        .faq-icone {
+            font-size: 1.4rem;
+            width: 18px;
+        }
+
+        .btn-expandir {
+            justify-content: flex-start;
+        }
+
+        .scroll-top-btn {
+            opacity: 0.5;
+            max-width: 2.8rem;
+            padding-right: 0.7rem;
+            gap: 0;
+            background: transparent;
+            color: #2c2c2c;
+            border-color: #2c2c2c;
+        }
+
+        .scroll-top-btn .scroll-top-label {
+            opacity: 0;
+            width: 0;
+            margin-left: 0;
+        }
+
+        .scroll-top-btn .scroll-top-icon {
+            transform: none;
+        }
+
+        .rodape {
+            padding: 0.15rem 0;
+            margin-top: 0;
+        }
+
+        .ticker-item {
+            font-size: 0.5rem;
+            letter-spacing: 0.9px;
+            padding-right: 4rem;
+        }
     }
 
-    .header-center nav {
-        flex-direction: row;
-        gap: 0;
-    }
-
-    .header-center nav a {
-        font-size: 0.8rem;
-        letter-spacing: 2px;
-        font-weight: 400;
-        color: #ffffffb5;
-        text-align: left;
-    }
-
-    /* Sublinhado nasce da esquerda, como no desktop */
-    .header-center nav a::after {
-        left: 0;
-        transform: none;
-    }
-
-    /* Textos do vídeo voltam às posições desktop */
-    .video-info {
-        position: absolute;
-        bottom: 2.5rem;
-        left: auto;
-        top: auto;
-        transform: none;
-        text-align: left;
-        font-size: 0.8rem;
-        letter-spacing: 2px;
-    }
-
-    .video-info.esquerda {
-        left: 5%;
-        top: auto;
-        bottom: 2.5rem;
-        font-size: 0.8rem;
-    }
-
-    .video-info.direita {
-        right: 5%;
-        left: auto;
-        top: auto;
-        bottom: 2.5rem;
-        font-size: 0.8rem;
-    }
-
-    /* Galeria volta a 3 colunas */
-    .galeria-feed {
-        grid-template-columns: repeat(3, 1fr);
-        grid-auto-rows: 280px;
-        gap: 0.6rem;
-        padding: 0 0.6rem;
-    }
-
-    /* Seções com tamanhos desktop */
-    .secao h2 {
-        font-size: 2rem;
-        letter-spacing: 4px;
-    }
-
-    .secao p {
-        font-size: 1rem;
-    }
-
-/* ---------- Split (Sobre nós) lado a lado ---------- */
-    .split-container {
-        flex-direction: row;
-        min-height: 70vh;
-    }
-
-    .split-texto,
-    .split-img {
-        width: 50%;
-    }
-
-    .split-img {
-        height: auto;
-        max-height: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-    }
-
-    .split-img img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        max-height: none;
-    }
-
-    .split-texto {
-        padding: 3rem 5% 0;
-        text-align: left;
-    }
-
-    .split-texto h2 {
-        font-size: 1.3rem;
-        letter-spacing: 2.5px;
-        text-align: left;
-    }
-
-    .split-texto p {
-        font-size: 0.9rem;
-    }
-
-    .sf-container {
-        flex-direction: row;
-        align-items: flex-start;
-        text-align: left;
-        gap: 4rem;
-    }
-
-    .sf-servicos,
-    .sf-faq {
-        width: auto;
-        max-width: none;
-        margin: 0;
-    }
-
-    .lista-servicos li {
-        justify-content: flex-start;
-        font-size: 0.88rem;
-        min-height: 50px;
-    }
-
-    .sf-titulo {
-        font-size: 2rem;
-        letter-spacing: 4px;
-    }
-
-    .faq-pergunta span:first-child {
-        font-size: 0.85rem;
-    }
-
-    .faq-resposta p {
-        font-size: 0.82rem;
-    }
-
-    .faq-icone {
-        font-size: 1.4rem;
-        width: 18px;
-    }
-
-    .btn-expandir {
-        justify-content: flex-start;
-    }
-
-    .scroll-top-btn {
-        opacity: 0.5;
-        max-width: 2.8rem;
-        padding-right: 0.7rem;
-        gap: 0;
-        background: transparent;
-        color: #2c2c2c;
-        border-color: #2c2c2c;
-    }
-
-    .scroll-top-btn .scroll-top-label {
-        opacity: 0;
-        width: 0;
-        margin-left: 0;
-    }
-
-    .scroll-top-btn .scroll-top-icon {
-        transform: none;
-    }
-
-    .rodape {
-        padding: 0.15rem 0;
-        margin-top: 0;
-    }
-
-    .ticker-item {
-        font-size: 0.5rem;
-        letter-spacing: 0.9px;
-        padding-right: 4rem;
-    }
-}
-
-/* ============================================================
+    /* ============================================================
    TABLET MÉDIO — 769px a 1024px
    ============================================================ */
-@media (min-width: 769px) and (max-width: 1024px) {
+    @media (min-width: 769px) and (max-width: 1024px) {
 
-    .header-center nav {
-        max-width: 820px;
+        .header-center nav {
+            max-width: 820px;
+        }
+
+        .header-center nav a {
+            font-size: 0.75rem;
+            letter-spacing: 1.6px;
+        }
+
+        .galeria-feed {
+            grid-auto-rows: 220px;
+        }
+
+        .split-container {
+            min-height: 58vh;
+        }
+
+        .split-img {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+            max-height: 520px;
+        }
+
+        .split-img img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            max-height: 520px;
+        }
+
+        .sf-container {
+            gap: 2.5rem;
+            padding: 0 4%;
+        }
+
+        .sf-titulo {
+            font-size: 1.65rem;
+            letter-spacing: 3px;
+            white-space: normal;
+        }
+
+        .lista-servicos li {
+            font-size: 0.84rem;
+        }
+
+        .faq-pergunta span:first-child {
+            font-size: 0.83rem;
+        }
+
+        .split-texto h2 {
+            font-size: 1.75rem;
+        }
+
+        .split-texto p {
+            font-size: 0.94rem;
+        }
     }
 
-    .header-center nav a {
-        font-size: 0.75rem;
-        letter-spacing: 1.6px;
-    }
-
-    .galeria-feed {
-        grid-auto-rows: 220px;
-    }
-
-    .split-container {
-        min-height: 58vh;
-    }
-
-    .split-img {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: visible;
-        max-height: 520px;
-    }
-
-    .split-img img {
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-        max-height: 520px;
-    }
-
-    .sf-container {
-        gap: 2.5rem;
-        padding: 0 4%;
-    }
-
-    .sf-titulo {
-        font-size: 1.65rem;
-        letter-spacing: 3px;
-        white-space: normal;
-    }
-
-    .lista-servicos li {
-        font-size: 0.84rem;
-    }
-
-    .faq-pergunta span:first-child {
-        font-size: 0.83rem;
-    }
-
-    .split-texto h2 {
-        font-size: 1.75rem;
-    }
-
-    .split-texto p {
-        font-size: 0.94rem;
-    }
-}
-
-/* ============================================================
+    /* ============================================================
    TABLET PEQUENO PORTRAIT — 600px a 768px
    ============================================================ */
-@media (min-width: 600px) and (max-width: 768px) and (orientation: portrait) {
+    @media (min-width: 600px) and (max-width: 768px) and (orientation: portrait) {
 
-    .galeria-feed {
-        grid-template-columns: repeat(3, 1fr);
-        grid-auto-rows: 190px;
-        gap: 0.5rem;
-        padding: 0 0.5rem;
+        .galeria-feed {
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 190px;
+            gap: 0.5rem;
+            padding: 0 0.5rem;
+        }
+
+        .split-container {
+            flex-direction: row;
+            min-height: 52vh;
+        }
+
+        .split-texto,
+        .split-img {
+            width: 50%;
+        }
+
+        .split-img {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+            height: auto;
+            max-height: 420px;
+        }
+
+        .split-img img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            max-height: 420px;
+        }
+
+        .split-texto {
+            padding: 2rem 4% 0;
+            text-align: left;
+        }
+
+        .split-texto h2 {
+            text-align: left;
+            font-size: 1.45rem;
+            letter-spacing: 3px;
+        }
+
+        .split-texto p {
+            font-size: 0.9rem;
+        }
+
+        .sf-container {
+            flex-direction: row;
+            text-align: left;
+            align-items: flex-start;
+            gap: 2rem;
+        }
+
+        .sf-servicos,
+        .sf-faq {
+            width: auto;
+            max-width: none;
+            margin: 0;
+        }
+
+        .sf-titulo {
+            font-size: 1.4rem;
+            letter-spacing: 2.5px;
+            white-space: normal;
+        }
+
+        .lista-servicos li {
+            justify-content: flex-start;
+            font-size: 0.82rem;
+        }
+
+        .btn-expandir {
+            justify-content: flex-start;
+        }
+
+        .scroll-top-btn {
+            opacity: 0.5;
+            max-width: 2.8rem;
+            padding-right: 0.7rem;
+            gap: 0;
+            background: transparent;
+            color: #2c2c2c;
+            border-color: #2c2c2c;
+        }
+
+        .scroll-top-btn .scroll-top-label {
+            opacity: 0;
+            width: 0;
+            margin-left: 0;
+        }
+
+        .scroll-top-btn .scroll-top-icon {
+            transform: none;
+        }
     }
 
-    .split-container {
-        flex-direction: row;
-        min-height: 52vh;
-    }
-
-    .split-texto,
-    .split-img {
-        width: 50%;
-    }
-
-    .split-img {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: visible;
-        height: auto;
-        max-height: 420px;
-    }
-
-    .split-img img {
-        width: 100%;
-        height: auto;
-        object-fit: contain;
-        max-height: 420px;
-    }
-
-    .split-texto {
-        padding: 2rem 4% 0;
-        text-align: left;
-    }
-
-    .split-texto h2 {
-        text-align: left;
-        font-size: 1.45rem;
-        letter-spacing: 3px;
-    }
-
-    .split-texto p {
-        font-size: 0.9rem;
-    }
-
-    .sf-container {
-        flex-direction: row;
-        text-align: left;
-        align-items: flex-start;
-        gap: 2rem;
-    }
-
-    .sf-servicos,
-    .sf-faq {
-        width: auto;
-        max-width: none;
-        margin: 0;
-    }
-
-    .sf-titulo {
-        font-size: 1.4rem;
-        letter-spacing: 2.5px;
-        white-space: normal;
-    }
-
-    .lista-servicos li {
-        justify-content: flex-start;
-        font-size: 0.82rem;
-    }
-
-    .btn-expandir {
-        justify-content: flex-start;
-    }
-
-    .scroll-top-btn {
-        opacity: 0.5;
-        max-width: 2.8rem;
-        padding-right: 0.7rem;
-        gap: 0;
-        background: transparent;
-        color: #2c2c2c;
-        border-color: #2c2c2c;
-    }
-
-    .scroll-top-btn .scroll-top-label {
-        opacity: 0;
-        width: 0;
-        margin-left: 0;
-    }
-
-    .scroll-top-btn .scroll-top-icon {
-        transform: none;
-    }
-}
-
-/* ============================================================
+    /* ============================================================
    DESKTOP GRANDE — acima de 1200px
    ============================================================ */
-@media (min-width: 1200px) {
+    @media (min-width: 1200px) {
 
-    .split-container {
-        min-height: 60vh;
-        max-height: 700px;
+        .split-container {
+            min-height: 60vh;
+            max-height: 700px;
+        }
+
+        .split-img {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            max-height: 700px;
+        }
+
+        .split-img img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            max-height: 700px;
+        }
     }
 
-    .split-img {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        max-height: 700px;
-    }
+    /* ========== SISTEMA DE PASTAS - GALERIA ========== */
 
-    .split-img img {
+    .galeria-container {
+        position: relative;
         width: 100%;
-        height: auto;
-        object-fit: contain;
-        max-height: 700px;
     }
-}
 
-/* ========== SISTEMA DE PASTAS - GALERIA ========== */
+    .galeria-feed {
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
 
-.galeria-container {
-    position: relative;
-    width: 100%;
-}
-
-.galeria-feed {
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.galeria-feed.fade-out {
-    opacity: 0;
-    transform: scale(0.95);
-    pointer-events: none;
-}
-
-.projeto-interno {
-    animation: fadeInUp 0.5s ease forwards;
-}
-
-@keyframes fadeInUp {
-    from {
+    .galeria-feed.fade-out {
         opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.voltar-capas {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: none;
-    border: 1px solid #333;
-    color: #333;
-    padding: 10px 20px;
-    font-size: 14px;
-    cursor: pointer;
-    margin-bottom: 30px;
-    transition: all 0.3s ease;
-    font-family: inherit;
-    letter-spacing: 0.5px;
-}
-
-.voltar-capas:hover {
-    background: #333;
-    color: #fff;
-}
-
-.projeto-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-}
-
-.projeto-grid img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    cursor: pointer;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.projeto-grid img:hover {
-    transform: scale(1.02);
-    opacity: 0.9;
-}
-
-@media (max-width: 768px) {
-    .projeto-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
+        transform: scale(0.95);
+        pointer-events: none;
     }
 
-    .projeto-grid img {
-        height: 160px;
+    .projeto-interno {
+        animation: fadeInUp 0.5s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .voltar-capas {
-        width: 100%;
-        justify-content: center;
-        padding: 15px;
-        font-size: 16px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: none;
+        border: 1px solid #333;
+        color: #333;
+        padding: 10px 20px;
+        font-size: 14px;
+        cursor: pointer;
+        margin-bottom: 30px;
+        transition: all 0.3s ease;
+        font-family: inherit;
+        letter-spacing: 0.5px;
     }
-}
 
-/* ========== LIGHTBOX COM MINIATURAS ========== */
-/* DOTS - INDICADORES DE NAVEGAÇÃO (ESTILO INSTAGRAM) */
-.lightbox-thumbnails {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-top: 20px;
-    padding: 8px 20px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    max-width: 85vw;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    opacity: 0;
-    transform: translateY(5px);
-    transition: opacity 0.3s ease 0.15s,
-                transform 0.3s ease 0.15s;
-}
+    .voltar-capas:hover {
+        background: #333;
+        color: #fff;
+    }
 
-.lightbox.ativa .lightbox-thumbnails {
-    opacity: 1;
-    transform: translateY(0);
-}
+    .projeto-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
 
-.lightbox-thumbnails::-webkit-scrollbar {
-    display: none;
-}
+    .projeto-grid img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        cursor: pointer;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
 
-/* Cada dot é um círculo */
-.lightbox-thumb {
-    width: 8px !important;
-    height: 8px !important;
-    min-width: 8px !important;
-    max-width: 8px !important;
-    max-height: 8px !important;
-    border-radius: 50% !important;
-    background: rgba(255, 255, 255, 0.4) !important;
-    cursor: pointer;
-    border: none !important;
-    opacity: 1 !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    flex-shrink: 0;
-    display: block !important;
-    padding: 0 !important;
-    object-fit: none !important;
-    box-shadow: none !important;
-    filter: none !important;
-    /* Esconde a imagem dentro do dot */
-    object-position: -9999px -9999px;
-}
+    .projeto-grid img:hover {
+        transform: scale(1.02);
+        opacity: 0.9;
+    }
 
-.lightbox-thumb:hover {
-    background: rgba(255, 255, 255, 0.7) !important;
-    transform: scale(1.3);
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3) !important;
-}
+    @media (max-width: 768px) {
+        .projeto-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
 
-.lightbox-thumb.active {
-    background: #ffffff !important;
-    transform: scale(1.4);
-    box-shadow: 0 0 12px rgba(255, 255, 255, 0.5) !important;
-}
+        .projeto-grid img {
+            height: 160px;
+        }
 
-/* Efeito de vinheta nas miniaturas */
-.lightbox-thumb::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: inherit;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
-    pointer-events: none;
-    transition: box-shadow 0.3s ease;
-}
-
-.lightbox-thumb.active::after {
-    box-shadow: inset 0 0 0px rgba(0, 0, 0, 0);
-}
-
+        .voltar-capas {
+            width: 100%;
+            justify-content: center;
+            padding: 15px;
+            font-size: 16px;
+        }
+    }
 }
 
 /* ========== LIGHTBOX COMPLETO (REGRAS ÚNICAS) ========== */
@@ -1895,9 +1892,9 @@ body.scroll-resolving .rodape {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.35s ease,
-                background 0.35s ease,
-                backdrop-filter 0.35s ease,
-                -webkit-backdrop-filter 0.35s ease;
+        background 0.35s ease,
+        backdrop-filter 0.35s ease,
+        -webkit-backdrop-filter 0.35s ease;
     will-change: opacity, background;
     backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px);
@@ -1946,7 +1943,7 @@ body.scroll-resolving .rodape {
     transform: scale(0.95);
     opacity: 0;
     transition: transform 0.35s ease,
-                opacity 0.35s ease;
+        opacity 0.35s ease;
     will-change: transform, opacity;
 }
 
@@ -1966,68 +1963,6 @@ body.scroll-resolving .rodape {
     box-shadow: 0 0 80px rgba(0, 0, 0, 0.7);
     display: block;
     will-change: opacity;
-}
-
-/* MINIATURAS */
-.lightbox-thumbnails {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    margin-top: 20px;
-    padding: 12px 20px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    max-width: 85vw;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.2s,
-                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
-}
-
-.lightbox.ativa .lightbox-thumbnails {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.lightbox-thumbnails::-webkit-scrollbar {
-    display: none;
-}
-
-.lightbox-thumb {
-    width: 75px !important;
-    height: 60px !important;
-    min-width: 75px !important;
-    max-width: 75px !important;
-    max-height: 60px !important;
-    object-fit: cover !important;
-    cursor: pointer;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    opacity: 0.4;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 4px;
-    flex-shrink: 0;
-    display: block !important;
-    filter: brightness(0.8);
-}
-
-.lightbox-thumb:hover {
-    opacity: 0.9;
-    border-color: rgba(255, 255, 255, 0.8);
-    transform: translateY(-4px);
-    filter: brightness(1);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-}
-
-.lightbox-thumb.active {
-    opacity: 1;
-    border-color: #ffffff;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
-                0 0 40px rgba(255, 255, 255, 0.1);
-    transform: translateY(-3px);
-    filter: brightness(1.1);
 }
 
 /* SETAS DE NAVEGAÇÃO - INVISÍVEIS MAS FUNCIONAIS */
@@ -2053,7 +1988,8 @@ body.scroll-resolving .rodape {
 }
 
 .lightbox-seta svg {
-    display: none;  /* esconde os ícones SVG completamente */
+    display: none;
+    /* esconde os ícones SVG completamente */
 }
 
 .lightbox-seta-esquerda {
@@ -2072,34 +2008,89 @@ body.scroll-resolving .rodape {
         max-width: 96vw;
         max-height: 96vh;
     }
-    
+
     .lightbox-imagem {
         max-height: 70vh;
     }
-    
+
     /* Remove qualquer estilo específico das setas no mobile */
     .lightbox-seta {
         width: 50%;
         max-width: 150px;
     }
-    
-    .lightbox-thumb {
-        width: 60px !important;
-        height: 48px !important;
-        min-width: 60px !important;
-        max-width: 60px !important;
-        max-height: 48px !important;
-    }
-    
-    .lightbox-thumbnails {
-        gap: 8px;
-        margin-top: 12px;
-        padding: 8px 10px;
-    }
-    
+
     .lightbox-fechar {
         top: 15px;
         right: 20px;
         font-size: 32px;
     }
+}
+
+/* ========== LIGHTBOX: INDICADORES (DOTS DE COR SÓLIDA SEM IMAGEM) ========== */
+.lightbox-thumbnails {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px !important; /* Espaçamento entre as bolinhas */
+    margin-top: 16px !important;
+    padding: 8px 20px !important;
+    flex-wrap: nowrap !important;
+    list-style: none !important;
+    overflow-x: auto !important;
+    max-width: 85vw !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    
+    /* Controla a aparição suave ao abrir o lightbox */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.lightbox-thumbnails::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* Mostra as bolinhas quando o lightbox abrir */
+.lightbox.ativa .lightbox-thumbnails {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Bolinha individual: Totalmente sólida, sem renderizar a imagem original */
+.lightbox-thumb {
+    width: 8px !important; /* Tamanho ideal para visualização estável */
+    height: 8px !important;
+    min-width: 8px !important;
+    max-width: 8px !important;
+    min-height: 8px !important;
+    max-height: 8px !important;
+    border-radius: 50% !important; /* Força o círculo perfeito */
+    
+    /* COR SÓLIDA das bolinhas inativas (Cinza escuro/médio para contrastar no fundo escuro) */
+    background: #666666 !important; 
+    
+    cursor: pointer !important;
+    border: none !important;
+    flex-shrink: 0 !important;
+    display: block !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    filter: none !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+    /* O TRUQUE: Remove e esconde completamente o conteúdo da imagem (<img src>) */
+    object-position: -9999px -9999px !important;
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E") !important;
+}
+
+/* Hover nos computadores */
+.lightbox-thumb:hover {
+    background: #999999 !important;
+}
+
+/* Bolinha da foto ativa: Cor sólida Branca e levemente maior */
+.lightbox-thumb.active {
+    background: #ffffff !important; /* Branco Sólido */
+    transform: scale(1.25) !important;
 }
