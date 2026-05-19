@@ -783,6 +783,8 @@ body.scroll-transitioning .galeria-feed,
 body.scroll-transitioning .rodape {
     filter: blur(0px);
     transition: filter 0.3s ease;
+    will-change: filter;
+    transform: translateZ(0);
 }
 
 body.scroll-transitioning.blur-ativo .video-destaque,
@@ -793,6 +795,8 @@ body.scroll-transitioning.blur-ativo .galeria-feed,
 body.scroll-transitioning.blur-ativo .rodape {
     filter: blur(3px);
     transition: filter 0.3s ease;
+    will-change: filter;
+    transform: translateZ(0);
 }
 
 body.scroll-resolving .video-destaque,

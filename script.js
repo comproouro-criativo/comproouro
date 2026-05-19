@@ -57,15 +57,15 @@ const projetos = [
         nome: 'Projeto 3',
         imagens: [
             'imagens/dd6.jpg',
-            'imagens/mina2.png'
+            'imagens/mina2.avif'
         ]
     },
 
       {
         nome: 'Projeto 4',
         imagens: [
-            'imagens/dd5.png',
-            'imagens/lancha1.png'
+            'imagens/dd5.avif',
+            'imagens/lancha1.avif'
         ]
     }
 ];
