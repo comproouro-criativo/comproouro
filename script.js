@@ -59,63 +59,29 @@ const projetos = [
             'imagens/dd6.jpg',
             'imagens/mina2.png'
         ]
+    },
+
+      {
+        nome: 'Projeto 4',
+        imagens: [
+            'imagens/dd5.png',
+            'imagens/lancha1.png'
+        ]
     }
 ];
 
-/* ========== SISTEMA DE PASTAS ========== */
-const galeriaCapas = document.getElementById('galeriaCapas');
-const projetoInterno = document.getElementById('projetoInterno');
-const projetoGrid = document.getElementById('projetoGrid');
-const btnVoltar = document.getElementById('btnVoltar');
+/* ========== SISTEMA DE PASTAS - NOVO ========== */
 const capasImagens = document.querySelectorAll('.galeria-feed img');
 
-// Abrir projeto ao clicar na capa
+// Abrir lightbox DIRETO ao clicar na capa
 capasImagens.forEach((img, index) => {
     img.addEventListener('click', () => {
-        abrirProjeto(index);
+        const projeto = projetos[index];
+        if (projeto && projeto.imagens.length > 0) {
+            abrirLightboxProjeto(projeto.imagens, 0);
+        }
     });
 });
-
-function abrirProjeto(indiceProjeto) {
-    const projeto = projetos[indiceProjeto];
-    
-    // Limpar grid
-    projetoGrid.innerHTML = '';
-    
-    // Preencher com imagens do projeto
-    projeto.imagens.forEach((imgSrc, index) => {
-        const img = document.createElement('img');
-        img.src = imgSrc;
-        img.alt = `${projeto.nome} - Imagem ${index + 1}`;
-        img.loading = 'lazy';
-        img.addEventListener('click', () => {
-            abrirLightboxProjeto(projeto.imagens, index);
-        });
-        projetoGrid.appendChild(img);
-    });
-    
-    // Animação de saída das capas
-    galeriaCapas.classList.add('fade-out');
-    
-    // Mostrar projeto interno após o fade-out
-    setTimeout(() => {
-        galeriaCapas.style.display = 'none';
-        projetoInterno.style.display = 'block';
-        projetoInterno.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 400);
-}
-
-// Voltar para as capas
-btnVoltar.addEventListener('click', voltarParaCapas);
-
-function voltarParaCapas() {
-    projetoInterno.style.display = 'none';
-    galeriaCapas.style.display = '';
-    
-    setTimeout(() => {
-        galeriaCapas.classList.remove('fade-out');
-    }, 50);
-}
 
 /* ========== Scroll com blur (APENAS mobile) ========== */
 document.querySelectorAll('.header-center nav a[href^="#"]').forEach(link => {
@@ -232,54 +198,74 @@ if ('IntersectionObserver' in window) {
 }
 document.querySelector('.header-center')?.classList.add('visible');
 
-/* ========== Lightbox MODIFICADO ========== */
+/* ========== Lightbox CORRIGIDO ========== */
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.querySelector('.lightbox-imagem');
 const lightboxFechar = document.querySelector('.lightbox-fechar');
 const setaEsquerda = document.querySelector('.lightbox-seta-esquerda');
 const setaDireita = document.querySelector('.lightbox-seta-direita');
 
-let imagensGaleriaGlobal = []; // Array global para o lightbox
+let imagensGaleriaGlobal = [];
 let imagemAtualIndex = 0;
 
-function blockScroll(e) { e.preventDefault(); }
-
-// Função para abrir lightbox a partir das capas (sistema antigo)
-function abrirLightboxCapas(imagens, index) {
-    imagensGaleriaGlobal = imagens;
-    imagemAtualIndex = index;
-    atualizarImagemLightbox(true);
-    lightbox.classList.add('ativa');
-    document.body.style.overflow = 'hidden';
-    document.addEventListener('touchmove', blockScroll, { passive: false });
+function blockScroll(e) { 
+    e.preventDefault(); 
+    e.stopPropagation();
 }
 
-// Função para abrir lightbox a partir do projeto interno
 function abrirLightboxProjeto(imagens, index) {
-    imagensGaleriaGlobal = imagens;
+    imagensGaleriaGlobal = [...imagens]; // Cria cópia do array
     imagemAtualIndex = index;
     atualizarImagemLightbox(true);
+    criarMiniaturas(imagens, index);
     lightbox.classList.add('ativa');
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
     document.addEventListener('touchmove', blockScroll, { passive: false });
 }
 
-// Inicializar com as capas (compatibilidade com código antigo)
-const imagensCapasArray = Array.from(document.querySelectorAll('.galeria-feed img'));
-imagensCapasArray.forEach((img, index) => {
-    img.addEventListener('click', (e) => {
-        // Só abre o lightbox se NÃO estiver no sistema de pastas
-        // ou se for clicado com Ctrl (para debug)
-        if (e.ctrlKey) {
-            e.stopPropagation();
-            abrirLightboxCapas(imagensCapasArray.map(i => i.src), index);
+function criarMiniaturas(imagens, indexAtivo) {
+    const container = document.getElementById('lightboxThumbnails');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    imagens.forEach((src, idx) => {
+        const thumb = document.createElement('img');
+        thumb.src = src;
+        thumb.alt = `Miniatura ${idx + 1}`;
+        thumb.className = 'lightbox-thumb';
+        if (idx === indexAtivo) {
+            thumb.classList.add('active');
+        }
+        
+        thumb.addEventListener('click', () => {
+            imagemAtualIndex = idx;
+            atualizarImagemLightbox(true);
+            sincronizarMiniaturas();
+        });
+        
+        container.appendChild(thumb);
+    });
+}
+
+function sincronizarMiniaturas() {
+    const thumbs = document.querySelectorAll('.lightbox-thumb');
+    thumbs.forEach((thumb, idx) => {
+        if (idx === imagemAtualIndex) {
+            thumb.classList.add('active');
+        } else {
+            thumb.classList.remove('active');
         }
     });
-});
+}
 
 function atualizarImagemLightbox(instant = false) {
-    if (instant || imagensGaleriaGlobal.length === 0) {
-        const imgSrc = imagensGaleriaGlobal[imagemAtualIndex];
+    if (!lightboxImg || imagensGaleriaGlobal.length === 0) return;
+    
+    const imgSrc = imagensGaleriaGlobal[imagemAtualIndex];
+    
+    if (instant) {
         lightboxImg.src = imgSrc;
         lightboxImg.alt = `Imagem ${imagemAtualIndex + 1}`;
         lightboxImg.style.opacity = '1';
@@ -288,7 +274,6 @@ function atualizarImagemLightbox(instant = false) {
 
     lightboxImg.style.opacity = '0';
     setTimeout(() => {
-        const imgSrc = imagensGaleriaGlobal[imagemAtualIndex];
         lightboxImg.src = imgSrc;
         lightboxImg.alt = `Imagem ${imagemAtualIndex + 1}`;
         lightboxImg.style.opacity = '1';
@@ -299,30 +284,48 @@ function proximaImagem() {
     if (imagensGaleriaGlobal.length === 0) return;
     imagemAtualIndex = (imagemAtualIndex + 1) % imagensGaleriaGlobal.length;
     atualizarImagemLightbox();
+    sincronizarMiniaturas();
 }
 
 function imagemAnterior() {
     if (imagensGaleriaGlobal.length === 0) return;
     imagemAtualIndex = (imagemAtualIndex - 1 + imagensGaleriaGlobal.length) % imagensGaleriaGlobal.length;
     atualizarImagemLightbox();
+    sincronizarMiniaturas();
 }
 
-setaDireita?.addEventListener('click', proximaImagem);
-setaEsquerda?.addEventListener('click', imagemAnterior);
+// Eventos das setas
+setaDireita?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    proximaImagem();
+});
+
+setaEsquerda?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    imagemAnterior();
+});
 
 function fecharLightbox() {
     lightbox.classList.remove('ativa');
     document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
     document.removeEventListener('touchmove', blockScroll);
     imagensGaleriaGlobal = [];
+    imagemAtualIndex = 0;
+    const container = document.getElementById('lightboxThumbnails');
+    if (container) container.innerHTML = '';
 }
 
-lightboxFechar?.addEventListener('click', fecharLightbox);
+lightboxFechar?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    fecharLightbox();
+});
 
 lightbox?.addEventListener('click', (e) => {
     if (e.target === lightbox) fecharLightbox();
 });
 
+// Teclado
 document.addEventListener('keydown', (e) => {
     if (!lightbox.classList.contains('ativa')) return;
     if (e.key === 'Escape') fecharLightbox();
@@ -330,17 +333,18 @@ document.addEventListener('keydown', (e) => {
     else if (e.key === 'ArrowLeft') imagemAnterior();
 });
 
+// Touch/swipe
 let touchStartX = 0;
 lightbox?.addEventListener('touchstart', (e) => {
     touchStartX = e.changedTouches[0].screenX;
 }, { passive: true });
 
 lightbox?.addEventListener('touchend', (e) => {
+    if (!lightbox.classList.contains('ativa')) return;
     const diff = touchStartX - e.changedTouches[0].screenX;
     if (diff > 50) proximaImagem();
     else if (diff < -50) imagemAnterior();
 }, { passive: true });
-
 /* ========== Copiar telefone ========== */
 function copiarTelefone() {
     const numero = document.getElementById('telefoneCopiar')?.textContent.trim();
