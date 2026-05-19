@@ -33,6 +33,90 @@ window.addEventListener('load', () => {
     }
 })();
 
+/* ========== DADOS DOS PROJETOS ========== */
+const projetos = [
+    {
+        nome: 'Projeto 1',
+        imagens: [
+            'imagens/dd4.jpg',
+            'imagens/back1.jpg',
+            'imagens/back2.jpg',
+            'imagens/back3.jpg'
+        ]
+    },
+    {
+        nome: 'Projeto 2',
+        imagens: [
+            'imagens/aa1.jpg',
+            'imagens/elvis1.jpg',
+            'imagens/elvis2.jpg',
+            'imagens/elvis3.jpg'
+        ]
+    },
+    {
+        nome: 'Projeto 3',
+        imagens: [
+            'imagens/dd6.jpg',
+            'imagens/mina2.png'
+        ]
+    }
+];
+
+/* ========== SISTEMA DE PASTAS ========== */
+const galeriaCapas = document.getElementById('galeriaCapas');
+const projetoInterno = document.getElementById('projetoInterno');
+const projetoGrid = document.getElementById('projetoGrid');
+const btnVoltar = document.getElementById('btnVoltar');
+const capasImagens = document.querySelectorAll('.galeria-feed img');
+
+// Abrir projeto ao clicar na capa
+capasImagens.forEach((img, index) => {
+    img.addEventListener('click', () => {
+        abrirProjeto(index);
+    });
+});
+
+function abrirProjeto(indiceProjeto) {
+    const projeto = projetos[indiceProjeto];
+    
+    // Limpar grid
+    projetoGrid.innerHTML = '';
+    
+    // Preencher com imagens do projeto
+    projeto.imagens.forEach((imgSrc, index) => {
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.alt = `${projeto.nome} - Imagem ${index + 1}`;
+        img.loading = 'lazy';
+        img.addEventListener('click', () => {
+            abrirLightboxProjeto(projeto.imagens, index);
+        });
+        projetoGrid.appendChild(img);
+    });
+    
+    // Animação de saída das capas
+    galeriaCapas.classList.add('fade-out');
+    
+    // Mostrar projeto interno após o fade-out
+    setTimeout(() => {
+        galeriaCapas.style.display = 'none';
+        projetoInterno.style.display = 'block';
+        projetoInterno.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 400);
+}
+
+// Voltar para as capas
+btnVoltar.addEventListener('click', voltarParaCapas);
+
+function voltarParaCapas() {
+    projetoInterno.style.display = 'none';
+    galeriaCapas.style.display = '';
+    
+    setTimeout(() => {
+        galeriaCapas.classList.remove('fade-out');
+    }, 50);
+}
+
 /* ========== Scroll com blur (APENAS mobile) ========== */
 document.querySelectorAll('.header-center nav a[href^="#"]').forEach(link => {
     link.addEventListener('click', function (e) {
@@ -148,54 +232,79 @@ if ('IntersectionObserver' in window) {
 }
 document.querySelector('.header-center')?.classList.add('visible');
 
-/* ========== Lightbox com navegação e fade ========== */
+/* ========== Lightbox MODIFICADO ========== */
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.querySelector('.lightbox-imagem');
 const lightboxFechar = document.querySelector('.lightbox-fechar');
 const setaEsquerda = document.querySelector('.lightbox-seta-esquerda');
 const setaDireita = document.querySelector('.lightbox-seta-direita');
 
-const imagensGaleria = Array.from(document.querySelectorAll('.galeria-feed img'));
+let imagensGaleriaGlobal = []; // Array global para o lightbox
 let imagemAtualIndex = 0;
 
 function blockScroll(e) { e.preventDefault(); }
 
-imagensGaleria.forEach((img, index) => {
-    img.addEventListener('click', () => {
-        imagemAtualIndex = index;
-        atualizarImagem(true);
-        lightbox.classList.add('ativa');
-        document.body.style.overflow = 'hidden';
-        document.addEventListener('touchmove', blockScroll, { passive: false });
+// Função para abrir lightbox a partir das capas (sistema antigo)
+function abrirLightboxCapas(imagens, index) {
+    imagensGaleriaGlobal = imagens;
+    imagemAtualIndex = index;
+    atualizarImagemLightbox(true);
+    lightbox.classList.add('ativa');
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('touchmove', blockScroll, { passive: false });
+}
+
+// Função para abrir lightbox a partir do projeto interno
+function abrirLightboxProjeto(imagens, index) {
+    imagensGaleriaGlobal = imagens;
+    imagemAtualIndex = index;
+    atualizarImagemLightbox(true);
+    lightbox.classList.add('ativa');
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('touchmove', blockScroll, { passive: false });
+}
+
+// Inicializar com as capas (compatibilidade com código antigo)
+const imagensCapasArray = Array.from(document.querySelectorAll('.galeria-feed img'));
+imagensCapasArray.forEach((img, index) => {
+    img.addEventListener('click', (e) => {
+        // Só abre o lightbox se NÃO estiver no sistema de pastas
+        // ou se for clicado com Ctrl (para debug)
+        if (e.ctrlKey) {
+            e.stopPropagation();
+            abrirLightboxCapas(imagensCapasArray.map(i => i.src), index);
+        }
     });
 });
 
-function atualizarImagem(instant = false) {
-    if (instant) {
-        const img = imagensGaleria[imagemAtualIndex];
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt;
+function atualizarImagemLightbox(instant = false) {
+    if (instant || imagensGaleriaGlobal.length === 0) {
+        const imgSrc = imagensGaleriaGlobal[imagemAtualIndex];
+        lightboxImg.src = imgSrc;
+        lightboxImg.alt = `Imagem ${imagemAtualIndex + 1}`;
         lightboxImg.style.opacity = '1';
         return;
     }
 
     lightboxImg.style.opacity = '0';
     setTimeout(() => {
-        const img = imagensGaleria[imagemAtualIndex];
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt;
+        const imgSrc = imagensGaleriaGlobal[imagemAtualIndex];
+        lightboxImg.src = imgSrc;
+        lightboxImg.alt = `Imagem ${imagemAtualIndex + 1}`;
         lightboxImg.style.opacity = '1';
     }, 250);
 }
 
 function proximaImagem() {
-    imagemAtualIndex = (imagemAtualIndex + 1) % imagensGaleria.length;
-    atualizarImagem();
+    if (imagensGaleriaGlobal.length === 0) return;
+    imagemAtualIndex = (imagemAtualIndex + 1) % imagensGaleriaGlobal.length;
+    atualizarImagemLightbox();
 }
 
 function imagemAnterior() {
-    imagemAtualIndex = (imagemAtualIndex - 1 + imagensGaleria.length) % imagensGaleria.length;
-    atualizarImagem();
+    if (imagensGaleriaGlobal.length === 0) return;
+    imagemAtualIndex = (imagemAtualIndex - 1 + imagensGaleriaGlobal.length) % imagensGaleriaGlobal.length;
+    atualizarImagemLightbox();
 }
 
 setaDireita?.addEventListener('click', proximaImagem);
@@ -205,6 +314,7 @@ function fecharLightbox() {
     lightbox.classList.remove('ativa');
     document.body.style.overflow = '';
     document.removeEventListener('touchmove', blockScroll);
+    imagensGaleriaGlobal = [];
 }
 
 lightboxFechar?.addEventListener('click', fecharLightbox);
@@ -346,29 +456,29 @@ function configurarExpandir(itens, container) {
         if (!expandido) {
             wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
             btn.classList.add('expandido');
-const textoEl = btn.querySelector('.btn-expandir-texto');
-const iconeEl = btn.querySelector('.btn-expandir-icone');
+            const textoEl = btn.querySelector('.btn-expandir-texto');
+            const iconeEl = btn.querySelector('.btn-expandir-icone');
 
-textoEl.style.opacity = '0';
-textoEl.style.filter = 'blur(3px)';
-textoEl.style.transform = 'translateY(-7px)';
-iconeEl.style.opacity = '0';
-iconeEl.style.filter = 'blur(3px)';
+            textoEl.style.opacity = '0';
+            textoEl.style.filter = 'blur(3px)';
+            textoEl.style.transform = 'translateY(-7px)';
+            iconeEl.style.opacity = '0';
+            iconeEl.style.filter = 'blur(3px)';
 
-setTimeout(() => {
-    textoEl.style.transition = 'none';
-    textoEl.style.transform = 'translateY(7px)';
-    textoEl.textContent = 'Recolher';
+            setTimeout(() => {
+                textoEl.style.transition = 'none';
+                textoEl.style.transform = 'translateY(7px)';
+                textoEl.textContent = 'Recolher';
 
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-        textoEl.style.transition = '';
-        textoEl.style.opacity = '1';
-        textoEl.style.filter = 'blur(0px)';
-        textoEl.style.transform = 'translateY(0)';
-        iconeEl.style.opacity = '1';
-        iconeEl.style.filter = 'blur(0px)';
-    }));
-}, 450);
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    textoEl.style.transition = '';
+                    textoEl.style.opacity = '1';
+                    textoEl.style.filter = 'blur(0px)';
+                    textoEl.style.transform = 'translateY(0)';
+                    iconeEl.style.opacity = '1';
+                    iconeEl.style.filter = 'blur(0px)';
+                }));
+            }, 450);
             requestAnimationFrame(() => {
                 const btnRect = btn.getBoundingClientRect();
                 const windowHeight = window.innerHeight;
@@ -391,29 +501,30 @@ setTimeout(() => {
             });
 
             btn.classList.remove('expandido');
-const textoEl = btn.querySelector('.btn-expandir-texto');
-const iconeEl = btn.querySelector('.btn-expandir-icone');
+            const textoEl = btn.querySelector('.btn-expandir-texto');
+            const iconeEl = btn.querySelector('.btn-expandir-icone');
 
-textoEl.style.opacity = '0';
-textoEl.style.filter = 'blur(3px)';
-textoEl.style.transform = 'translateY(-7px)';
-iconeEl.style.opacity = '0';
-iconeEl.style.filter = 'blur(3px)';
+            textoEl.style.opacity = '0';
+            textoEl.style.filter = 'blur(3px)';
+            textoEl.style.transform = 'translateY(-7px)';
+            iconeEl.style.opacity = '0';
+            iconeEl.style.filter = 'blur(3px)';
 
-setTimeout(() => {
-    textoEl.style.transition = 'none';
-    textoEl.style.transform = 'translateY(7px)';
-    textoEl.textContent = `Ver todos (${itens.length})`;
+            setTimeout(() => {
+                textoEl.style.transition = 'none';
+                textoEl.style.transform = 'translateY(7px)';
+                textoEl.textContent = `Ver todos (${itens.length})`;
 
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-        textoEl.style.transition = '';
-        textoEl.style.opacity = '1';
-        textoEl.style.filter = 'blur(0px)';
-        textoEl.style.transform = 'translateY(0)';
-        iconeEl.style.opacity = '1';
-        iconeEl.style.filter = 'blur(0px)';
-    }));
-}, 450);      }
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    textoEl.style.transition = '';
+                    textoEl.style.opacity = '1';
+                    textoEl.style.filter = 'blur(0px)';
+                    textoEl.style.transform = 'translateY(0)';
+                    iconeEl.style.opacity = '1';
+                    iconeEl.style.filter = 'blur(0px)';
+                }));
+            }, 450);
+        }
     });
 }
 
