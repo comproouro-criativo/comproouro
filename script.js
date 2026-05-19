@@ -191,7 +191,7 @@ if ('IntersectionObserver' in window) {
         entries.forEach(entry => {
             if (entry.isIntersecting) entry.target.classList.add('visible');
         });
-    }, { threshold: 0.1 });
+    }, { rootMargin: '0px 0px 300px 0px', threshold: 0 });
     fadeElements.forEach(el => observer.observe(el));
 } else {
     fadeElements.forEach(el => el.classList.add('visible'));
@@ -280,7 +280,7 @@ function atualizarImagemLightbox(instant = false) {
         lightboxImg.src = imgSrc;
         lightboxImg.alt = `Imagem ${imagemAtualIndex + 1}`;
         lightboxImg.style.opacity = '1';
-    }, 250);
+    }, 200);
 }
 
 function proximaImagem() {

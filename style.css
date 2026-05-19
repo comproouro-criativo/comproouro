@@ -1955,11 +1955,11 @@ body.scroll-resolving .rodape {
 /* IMAGEM PRINCIPAL */
 .lightbox-imagem {
     max-width: 100%;
-    max-height: 78vh;
+    max-height: 87vh;
     width: auto;
     height: auto;
     object-fit: contain;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.20s ease;
     box-shadow: 0 0 80px rgba(0, 0, 0, 0.7);
     display: block;
     will-change: opacity;
