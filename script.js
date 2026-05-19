@@ -16,7 +16,7 @@ window.addEventListener('load', () => {
         if (promise !== undefined) {
             promise.catch(() => {
                 const desbloqueio = () => {
-                    video.play().catch(() => {});
+                    video.play().catch(() => { });
                     document.removeEventListener('touchstart', desbloqueio);
                     document.removeEventListener('click', desbloqueio);
                 };
@@ -61,13 +61,24 @@ const projetos = [
         ]
     },
 
-      {
+    {
         nome: 'Projeto 4',
         imagens: [
             'imagens/dd5.avif',
             'imagens/lancha1.avif'
         ]
+    },
+
+    {
+        nome: 'Projeto 5',
+        imagens: [
+            'imagens/noiva2.jpg',
+            'imagens/noiva.jpg',
+            'imagens/noiva3.jpg'
+
+        ]
     }
+
 ];
 
 /* ========== SISTEMA DE PASTAS - NOVO ========== */
@@ -208,8 +219,8 @@ const setaDireita = document.querySelector('.lightbox-seta-direita');
 let imagensGaleriaGlobal = [];
 let imagemAtualIndex = 0;
 
-function blockScroll(e) { 
-    e.preventDefault(); 
+function blockScroll(e) {
+    e.preventDefault();
     e.stopPropagation();
 }
 
@@ -227,9 +238,9 @@ function abrirLightboxProjeto(imagens, index) {
 function criarMiniaturas(imagens, indexAtivo) {
     const container = document.getElementById('lightboxThumbnails');
     if (!container) return;
-    
+
     container.innerHTML = '';
-    
+
     imagens.forEach((src, idx) => {
         const thumb = document.createElement('img');
         thumb.src = src;
@@ -238,16 +249,16 @@ function criarMiniaturas(imagens, indexAtivo) {
         if (idx === indexAtivo) {
             thumb.classList.add('active');
         }
-        
+
         // CORRIGIDO: Agora usa instant=false para ter animação
         thumb.addEventListener('click', () => {
             if (idx === imagemAtualIndex) return; // Não faz nada se clicar na mesma
-            
+
             imagemAtualIndex = idx;
             atualizarImagemLightbox(false); // ← MUDOU DE true PARA false
             sincronizarMiniaturas();
         });
-        
+
         container.appendChild(thumb);
     });
 }
@@ -265,9 +276,9 @@ function sincronizarMiniaturas() {
 
 function atualizarImagemLightbox(instant = false) {
     if (!lightboxImg || imagensGaleriaGlobal.length === 0) return;
-    
+
     const imgSrc = imagensGaleriaGlobal[imagemAtualIndex];
-    
+
     if (instant) {
         lightboxImg.src = imgSrc;
         lightboxImg.alt = `Imagem ${imagemAtualIndex + 1}`;
@@ -586,7 +597,7 @@ if (listaFaq) {
 }
 
 // Corrige o hover travado no mobile
-document.addEventListener('touchstart', function() {
+document.addEventListener('touchstart', function () {
     document.querySelectorAll(':hover').forEach(el => {
         el.style.removeProperty('color');
         el.style.removeProperty('background-color');
@@ -600,14 +611,14 @@ document.addEventListener('touchstart', function() {
 }, { passive: true });
 
 /* ========== Rodapé – Ticker contínuo (ajuste de loop) ========== */
-(function() {
+(function () {
     const track = document.querySelector('.rodape-ticker-track');
     const items = track.querySelectorAll('.ticker-item');
     if (!items.length) return;
 
     const itemWidth = items[0].getBoundingClientRect().width;
     const totalItems = items.length;
-    const setWidth = (itemWidth * totalItems) / 2;  
+    const setWidth = (itemWidth * totalItems) / 2;
 
     track.style.setProperty('--scroll-distance', `-${setWidth}px`);
     track.style.animation = `rodape-ticker 286s linear infinite`;
