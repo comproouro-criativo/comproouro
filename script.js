@@ -609,17 +609,3 @@ document.addEventListener('touchstart', function () {
         }, 0);
     });
 }, { passive: true });
-
-/* ========== Rodapé – Ticker contínuo (ajuste de loop) ========== */
-(function () {
-    const track = document.querySelector('.rodape-ticker-track');
-    const items = track.querySelectorAll('.ticker-item');
-    if (!items.length) return;
-
-    const itemWidth = items[0].getBoundingClientRect().width;
-    const totalItems = items.length;
-    const setWidth = (itemWidth * totalItems) / 2;
-
-    track.style.setProperty('--scroll-distance', `-${setWidth}px`);
-    track.style.animation = `rodape-ticker 286s linear infinite`;
-})();

@@ -203,7 +203,7 @@ video,
    ============================================================ */
 #portfolio {
     max-width: 100%;
-    padding: 4rem 0 3rem 0;
+    padding: 4rem 0 2.7rem 0;
     /* topo 4rem, embaixo 4rem, sem margem */
     background: #fffcf6;
 }
@@ -324,7 +324,7 @@ video,
     margin-top: -0.2rem;
 }
 
-/* ---------- Galeria Feed ---------- */
+/* ---------- Galeria Feed (com ícone de carrossel) ---------- */
 .galeria-feed {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -336,18 +336,22 @@ video,
     margin-bottom: -2rem;
 }
 
-.galeria-feed img {
+.galeria-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.galeria-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
     filter: brightness(1) contrast(1.1);
     transition: filter 0.3s ease, transform 0.3s ease;
-    cursor: pointer;
-    /* ← adicione esta linha */
 }
 
-.galeria-feed img:hover {
+.galeria-item:hover img {
     filter: brightness(0.88) contrast(1);
     transform: scale(0.99);
 }
@@ -355,11 +359,35 @@ video,
 .tall {
     grid-row: span 2;
 }
-
 .wide {
     grid-column: span 2;
 }
 
+/* Ícone "+" no canto superior direito */
+.galeria-item::after {
+    content: '+';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 30px;
+    font-weight: 300;
+    color: #f8f8f8;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
+    pointer-events: none;
+}
+
+.galeria-item:hover::after {
+    opacity: 0.6;
+    transform: scale(1);
+}
 /* ============================================================
    REDES SOCIAIS
    ============================================================ */
@@ -367,7 +395,7 @@ video,
     display: flex;
     justify-content: center;
     gap: 3rem;
-    margin: 0.5rem 0 1.5rem;
+    margin: -1rem 0 -5rem;
 }
 
 .social-links a {
@@ -444,9 +472,8 @@ video,
     0% {
         transform: translateX(0%);
     }
-
     100% {
-        transform: translateX(var(--scroll-distance, -50%));
+        transform: translateX(-50%);
     }
 }
 
@@ -1314,7 +1341,7 @@ body.scroll-resolving .rodape {
         margin-bottom: 0;
         padding-top: 3rem;
         /* ← novo: reduz o espaço acima do título "Projetos" */
-        padding-bottom: 3rem;
+        padding-bottom: 2.3rem;
         /* mantém o respiro inferior branco */
     }
 
@@ -1355,7 +1382,7 @@ body.scroll-resolving .rodape {
         }
 
         .rodape-ticker-track {
-            animation: rodape-ticker 12s linear infinite;
+            animation: rodape-ticker 9s linear infinite;
             /* opcional: velocidade diferente */
         }
 
@@ -1981,19 +2008,24 @@ body.scroll-resolving .rodape {
     cursor: pointer;
     z-index: 10001;
     display: flex;
+    margin-left: 40px;
+    margin-right: 40px;
     align-items: center;
     justify-content: center;
-    color: transparent;
-    transition: none;
+    transition: color 0.3s ease;
     padding: 0;
     opacity: 1;
     outline: none;
+    color: rgba(255, 255, 255, 0.7);  /* cor padrão = mesma do × */
     -webkit-tap-highlight-color: transparent;
 }
 
 .lightbox-seta svg {
-    display: none;
-    /* esconde os ícones SVG completamente */
+    display: block;                   /* exibe os ícones */
+}
+
+.lightbox-seta:hover {
+    color: #ffffff;
 }
 
 .lightbox-seta-esquerda {
@@ -2021,7 +2053,12 @@ body.scroll-resolving .rodape {
     .lightbox-seta {
         width: 50%;
         max-width: 150px;
+         color: transparent;  
     }
+       .lightbox-seta svg {
+        display: none;             /* esconde o SVG no mobile */
+    }
+    
 
     .lightbox-fechar {
             display: none;
@@ -2097,3 +2134,4 @@ body.scroll-resolving .rodape {
     background: #ffffff !important; /* Branco Sólido */
     transform: scale(1.25) !important;
 }
+
