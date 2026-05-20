@@ -2,8 +2,8 @@
   "name": "sorria",
   "version": "1.0.0",
   "main": "script.js",
-   "scripts": {
-    "dev": "live-server"
+  "scripts": {
+    "dev": "live-server --host=0.0.0.0"
   },
   "keywords": [],
   "author": "",

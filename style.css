@@ -94,7 +94,7 @@ video,
     /* Ajuste o tamanho do seu logo */
     width: auto;
     display: block;
-    opacity: 0.35;
+    opacity: 0.30;
     transition: opacity 0.3s ease;
     filter: brightness(0) invert(1);
     /* Força o logo a ficar branco */
@@ -114,7 +114,7 @@ video,
     bottom: 2.5rem;
     color: #ffffffb5;
     font-size: 0.8rem;
-    font-weight: 400;
+    font-weight: 0;
     letter-spacing: 2px;
     text-transform: uppercase;
     z-index: 15;
@@ -132,7 +132,7 @@ video,
 .middot-maior {
     font-size: 1.2rem;
     vertical-align: middle;
-    line-height: 1;
+    line-height: 0;
 }
 
 .registro {
@@ -169,7 +169,7 @@ video,
     text-decoration: none;
     color: #ffffffb5;
     font-size: 0.8rem;
-    font-weight: 400;
+    font-weight: 0;
     letter-spacing: 2px;
     text-transform: uppercase;
     position: relative;
@@ -450,12 +450,23 @@ video,
 .rodape-ticker-wrapper {
     width: 100%;
     overflow: hidden;
+    display: flex;
+    /* Evita bugs de toque ou seleção arrastando o letreiro no mobile */
+    pointer-events: none; 
 }
 
 .rodape-ticker-track {
     display: flex;
     white-space: nowrap;
-    animation: rodape-ticker 9s linear infinite;
+    width: max-content;
+    
+    /* Força o celular a usar a placa de vídeo para renderizar o texto (Evita sumir) */
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    
+    /* Ajuste o tempo aqui se achar necessário (ex: 35s, 40s) */
+    animation: rodape-ticker 15s linear infinite; 
 }
 
 .ticker-item {
@@ -465,15 +476,18 @@ video,
     font-weight: 400;
     letter-spacing: 0.9px;
     padding-right: 4rem;
-    /* espaço entre as cópias */
+    /* Garante estabilidade visual em telas retina de celulares */
+    -webkit-font-smoothing: antialiased;
 }
 
+/* Novo cálculo matemático perfeito para múltiplos clones */
 @keyframes rodape-ticker {
     0% {
-        transform: translateX(0%);
+        transform: translate3d(0, 0, 0);
     }
     100% {
-        transform: translateX(-50%);
+        /* Move exatamente a fração correspondente para o loop invisível */
+        transform: translate3d(-33.3333%, 0, 0);
     }
 }
 
@@ -884,18 +898,6 @@ body.scroll-resolving .rodape {
     }
 }
 
-/* Animação: move a track exatamente 50% (metade do conteúdo duplicado) */
-@keyframes ticker-rolagem {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(calc(-50% - 2rem));
-        /* desconta metade do gap total? Ajuste fino: -50% do width total */
-    }
-}
-
 /* ============================================================
    SETA DE VOLTAR AO TOPO – MODERNA (PILL EXPANSÍVEL)
    ============================================================ */
@@ -990,6 +992,10 @@ body.scroll-resolving .rodape {
 
     .galeria-feed img:last-child:nth-child(odd) {
         grid-column: 1 / -1;
+    }
+
+    #servicos {
+        padding-top: 60px !important; /* Aumente este valor (ex: 100px, 120px, 140px) até ficar ao seu gosto */
     }
 
     .secao p,
@@ -1120,13 +1126,13 @@ body.scroll-resolving .rodape {
         transform: translateX(-50%);
         text-align: center;
         white-space: nowrap;
-        font-size: 0.6rem;
+        font-size: 0.7rem;
         letter-spacing: 2px;
         color: #ffffffb5;
     }
 
     .video-info.direita {
-        top: 2rem;
+        top: 3rem;
         bottom: auto;
         right: auto;
         font-size: 0.65rem;
@@ -1134,7 +1140,7 @@ body.scroll-resolving .rodape {
     }
 
     .video-info.esquerda {
-        top: 3.5rem;
+        top: 4.5rem;
         bottom: auto;
         right: auto;
         font-size: 0.50rem;
@@ -1144,7 +1150,7 @@ body.scroll-resolving .rodape {
     /* ---------- Header mobile: CENTRALIZADO na tela ---------- */
     .header-center {
         position: absolute;
-        top: 230px;
+        top: 390px;
         bottom: 0px;
         left: 0;
         right: 0;
@@ -1181,9 +1187,9 @@ body.scroll-resolving .rodape {
     }
 
     .header-center nav a {
-        font-size: 0.86rem;
-        letter-spacing: 3px;
-        font-weight: 500;
+        font-size: 0.65rem;
+        letter-spacing: 3.5px;
+        font-weight: 400;
         color: #ffffffcc;
         text-transform: uppercase;
         text-decoration: none;
@@ -1382,7 +1388,7 @@ body.scroll-resolving .rodape {
         }
 
         .rodape-ticker-track {
-            animation: rodape-ticker 9s linear infinite;
+            animation: rodape-ticker 15s linear infinite;
             /* opcional: velocidade diferente */
         }
 
@@ -2134,4 +2140,14 @@ body.scroll-resolving .rodape {
     background: #ffffff !important; /* Branco Sólido */
     transform: scale(1.25) !important;
 }
+/* ========== Efeito de Imersão Bidirecional (Ativo em Todos os Modos — Desktop, Tablet, Mobile) ========== */
+#portfolio, #servicos, #quem-somos {
+    will-change: opacity, transform;
+    transition: none !important;
+}
 
+/* Agora TODAS as seções começam invisíveis para o script controlar desde o topo com o vídeo */
+#portfolio, #servicos, #quem-somos {
+    opacity: 0;
+    pointer-events: none;
+}

@@ -64,18 +64,18 @@ const projetos = [
     {
         nome: 'Projeto 4',
         imagens: [
-            'imagens/dd5.avif',
-            'imagens/lancha1.avif'
-        ]
-    },
-
-    {
-        nome: 'Projeto 5',
-        imagens: [
             'imagens/noiva2.jpg',
             'imagens/noiva.jpg',
             'imagens/noiva3.jpg'
 
+        ]
+    },
+
+      {
+        nome: 'Projeto 5',
+        imagens: [
+            'imagens/dd5.avif',
+            'imagens/lancha1.avif'
         ]
     }
 
@@ -609,3 +609,127 @@ document.addEventListener('touchstart', function () {
         }, 0);
     });
 }, { passive: true });
+
+/* ========== Motor de Imersão Bidirecional (Scroll — Fluxo Completo com Vídeo Inicial) ========== */
+(function () {
+    function initImersaoBidirecional() {
+        const portfolio  = document.getElementById('portfolio');
+        const servicos   = document.getElementById('servicos');
+        const quemSomos  = document.getElementById('quem-somos');
+
+        if (!portfolio || !servicos || !quemSomos) return;
+
+        // --- GATILHOS CALIBRADOS ---
+        const TRIGGER_PORTFOLIO = 0.8; // Controla a transição entre o Vídeo e os Projetos
+        const TRIGGER_SERVICOS  = 0.8; 
+        const TRIGGER_SOBRE_NOS = 0.8; 
+        // ---------------------------
+
+        let ticking = false;
+
+        function processarScroll() {
+            const vh = window.innerHeight;
+            const topPortfolio = portfolio.getBoundingClientRect().top;
+            const topServicos = servicos.getBoundingClientRect().top;
+            const topSobreNos = quemSomos.getBoundingClientRect().top;
+            
+            const triggerPortfolioPx = vh * TRIGGER_PORTFOLIO;
+            const triggerServicosPx = vh * TRIGGER_SERVICOS;
+            const triggerSobreNosPx = vh * TRIGGER_SOBRE_NOS;
+
+            // — TRANSIÇÃO 0: VÍDEO INICIAL → PROJETOS (PORTFÓLIO) —
+            // Ativa quando o utilizador está no topo (perto do vídeo) e começa a descer para os Projetos
+            if (topPortfolio > 0 && topServicos >= triggerServicosPx) {
+                // p vai de 0 (no topo do vídeo) a 1 (quando Projetos atinge o gatilho)
+                const p = Math.max(0, Math.min(1, 1 - (topPortfolio / triggerPortfolioPx)));
+                
+                // Entrada suave do Portfólio (Smoothstep)
+                const pSuaveIn = p * p * (3 - 2 * p);
+                portfolio.style.opacity = String(pSuaveIn);
+                portfolio.style.pointerEvents = pSuaveIn > 0.1 ? 'auto' : 'none';
+
+                servicos.style.opacity = '0';
+                servicos.style.pointerEvents = 'none';
+                quemSomos.style.opacity = '0';
+                quemSomos.style.pointerEvents = 'none';
+            }
+            
+            // — TRANSIÇÃO 1: PROJETOS (PORTFÓLIO) → SERVIÇOS —
+            else if (topServicos < triggerServicosPx && topSobreNos >= triggerSobreNosPx) {
+                const p = Math.max(0, Math.min(1, 1 - (topServicos / triggerServicosPx)));
+                
+                // Entrada suave de Serviços
+                const pSuaveIn = p * p * (3 - 2 * p);
+                servicos.style.opacity = String(pSuaveIn);     
+                servicos.style.pointerEvents = pSuaveIn > 0.1 ? 'auto' : 'none';
+
+                // Saída suave e acelerada do Portfólio (Cosseno)
+                const pAcelerado = Math.max(0, Math.min(1, p * 1.6));
+                const pSuaveOut = 0.5 * (1 + Math.cos(pAcelerado * Math.PI));
+                portfolio.style.opacity = String(pSuaveOut);
+                portfolio.style.pointerEvents = pSuaveOut < 0.1 ? 'none' : 'auto';
+
+                quemSomos.style.opacity = '0';
+                quemSomos.style.pointerEvents = 'none';
+            } 
+            
+            // — TRANSIÇÃO 2: SERVIÇOS → SOBRE NÓS (QUEM SOMOS) —
+            else if (topSobreNos < triggerSobreNosPx) {
+                const p = Math.max(0, Math.min(1, 1 - (topSobreNos / triggerSobreNosPx)));
+
+                // Entrada suave do Sobre Nós
+                const pSuaveIn = p * p * (3 - 2 * p);
+                quemSomos.style.opacity = String(pSuaveIn);     
+                quemSomos.style.pointerEvents = pSuaveIn > 0.1 ? 'auto' : 'none';
+
+                // Saída suave e acelerada de Serviços
+                const pAcelerado = Math.max(0, Math.min(1, p * 1.6));
+                const pSuaveOut = 0.5 * (1 + Math.cos(pAcelerado * Math.PI));
+                servicos.style.opacity = String(pSuaveOut); 
+                servicos.style.pointerEvents = pSuaveOut < 0.1 ? 'none' : 'auto';
+                
+                portfolio.style.opacity = '0';
+                portfolio.style.pointerEvents = 'none';
+            } 
+            
+            // — BLOQUEIOS DE SEGURANÇA (Estados Sólidos Estáveis) —
+            else {
+                if (topPortfolio <= 0 && topServicos >= triggerServicosPx) {
+                    // Focado puramente nos Projetos
+                    portfolio.style.opacity = '1';
+                    portfolio.style.pointerEvents = 'auto';
+                    servicos.style.opacity  = '0';
+                    servicos.style.pointerEvents = 'none';
+                    quemSomos.style.opacity = '0';
+                    quemSomos.style.pointerEvents = 'none';
+                } else if (topSobreNos <= 0) {
+                    // Focado puramente no Sobre Nós
+                    portfolio.style.opacity = '0';
+                    portfolio.style.pointerEvents = 'none';
+                    servicos.style.opacity  = '0';
+                    servicos.style.pointerEvents = 'none';
+                    quemSomos.style.opacity = '1';
+                    quemSomos.style.pointerEvents = 'auto';
+                }
+            }
+
+            document.body.style.backgroundColor = '#1c1c1c';
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(processarScroll);
+                ticking = true;
+            }
+        }, { passive: true });
+
+        processarScroll(); 
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initImersaoBidirecional);
+    } else {
+        initImersaoBidirecional();
+    }
+})();
