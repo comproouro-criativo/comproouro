@@ -733,3 +733,38 @@ document.addEventListener('touchstart', function () {
         initImersaoBidirecional();
     }
 })();
+
+/* ========== Gerenciamento inteligente e otimizado do vídeo Sobre Nós ========== */
+document.addEventListener('DOMContentLoaded', () => {
+    const secaoSobre = document.getElementById('quem-somos');
+    const videoSobre = document.getElementById('video-sobre');
+    
+    if (!secaoSobre || !videoSobre) return;
+
+    // Monitora a visibilidade da seção no viewport do usuário
+    const observerVideo = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Se os metadados do vídeo não foram inicializados, força o carregamento inicial
+                if (videoSobre.readyState === 0) {
+                    videoSobre.load();
+                }
+                // Executa a reprodução assíncrona de forma segura contra bloqueios de navegadores
+                videoSobre.play().catch(() => {
+                    /* Fallback silencioso - resolvido pelo uso mandatório da tag 'muted' */
+                });
+            } else {
+                // Fora da tela? Pausa imediatamente o vídeo economizando processamento de hardware
+                if (!videoSobre.paused) {
+                    videoSobre.pause();
+                }
+            }
+        });
+    }, {
+        root: null,        // Usa o viewport padrão do navegador
+        rootMargin: '0px',
+        threshold: 0.1     // Gatilho ativa assim que 10% da seção desponta na tela
+    });
+
+    observerVideo.observe(secaoSobre);
+});
