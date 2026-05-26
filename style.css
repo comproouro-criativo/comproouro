@@ -1299,12 +1299,19 @@ body {
         color: #ffffffb5;
     }
 
+    /* Dentro de @media (max-width: 480px) */
+.quem-somos-conteudo {
+    max-width: 345px;  /* diminui a largura máxima da caixa */
+    width: 88.8%;        /* deixa um respiro extra nas laterais */
+}
+
     .video-info.direita {
-        top: 3rem;
+        top: 3.5rem;
         bottom: auto;
         right: auto;
-        font-size: 0.73rem;
-        opacity: 0.7;
+        font-size: 0.65rem;
+        opacity: 0.55;
+         font-weight: bolder;
 
 
         /* Tamanho do COMPRO OURO® */
@@ -1312,11 +1319,13 @@ body {
 
 
     .video-info.esquerda {
-        top: 4.5rem;
+        top: 4.9rem;
         bottom: auto;
         right: auto;
+        
+         font-weight: bolder;
         font-size: 0.58rem;
-        opacity: 0.7;
+        opacity: 0.55;
 
         /* Tamanho do Florianópolis */
     }
@@ -1326,14 +1335,17 @@ body {
         max-width: none;
         gap: 0.5rem;
         padding: 0.45rem 1rem;
-        margin-bottom: 1.5rem;
-        opacity: 0.7;
+        margin-bottom: -5rem;
+          margin-top: 10rem; 
+        opacity: 0.8;
         border-width: 1.8px;
+            border-color: rgba(255, 252, 246, 0.8);  /* ← borda com opacidade 0.8 */
+
         transition: transform 0.15s ease, opacity 0.3s ease;
     }
 
     .btn-voltar-inicio-texto {
-        opacity: 1;
+        opacity: 0.8;
         width: auto;
         margin-left: 0.2rem;
         font-size: 0.5rem;
@@ -1344,6 +1356,8 @@ body {
     .btn-voltar-inicio-icone {
         width: 16px;
         height: 16px;
+                opacity: 0.8;
+
     }
 
     /* Efeito de clique (active) */
@@ -1369,6 +1383,8 @@ body {
         padding: 0 0%;
         /* pequeno respiro lateral */
         z-index: 20;
+opacity: 0.7;
+        
     }
 
 
@@ -1376,6 +1392,7 @@ body {
     .rodape {
         padding: 0.25rem 0;
         /* barra mais fina */
+    
     }
 
     .ticker-item {
