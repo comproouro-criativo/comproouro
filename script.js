@@ -6,49 +6,44 @@ window.addEventListener('load', () => {
 
 /* ========== Autoplay do vídeo — fallback mobile ========== */
 // DEPOIS
+// DEPOIS
 (function () {
     const video = document.getElementById('video-hero')
                 || document.querySelector('.video-destaque video');
     if (!video) return;
+
     video.muted       = true;
     video.loop        = true;
     video.playsInline = true;
     video.setAttribute('playsinline', '');
     video.setAttribute('webkit-playsinline', '');
 
-    let tentativas = 0;
-
     function tentarPlay() {
-        tentativas++;
         const p = video.play();
         if (p !== undefined) {
-            p.then(() => { tentativas = 0; })
-             .catch(() => {
-                if (tentativas < 5) {
-                    setTimeout(tentarPlay, 300 * tentativas);
-                } else {
-                    const desbloqueio = () => video.play().catch(() => {});
-                    document.addEventListener('touchstart', desbloqueio, { once: true, passive: true });
-                    document.addEventListener('touchend',   desbloqueio, { once: true, passive: true });
-                    document.addEventListener('click',      desbloqueio, { once: true });
-                    document.addEventListener('scroll',     desbloqueio, { once: true, passive: true });
-                }
+            p.catch(() => {
+                // Browser bloqueou — aguarda primeiro toque/scroll (sem botão nativo)
+                const desbloquear = () => { video.play().catch(() => {}); };
+                document.addEventListener('touchend', desbloquear, { once: true, passive: true });
+                document.addEventListener('scroll',   desbloquear, { once: true, passive: true });
             });
         }
     }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', tentarPlay, { once: true });
-    } else {
+    // Aguarda o vídeo ter dados suficientes antes de tentar o play
+    // Isso evita o estado "buffering" que faz o iOS exibir o botão nativo
+    if (video.readyState >= 3) {
+        // HAVE_FUTURE_DATA — já tem dados, pode tocar direto
         tentarPlay();
+    } else {
+        video.addEventListener('canplay', tentarPlay, { once: true });
     }
 
-    // Reativa ao voltar do background (iOS mata o play ao minimizar)
     document.addEventListener('visibilitychange', () => {
-        if (!document.hidden && video.paused) { tentativas = 0; tentarPlay(); }
+        if (!document.hidden && video.paused) tentarPlay();
     });
-    window.addEventListener('focus', () => {
-        if (video.paused) { tentativas = 0; tentarPlay(); }
+    window.addEventListener('pageshow', () => {
+        if (video.paused) tentarPlay();
     });
 })();
 
