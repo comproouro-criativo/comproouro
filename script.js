@@ -5,32 +5,51 @@ window.addEventListener('load', () => {
 });
 
 /* ========== Autoplay do vídeo — fallback mobile ========== */
+// DEPOIS
 (function () {
-    const video = document.querySelector('.video-destaque video');
+    const video = document.getElementById('video-hero')
+                || document.querySelector('.video-destaque video');
     if (!video) return;
-    video.muted = true;
+    video.muted       = true;
+    video.loop        = true;
     video.playsInline = true;
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+
+    let tentativas = 0;
 
     function tentarPlay() {
-        const promise = video.play();
-        if (promise !== undefined) {
-            promise.catch(() => {
-                const desbloqueio = () => {
-                    video.play().catch(() => { });
-                    document.removeEventListener('touchstart', desbloqueio);
-                    document.removeEventListener('click', desbloqueio);
-                };
-                document.addEventListener('touchstart', desbloqueio, { once: true, passive: true });
-                document.addEventListener('click', desbloqueio, { once: true });
+        tentativas++;
+        const p = video.play();
+        if (p !== undefined) {
+            p.then(() => { tentativas = 0; })
+             .catch(() => {
+                if (tentativas < 5) {
+                    setTimeout(tentarPlay, 300 * tentativas);
+                } else {
+                    const desbloqueio = () => video.play().catch(() => {});
+                    document.addEventListener('touchstart', desbloqueio, { once: true, passive: true });
+                    document.addEventListener('touchend',   desbloqueio, { once: true, passive: true });
+                    document.addEventListener('click',      desbloqueio, { once: true });
+                    document.addEventListener('scroll',     desbloqueio, { once: true, passive: true });
+                }
             });
         }
     }
 
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-        tentarPlay();
-    } else {
+    if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', tentarPlay, { once: true });
+    } else {
+        tentarPlay();
     }
+
+    // Reativa ao voltar do background (iOS mata o play ao minimizar)
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && video.paused) { tentativas = 0; tentarPlay(); }
+    });
+    window.addEventListener('focus', () => {
+        if (video.paused) { tentativas = 0; tentarPlay(); }
+    });
 })();
 
 /* ========== DADOS DOS PROJETOS ========== */
@@ -735,36 +754,57 @@ document.addEventListener('touchstart', function () {
 })();
 
 /* ========== Gerenciamento inteligente e otimizado do vídeo Sobre Nós ========== */
-document.addEventListener('DOMContentLoaded', () => {
-    const secaoSobre = document.getElementById('quem-somos');
-    const videoSobre = document.getElementById('video-sobre');
-    
-    if (!secaoSobre || !videoSobre) return;
+// DEPOIS
+(function () {
+    function initVideoSobre() {
+        const secaoSobre = document.getElementById('quem-somos');
+        const videoSobre = document.getElementById('video-sobre');
+        if (!secaoSobre || !videoSobre) return;
 
-    // Monitora a visibilidade da seção no viewport do usuário
-    const observerVideo = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Se os metadados do vídeo não foram inicializados, força o carregamento inicial
-                if (videoSobre.readyState === 0) {
-                    videoSobre.load();
-                }
-                // Executa a reprodução assíncrona de forma segura contra bloqueios de navegadores
-                videoSobre.play().catch(() => {
-                    /* Fallback silencioso - resolvido pelo uso mandatório da tag 'muted' */
-                });
-            } else {
-                // Fora da tela? Pausa imediatamente o vídeo economizando processamento de hardware
-                if (!videoSobre.paused) {
-                    videoSobre.pause();
-                }
+        videoSobre.muted       = true;
+        videoSobre.loop        = true;
+        videoSobre.playsInline = true;
+        videoSobre.setAttribute('playsinline', '');
+        videoSobre.setAttribute('webkit-playsinline', '');
+
+        // Pré-carrega enquanto a seção ainda não apareceu
+        if (videoSobre.readyState === 0) videoSobre.load();
+
+        let tentativas = 0;
+
+        function playVideoSobre() {
+            tentativas++;
+            videoSobre.play()
+                .then(() => { tentativas = 0; })
+                .catch(() => { if (tentativas < 5) setTimeout(playVideoSobre, 200 * tentativas); });
+        }
+
+        // Observer de posição no scroll
+        new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { tentativas = 0; playVideoSobre(); }
+                else if (!videoSobre.paused) videoSobre.pause();
+            });
+        }, { threshold: 0.05 }).observe(secaoSobre);
+
+        // Observer de opacity — detecta quando o motor de imersão revela a seção
+        new MutationObserver(() => {
+            const opacity = parseFloat(secaoSobre.style.opacity || '1');
+            if (opacity > 0.05) { tentativas = 0; playVideoSobre(); }
+            else if (!videoSobre.paused) videoSobre.pause();
+        }).observe(secaoSobre, { attributes: true, attributeFilter: ['style'] });
+
+        // Reativa ao voltar do background
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && parseFloat(secaoSobre.style.opacity || '1') > 0.05) {
+                tentativas = 0; playVideoSobre();
             }
         });
-    }, {
-        root: null,        // Usa o viewport padrão do navegador
-        rootMargin: '0px',
-        threshold: 0.1     // Gatilho ativa assim que 10% da seção desponta na tela
-    });
+    }
 
-    observerVideo.observe(secaoSobre);
-});
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initVideoSobre, { once: true });
+    } else {
+        initVideoSobre();
+    }
+})();
