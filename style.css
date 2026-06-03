@@ -100,11 +100,11 @@ video,
 }
 
 .video-logo img {
-    height: 55px;
+    height: 50px;
     /* Ajuste o tamanho do seu logo */
     width: auto;
     display: block;
-    opacity: 0.30;
+    opacity: 0.50;
     transition: opacity 0.3s ease;
     filter: brightness(0) invert(1);
     /* Força o logo a ficar branco */
