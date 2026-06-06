@@ -1309,7 +1309,7 @@ body {
         position: absolute;
         top: 3.2rem; /* Distância do topo da tela */
         left: 10%; /* Respiro lateral */
-        right: 5%; /* Respiro lateral */
+        right: 10%; /* Respiro lateral */
         display: flex;
         justify-content: space-between; /* Joga um item pra cada canto e um no meio */
         align-items: center;
@@ -1420,7 +1420,7 @@ body {
     /* ---------- Header mobile: CENTRALIZADO na tela ---------- */
     .header-center {
         position: absolute;
-        top: 390px;
+        top: 420px;
         bottom: 0px;
         left: 0;
         right: 0;
