@@ -576,16 +576,19 @@ grid-auto-rows: minmax(250px, 1fr);
 
 .quem-somos-conteudo p {
     color: rgba(255, 252, 246, 0.9) !important;
-    font-size: 0.95rem;
+    font-size: 0.69rem; /* Tamanho ajustado para compensar o Capslock */
+    font-weight: 700; /* Negrito brutalista */
+    text-transform: uppercase; /* CAIXA ALTA ATIVADA */
+    letter-spacing: 1.5px; /* Espaçamento essencial para leitura em Caps */
     opacity: 0.7;
     line-height: 1.8;
     margin-bottom: 1.2rem;
-    text-align: left;                  /* ← evita justificação forçada */
-    hyphens: auto;                    /* ← quebra palavras com hífen (requer idioma no HTML) */
+    text-align: left;
+    hyphens: auto;
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
-    overflow-wrap: break-word;        /* ← quebra palavras muito longas */
-    word-break: break-word;           /* ← alternativa para navegadores antigos */
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 /* Container inferior para os ícones e botão de voltar */
@@ -746,7 +749,7 @@ body {
 
 .sf-titulo {
     font-size: 1.7rem;
-    font-weight: 500;
+    font-weight: 800;
     letter-spacing: 4px;
     text-transform: uppercase;
     margin-bottom: 1.8rem;
@@ -766,17 +769,24 @@ body {
 }
 
 .lista-servicos li {
-    font-size: 0.88rem;
-    font-weight: 400;
-    letter-spacing: 0.3px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     color: #fffcf6cc;
     line-height: 1.45;
     transition: color 0.25s ease, padding-left 0.25s ease;
     cursor: default;
     display: flex;
     align-items: center;
-    min-height: 50px;
+    min-height: 50px; /* Garante a mesma altura exata do FAQ */
     padding: 0.5rem 0;
+    border-bottom: 1.8px solid rgba(255, 255, 255, 0.15); /* Linha divisória simétrica */
+}
+
+/* NOVO: Adiciona a linha de topo apenas no primeiro item, espelhando o FAQ */
+.lista-servicos li:first-child {
+    border-top: 1.8px solid rgba(255, 255, 255, 0.15);
 }
 
 @media (hover: hover) {
@@ -822,9 +832,10 @@ body {
 }
 
 .faq-pergunta span:first-child {
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.3px;
+    font-size: 0.72rem; /* Ajustado sutilmente para manter o equilíbrio visual */
+    font-weight: 800; /* Peso Brutalista máximo */
+    text-transform: uppercase; /* Força todas as perguntas em Caixa Alta */
+    letter-spacing: 1px; /* Espaçamento elegante entre as letras maiúsculas */
     color: #fffcf6;
     line-height: 1.45;
 }
@@ -850,7 +861,7 @@ body {
 
 .faq-resposta p {
     font-size: 0.82rem;
-    font-weight: 300;
+    font-weight: 600;
     line-height: 1.7;
     color: #fffcf6aa;
     padding-bottom: 1rem;
@@ -882,7 +893,7 @@ body {
     width: 100%;
     font-family: inherit;
     font-size: 0.78rem;
-    font-weight: 400;
+    font-weight: 800;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #fffcf666;
@@ -1460,6 +1471,7 @@ opacity: 0.7;
 
     .btn-expandir {
         justify-content: center;
+        font-size: 0.63rem;
     }
 
     .sub-header-portfolio a {
@@ -1477,7 +1489,9 @@ opacity: 0.7;
     }
 
     .secao p {
-        font-size: 0.9rem;
+        font-size: 0.59rem;
+                letter-spacing: 1.8px;
+
     }
 
     @media (max-width: 380px) {
@@ -1514,16 +1528,16 @@ opacity: 0.7;
     }
 
     .lista-servicos li {
-        font-size: 0.8rem;
+        font-size: 0.65rem;
         min-height: 44px;
     }
 
     .faq-pergunta span:first-child {
-        font-size: 0.78rem;
+        font-size: 0.65rem;
     }
 
     .faq-resposta p {
-        font-size: 0.76rem;
+        font-size: 0.69rem;
     }
 
     .faq-icone {
