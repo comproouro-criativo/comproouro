@@ -1528,8 +1528,9 @@ opacity: 0.7;
     }
 
     .lista-servicos li {
-        font-size: 0.65rem;
+        font-size: 0.62rem;
         min-height: 44px;
+        letter-spacing: 1.2px;
     }
 
     .faq-pergunta span:first-child {
