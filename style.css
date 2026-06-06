@@ -1302,6 +1302,37 @@ body {
 @media (max-width: 480px) {
 
 
+    /* =========================================
+       NOVA BARRA SUPERIOR MOBILE (LOGO + FLN + 2026)
+       ========================================= */
+    .topbar-mobile {
+        position: absolute;
+        top: 2rem; /* Distância do topo da tela */
+        left: 5%; /* Respiro lateral */
+        right: 5%; /* Respiro lateral */
+        display: flex;
+        justify-content: space-between; /* Joga um item pra cada canto e um no meio */
+        align-items: center;
+        z-index: 20; /* Mantém acima do vídeo */
+        pointer-events: none; /* Permite clicar no vídeo atrás, se necessário */
+    }
+
+    .topbar-txt {
+        color: #ffffffb5; /* Mesma cor do seu header atual */
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+                opacity: 0.7;
+
+        font-weight: bolder;
+    }
+
+    .topbar-logo {
+        height: 45px; /* Ajuste a altura do logo aqui */
+        width: auto;
+        opacity: 0.5;
+        filter: brightness(0) invert(1); /* Garante que o logo fique branco */
+    }
+
     /* ---------- Reposicionamento dos textos do vídeo ---------- */
     .video-info {
         position: absolute;
@@ -1401,7 +1432,7 @@ body {
         padding: 0 0%;
         /* pequeno respiro lateral */
         z-index: 20;
-opacity: 0.7;
+opacity: 0.9;
         
     }
 
