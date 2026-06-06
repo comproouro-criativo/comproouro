@@ -1307,8 +1307,8 @@ body {
        ========================================= */
     .topbar-mobile {
         position: absolute;
-        top: 2rem; /* Distância do topo da tela */
-        left: 5%; /* Respiro lateral */
+        top: 3.2rem; /* Distância do topo da tela */
+        left: 10%; /* Respiro lateral */
         right: 5%; /* Respiro lateral */
         display: flex;
         justify-content: space-between; /* Joga um item pra cada canto e um no meio */
@@ -1327,7 +1327,7 @@ body {
     }
 
     .topbar-logo {
-        height: 45px; /* Ajuste a altura do logo aqui */
+        height: 50px; /* Ajuste a altura do logo aqui */
         width: auto;
         opacity: 0.5;
         filter: brightness(0) invert(1); /* Garante que o logo fique branco */
