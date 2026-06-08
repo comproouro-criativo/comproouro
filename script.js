@@ -35,50 +35,41 @@ window.addEventListener('load', () => {
 
 /* ========== DADOS DOS PROJETOS ========== */
 const projetos = [
+    // [Posição 0] - Seu primeiro projeto
     {
         nome: 'Projeto 1',
         imagens: [
-            'imagens/dd4.jpg',
+            'imagens/back.jpg',
             'imagens/back1.jpg',
             'imagens/back2.jpg',
             'imagens/back3.jpg'
         ]
     },
+    // [Posição 1] - Seu segundo projeto (Exemplo: Noiva)
     {
         nome: 'Projeto 2',
         imagens: [
-            'imagens/aa1.jpg',
+            'imagens/elvis.jpg',
             'imagens/elvis1.jpg',
             'imagens/elvis2.jpg',
-            'imagens/elvis3.jpg'
+               'imagens/elvis3.jpg'
         ]
     },
+    // [Posição 2] - O projeto do Vídeo (Deve ser o ÚLTIMO da lista)
     {
-        nome: 'Projeto 3',
+        nome: 'Cidades x Mezoil',
         imagens: [
-            'imagens/dd6.jpg',
-            'imagens/mina2.avif'
+            'videos/cidades.mp4'
         ]
     },
 
-    {
-        nome: 'Projeto 4',
+        {
+        nome: 'Modelo',
         imagens: [
-            'imagens/noiva2.jpg',
-            'imagens/noiva.jpg',
-            'imagens/noiva3.jpg'
-
+            'imagens/modelo.jpg',
+            'imagens/modelo2.avif',
         ]
     },
-
-      {
-        nome: 'Projeto 5',
-        imagens: [
-            'imagens/dd5.avif',
-            'imagens/lancha1.avif'
-        ]
-    }
-
 ];
 
 /* ========== SISTEMA DE PASTAS - NOVO ========== */
@@ -212,6 +203,7 @@ document.querySelector('.header-center')?.classList.add('visible');
 /* ========== Lightbox CORRIGIDO ========== */
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.querySelector('.lightbox-imagem');
+const lightboxVideo = document.querySelector('.lightbox-video'); /* NOVO */
 const lightboxFechar = document.querySelector('.lightbox-fechar');
 const setaEsquerda = document.querySelector('.lightbox-seta-esquerda');
 const setaDireita = document.querySelector('.lightbox-seta-direita');
@@ -275,22 +267,51 @@ function sincronizarMiniaturas() {
 }
 
 function atualizarImagemLightbox(instant = false) {
-    if (!lightboxImg || imagensGaleriaGlobal.length === 0) return;
+    if ((!lightboxImg && !lightboxVideo) || imagensGaleriaGlobal.length === 0) return;
 
     const imgSrc = imagensGaleriaGlobal[imagemAtualIndex];
+    const isVideo = imgSrc.toLowerCase().endsWith('.mp4');
 
     if (instant) {
-        lightboxImg.src = imgSrc;
-        lightboxImg.alt = `Imagem ${imagemAtualIndex + 1}`;
-        lightboxImg.style.opacity = '1';
+        if (isVideo) {
+            lightboxImg.style.display = 'none';
+            lightboxVideo.style.display = 'block';
+            lightboxVideo.src = imgSrc;
+            lightboxVideo.play().catch(() => { });
+            lightboxVideo.style.opacity = '1';
+        } else {
+            if (lightboxVideo) {
+                lightboxVideo.style.display = 'none';
+                lightboxVideo.pause();
+            }
+            lightboxImg.style.display = 'block';
+            lightboxImg.src = imgSrc;
+            lightboxImg.alt = `Imagem ${imagemAtualIndex + 1}`;
+            lightboxImg.style.opacity = '1';
+        }
         return;
     }
 
     lightboxImg.style.opacity = '0';
+    if (lightboxVideo) lightboxVideo.style.opacity = '0';
+
     setTimeout(() => {
-        lightboxImg.src = imgSrc;
-        lightboxImg.alt = `Imagem ${imagemAtualIndex + 1}`;
-        lightboxImg.style.opacity = '1';
+        if (isVideo) {
+            lightboxImg.style.display = 'none';
+            lightboxVideo.style.display = 'block';
+            lightboxVideo.src = imgSrc;
+            lightboxVideo.play().catch(() => { });
+            lightboxVideo.style.opacity = '1';
+        } else {
+            if (lightboxVideo) {
+                lightboxVideo.style.display = 'none';
+                lightboxVideo.pause();
+            }
+            lightboxImg.style.display = 'block';
+            lightboxImg.src = imgSrc;
+            lightboxImg.alt = `Imagem ${imagemAtualIndex + 1}`;
+            lightboxImg.style.opacity = '1';
+        }
     }, 200);
 }
 
@@ -326,10 +347,16 @@ function fecharLightbox() {
     document.removeEventListener('touchmove', blockScroll);
     imagensGaleriaGlobal = [];
     imagemAtualIndex = 0;
+
+    // NOVO: Pausa e descarrega o vídeo para economizar processamento e internet
+    if (lightboxVideo) {
+        lightboxVideo.pause();
+        lightboxVideo.src = '';
+    }
+
     const container = document.getElementById('lightboxThumbnails');
     if (container) container.innerHTML = '';
 }
-
 lightboxFechar?.addEventListener('click', (e) => {
     e.stopPropagation();
     fecharLightbox();
@@ -613,16 +640,16 @@ document.addEventListener('touchstart', function () {
 /* ========== Motor de Imersão Bidirecional (Scroll — Fluxo Completo com Vídeo Inicial) ========== */
 (function () {
     function initImersaoBidirecional() {
-        const portfolio  = document.getElementById('portfolio');
-        const servicos   = document.getElementById('servicos');
-        const quemSomos  = document.getElementById('quem-somos');
+        const portfolio = document.getElementById('portfolio');
+        const servicos = document.getElementById('servicos');
+        const quemSomos = document.getElementById('quem-somos');
 
         if (!portfolio || !servicos || !quemSomos) return;
 
         // --- GATILHOS CALIBRADOS ---
         const TRIGGER_PORTFOLIO = 0.8; // Controla a transição entre o Vídeo e os Projetos
-        const TRIGGER_SERVICOS  = 0.8; 
-        const TRIGGER_SOBRE_NOS = 0.8; 
+        const TRIGGER_SERVICOS = 0.8;
+        const TRIGGER_SOBRE_NOS = 0.8;
         // ---------------------------
 
         let ticking = false;
@@ -632,7 +659,7 @@ document.addEventListener('touchstart', function () {
             const topPortfolio = portfolio.getBoundingClientRect().top;
             const topServicos = servicos.getBoundingClientRect().top;
             const topSobreNos = quemSomos.getBoundingClientRect().top;
-            
+
             const triggerPortfolioPx = vh * TRIGGER_PORTFOLIO;
             const triggerServicosPx = vh * TRIGGER_SERVICOS;
             const triggerSobreNosPx = vh * TRIGGER_SOBRE_NOS;
@@ -642,7 +669,7 @@ document.addEventListener('touchstart', function () {
             if (topPortfolio > 0 && topServicos >= triggerServicosPx) {
                 // p vai de 0 (no topo do vídeo) a 1 (quando Projetos atinge o gatilho)
                 const p = Math.max(0, Math.min(1, 1 - (topPortfolio / triggerPortfolioPx)));
-                
+
                 // Entrada suave do Portfólio (Smoothstep)
                 const pSuaveIn = p * p * (3 - 2 * p);
                 portfolio.style.opacity = String(pSuaveIn);
@@ -653,14 +680,14 @@ document.addEventListener('touchstart', function () {
                 quemSomos.style.opacity = '0';
                 quemSomos.style.pointerEvents = 'none';
             }
-            
+
             // — TRANSIÇÃO 1: PROJETOS (PORTFÓLIO) → SERVIÇOS —
             else if (topServicos < triggerServicosPx && topSobreNos >= triggerSobreNosPx) {
                 const p = Math.max(0, Math.min(1, 1 - (topServicos / triggerServicosPx)));
-                
+
                 // Entrada suave de Serviços
                 const pSuaveIn = p * p * (3 - 2 * p);
-                servicos.style.opacity = String(pSuaveIn);     
+                servicos.style.opacity = String(pSuaveIn);
                 servicos.style.pointerEvents = pSuaveIn > 0.1 ? 'auto' : 'none';
 
                 // Saída suave e acelerada do Portfólio (Cosseno)
@@ -671,34 +698,34 @@ document.addEventListener('touchstart', function () {
 
                 quemSomos.style.opacity = '0';
                 quemSomos.style.pointerEvents = 'none';
-            } 
-            
+            }
+
             // — TRANSIÇÃO 2: SERVIÇOS → SOBRE NÓS (QUEM SOMOS) —
             else if (topSobreNos < triggerSobreNosPx) {
                 const p = Math.max(0, Math.min(1, 1 - (topSobreNos / triggerSobreNosPx)));
 
                 // Entrada suave do Sobre Nós
                 const pSuaveIn = p * p * (3 - 2 * p);
-                quemSomos.style.opacity = String(pSuaveIn);     
+                quemSomos.style.opacity = String(pSuaveIn);
                 quemSomos.style.pointerEvents = pSuaveIn > 0.1 ? 'auto' : 'none';
 
                 // Saída suave e acelerada de Serviços
                 const pAcelerado = Math.max(0, Math.min(1, p * 1.6));
                 const pSuaveOut = 0.5 * (1 + Math.cos(pAcelerado * Math.PI));
-                servicos.style.opacity = String(pSuaveOut); 
+                servicos.style.opacity = String(pSuaveOut);
                 servicos.style.pointerEvents = pSuaveOut < 0.1 ? 'none' : 'auto';
-                
+
                 portfolio.style.opacity = '0';
                 portfolio.style.pointerEvents = 'none';
-            } 
-            
+            }
+
             // — BLOQUEIOS DE SEGURANÇA (Estados Sólidos Estáveis) —
             else {
                 if (topPortfolio <= 0 && topServicos >= triggerServicosPx) {
                     // Focado puramente nos Projetos
                     portfolio.style.opacity = '1';
                     portfolio.style.pointerEvents = 'auto';
-                    servicos.style.opacity  = '0';
+                    servicos.style.opacity = '0';
                     servicos.style.pointerEvents = 'none';
                     quemSomos.style.opacity = '0';
                     quemSomos.style.pointerEvents = 'none';
@@ -706,7 +733,7 @@ document.addEventListener('touchstart', function () {
                     // Focado puramente no Sobre Nós
                     portfolio.style.opacity = '0';
                     portfolio.style.pointerEvents = 'none';
-                    servicos.style.opacity  = '0';
+                    servicos.style.opacity = '0';
                     servicos.style.pointerEvents = 'none';
                     quemSomos.style.opacity = '1';
                     quemSomos.style.pointerEvents = 'auto';
@@ -724,7 +751,7 @@ document.addEventListener('touchstart', function () {
             }
         }, { passive: true });
 
-        processarScroll(); 
+        processarScroll();
     }
 
     if (document.readyState === 'loading') {
@@ -738,7 +765,7 @@ document.addEventListener('touchstart', function () {
 document.addEventListener('DOMContentLoaded', () => {
     const secaoSobre = document.getElementById('quem-somos');
     const videoSobre = document.getElementById('video-sobre');
-    
+
     if (!secaoSobre || !videoSobre) return;
 
     // Monitora a visibilidade da seção no viewport do usuário

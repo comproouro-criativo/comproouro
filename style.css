@@ -2464,3 +2464,59 @@ body {
     opacity: 0;
     pointer-events: none;
 }
+
+/* ========== VÍDEO NA GALERIA E LIGHTBOX ========== */
+
+/* Substitui o "+" pelo ícone de "▶" na capa do vídeo */
+.galeria-item.item-video::after {
+    content: '▶';
+    font-size: 16px;
+    padding-left: 3px; /* Ajuste para o triângulo parecer centralizado */
+}
+
+/* Estilos da tag de vídeo no Lightbox (herdando o visual da imagem) */
+.lightbox-video {
+    max-width: 100%;
+    max-height: 87vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.7);
+    transition: opacity 0.20s ease;
+    will-change: opacity;
+    outline: none;
+    border-radius: 4px; /* Opcional, para acabamento */
+}
+
+/* Responsivo para o vídeo no celular */
+@media (max-width: 768px) {
+    .lightbox-video {
+        max-height: 70vh;
+    }
+}
+
+/* ========== VÍDEO NA GALERIA E LIGHTBOX ========== */
+.galeria-item.item-video::after {
+    content: '▶';
+    font-size: 16px;
+    padding-left: 3px; 
+}
+
+.lightbox-video {
+    max-width: 100%;
+    max-height: 87vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.7);
+    transition: opacity 0.20s ease;
+    will-change: opacity;
+    outline: none;
+    border-radius: 4px; 
+}
+
+@media (max-width: 768px) {
+    .lightbox-video {
+        max-height: 70vh;
+    }
+}
