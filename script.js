@@ -74,14 +74,15 @@ const projetos = [
 
 /* ========== SISTEMA DE PASTAS – CLIQUE NAS CAPAS (IMG + VÍDEO) ========== */
 let videoFullscreenAtual = null;
-let retryPauseHandler = null; // para evitar múltiplos handlers
+let retryPauseHandler = null;
 
-// Restaura o estado mudo e tenta retomar a reprodução
+// Função que restaura o estado mudo e garante que o vídeo continue tocando
 function restaurarAposFullscreen(video) {
     if (!video) return;
     video.muted = true;
 
-    function tentarPlay() {
+    // Tenta imediatamente retomar a reprodução
+    const tentarPlay = () => {
         if (video.paused) {
             video.play().catch(() => {
                 // Se falhar, ouvimos o próximo evento 'pause' (causado pelo navegador)
@@ -95,8 +96,18 @@ function restaurarAposFullscreen(video) {
                 }
             });
         }
-    }
+    };
+
     tentarPlay();
+    // Garantia extra: alguns navegadores disparam 'pause' após sair do fullscreen
+    if (!retryPauseHandler) {
+        retryPauseHandler = () => {
+            video.play().catch(() => {});
+            video.removeEventListener('pause', retryPauseHandler);
+            retryPauseHandler = null;
+        };
+        video.addEventListener('pause', retryPauseHandler, { once: true });
+    }
 }
 
 // Listener global de fullscreen (desktop / Android)
@@ -106,8 +117,8 @@ function onFullscreenChange() {
         if (videoFullscreenAtual &&
             (document.fullscreenElement === videoFullscreenAtual ||
              document.webkitFullscreenElement === videoFullscreenAtual)) {
+            // Desmuta para ativar o som
             videoFullscreenAtual.muted = false;
-            videoFullscreenAtual.play().catch(() => {});
         }
     } else {
         // Saiu do fullscreen
@@ -137,24 +148,24 @@ document.querySelectorAll('.galeria-item').forEach(item => {
         if (video) {
             e.preventDefault();
 
-            // Reinicia do começo
-            video.currentTime = 0;
+            // NÃO reiniciamos o vídeo – continua de onde está
             videoFullscreenAtual = video;
 
-            // Estratégia: desmutar agora (o áudio só será ouvido quando a tela cheia assumir)
+            // Já desmuta para ter som ao entrar em fullscreen
             video.muted = false;
+
+            // Garante que está tocando (pode já estar em autoplay mudo)
             video.play().catch(() => {});
 
-            // Solicita o fullscreen
+            // Solicita o fullscreen adequado para cada plataforma
             if (video.webkitEnterFullscreen) {
-                // iOS – o método já inicia a reprodução no player nativo
+                // iOS – o player nativo já lida com áudio e reprodução
                 video.webkitEnterFullscreen();
             } else if (video.requestFullscreen) {
                 video.requestFullscreen();
             } else if (video.msRequestFullscreen) {
                 video.msRequestFullscreen();
             }
-            // Se nenhum método funcionar, mantemos o vídeo tocando com som inline (fallback)
 
             return;
         }
