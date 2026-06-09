@@ -75,14 +75,29 @@ const projetos = [
 /* ========== SISTEMA DE PASTAS – CLIQUE NAS CAPAS (IMG + VÍDEO) ========== */
 let videoFullscreenAtual = null;
 
-// Listener global para restaurar mute e retomar autoplay ao sair do fullscreen
+// Listener global para controlar mute ao entrar/sair do fullscreen
 function onFullscreenChange() {
-    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+    // Entrou em fullscreen?
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+        // Se temos um vídeo registrado e ele entrou em fullscreen
+        if (videoFullscreenAtual && 
+            (document.fullscreenElement === videoFullscreenAtual || 
+             document.webkitFullscreenElement === videoFullscreenAtual)) {
+            // Agora sim, desmuta com segurança
+            videoFullscreenAtual.muted = false;
+        }
+    } else {
         // Saiu do fullscreen
         if (videoFullscreenAtual) {
             videoFullscreenAtual.muted = true;
-            // Retoma a reprodução automaticamente (em loop mudo)
-            videoFullscreenAtual.play().catch(err => console.warn('Falha ao retomar reprodução:', err));
+            // Pequeno delay para garantir que o navegador liberou o vídeo
+            setTimeout(() => {
+                if (videoFullscreenAtual.paused) {
+                    videoFullscreenAtual.play().catch(err => 
+                        console.warn('Falha ao retomar reprodução:', err)
+                    );
+                }
+            }, 100);
             videoFullscreenAtual = null;
         }
     }
@@ -92,39 +107,47 @@ document.addEventListener('fullscreenchange', onFullscreenChange);
 document.addEventListener('webkitfullscreenchange', onFullscreenChange);
 
 document.querySelectorAll('.galeria-item').forEach(item => {
-    // Garantir que o clique funcione mesmo se o usuário tocar diretamente no vídeo
     item.addEventListener('click', function(e) {
         const video = item.querySelector('video');
         const img = item.querySelector('img');
 
         if (video) {
-            e.preventDefault();  // Evita qualquer comportamento padrão do navegador
+            e.preventDefault();
 
-            // Reinicia o vídeo do começo
+            // Pausa o autoplay atual para evitar vazamento de áudio
+            video.pause();
+            // Reinicia do começo
             video.currentTime = 0;
-            // Desmuta para tocar com som no fullscreen
-            video.muted = false;
+            // Mantém mudo por enquanto (será desmutado quando entrar em fullscreen)
+            video.muted = true;
             videoFullscreenAtual = video;
 
-            // Tenta fullscreen padrão (Android, desktop)
-            if (video.requestFullscreen) {
-                video.requestFullscreen().catch(() => {});
-            } else if (video.webkitRequestFullscreen) {
-                video.webkitRequestFullscreen();
-            } else if (video.webkitEnterFullscreen) {
-                // iOS (Safari) – método específico para vídeos
-                video.webkitEnterFullscreen();
-            } else if (video.msRequestFullscreen) {
-                video.msRequestFullscreen();
-            }
+            // Tenta fullscreen
+            const requestPromise = video.requestFullscreen ? 
+                video.requestFullscreen() : 
+                video.webkitRequestFullscreen ? 
+                    video.webkitRequestFullscreen() : 
+                    video.webkitEnterFullscreen ? 
+                        video.webkitEnterFullscreen() : 
+                        video.msRequestFullscreen ? 
+                            video.msRequestFullscreen() : 
+                            Promise.reject('Fullscreen não suportado');
 
-            // Inicia a reprodução (o fullscreen pode ativar automaticamente o play, mas é seguro chamar)
-            video.play().catch(err => console.warn('Reprodução bloqueada:', err));
+            // Após solicitar fullscreen, tenta dar play (ainda mudo)
+            requestPromise
+                .then(() => {
+                    // O fullscreen foi aceito, agora podemos dar play (mudo ainda)
+                    return video.play();
+                })
+                .catch(() => {
+                    // Fallback para navegadores que não retornam promessa (webkitEnterFullscreen)
+                    video.play().catch(() => {});
+                });
+
             return;
         }
 
         if (img) {
-            // Comportamento normal do lightbox para imagens
             const idProjeto = parseInt(item.dataset.projeto, 10);
             const projeto = projetos[idProjeto];
             if (projeto && projeto.imagens.length > 0) {
@@ -132,32 +155,7 @@ document.querySelectorAll('.galeria-item').forEach(item => {
             }
         }
     });
-
-    // Fallback para dispositivos que não disparam 'click' corretamente
-    item.addEventListener('touchend', function(e) {
-        // Se já tratado pelo click, ignorar (evita duplo processamento)
-        if (e.defaultPrevented) return;
-        const video = item.querySelector('video');
-        if (video) {
-            e.preventDefault();
-            video.currentTime = 0;
-            video.muted = false;
-            videoFullscreenAtual = video;
-
-            if (video.requestFullscreen) {
-                video.requestFullscreen().catch(() => {});
-            } else if (video.webkitRequestFullscreen) {
-                video.webkitRequestFullscreen();
-            } else if (video.webkitEnterFullscreen) {
-                video.webkitEnterFullscreen();
-            } else if (video.msRequestFullscreen) {
-                video.msRequestFullscreen();
-            }
-            video.play().catch(err => console.warn('Reprodução bloqueada:', err));
-        }
-    });
 });
-
 /* ========== Scroll com blur (APENAS mobile) ========== */
 document.querySelectorAll('.header-center nav a[href^="#"]').forEach(link => {
     link.addEventListener('click', function (e) {
