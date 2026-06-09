@@ -74,46 +74,60 @@ const projetos = [
 
 /* ========== SISTEMA DE PASTAS – CLIQUE NAS CAPAS (IMG + VÍDEO) ========== */
 let videoFullscreenAtual = null;
+let retryPauseHandler = null; // para evitar múltiplos handlers
 
-// Listener global para controlar mute e retomada de reprodução
+// Restaura o estado mudo e tenta retomar a reprodução
+function restaurarAposFullscreen(video) {
+    if (!video) return;
+    video.muted = true;
+
+    function tentarPlay() {
+        if (video.paused) {
+            video.play().catch(() => {
+                // Se falhar, ouvimos o próximo evento 'pause' (causado pelo navegador)
+                if (!retryPauseHandler) {
+                    retryPauseHandler = () => {
+                        video.play().catch(() => {});
+                        video.removeEventListener('pause', retryPauseHandler);
+                        retryPauseHandler = null;
+                    };
+                    video.addEventListener('pause', retryPauseHandler, { once: true });
+                }
+            });
+        }
+    }
+    tentarPlay();
+}
+
+// Listener global de fullscreen (desktop / Android)
 function onFullscreenChange() {
     if (document.fullscreenElement || document.webkitFullscreenElement) {
-        // ENTROU em fullscreen
+        // Entrou em fullscreen
         if (videoFullscreenAtual &&
             (document.fullscreenElement === videoFullscreenAtual ||
              document.webkitFullscreenElement === videoFullscreenAtual)) {
-            // Agora que está em tela cheia, desmuta com segurança
             videoFullscreenAtual.muted = false;
-            // Garante que está tocando (pode já estar em loop mudo)
             videoFullscreenAtual.play().catch(() => {});
         }
     } else {
-        // SAIU do fullscreen
+        // Saiu do fullscreen
         if (videoFullscreenAtual) {
-            // Volta a mutar
-            videoFullscreenAtual.muted = true;
-
-            // Força retomada da reprodução com retry, pois alguns navegadores pausam ao sair
-            function retryPlay() {
-                if (videoFullscreenAtual.paused) {
-                    videoFullscreenAtual.play()
-                        .then(() => {
-                            videoFullscreenAtual = null;
-                        })
-                        .catch(() => {
-                            setTimeout(retryPlay, 150);
-                        });
-                } else {
-                    videoFullscreenAtual = null;
-                }
-            }
-            retryPlay();
+            restaurarAposFullscreen(videoFullscreenAtual);
+            videoFullscreenAtual = null;
         }
     }
 }
 
 document.addEventListener('fullscreenchange', onFullscreenChange);
 document.addEventListener('webkitfullscreenchange', onFullscreenChange);
+
+// Suporte a iOS (player nativo)
+document.addEventListener('webkitendfullscreen', function() {
+    if (videoFullscreenAtual) {
+        restaurarAposFullscreen(videoFullscreenAtual);
+        videoFullscreenAtual = null;
+    }
+}, false);
 
 document.querySelectorAll('.galeria-item').forEach(item => {
     item.addEventListener('click', function(e) {
@@ -125,28 +139,22 @@ document.querySelectorAll('.galeria-item').forEach(item => {
 
             // Reinicia do começo
             video.currentTime = 0;
-            // Mantém mudo por enquanto (será desmutado ao entrar em fullscreen)
-            video.muted = true;
             videoFullscreenAtual = video;
 
-            // Garante que o vídeo está tocando (autoplay mudo)
+            // Estratégia: desmutar agora (o áudio só será ouvido quando a tela cheia assumir)
+            video.muted = false;
             video.play().catch(() => {});
 
             // Solicita o fullscreen
-            const requestPromise = video.requestFullscreen ?
-                video.requestFullscreen() :
-                video.webkitRequestFullscreen ?
-                    video.webkitRequestFullscreen() :
-                    video.webkitEnterFullscreen ?
-                        video.webkitEnterFullscreen() :
-                        video.msRequestFullscreen ?
-                            video.msRequestFullscreen() :
-                            Promise.reject('Fullscreen não suportado');
-
-            // Pequeno fallback para navegadores que não retornam promessa (iOS)
-            requestPromise.catch(() => {
-                video.play().catch(() => {});
-            });
+            if (video.webkitEnterFullscreen) {
+                // iOS – o método já inicia a reprodução no player nativo
+                video.webkitEnterFullscreen();
+            } else if (video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if (video.msRequestFullscreen) {
+                video.msRequestFullscreen();
+            }
+            // Se nenhum método funcionar, mantemos o vídeo tocando com som inline (fallback)
 
             return;
         }
