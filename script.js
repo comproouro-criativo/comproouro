@@ -29,8 +29,8 @@ const projetos = [
     {
         nome: 'Projeto 2',
         imagens: [
-            'imagens/elvis.jpg',
             'imagens/elvis1.jpg',
+            'imagens/elvis.jpg',
             'imagens/elvis2.jpg',
             'imagens/elvis3.jpg'
         ]

@@ -1992,61 +1992,36 @@ body {
         }
     }
 
-    /* ========== GALERIA MOBILE (ATÉ 480px) – TOPO DO VÍDEO REDUZIDO, TÍTULO COM ESPAÇO ========== */
-    .galeria-feed {
-        display: grid !important;
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 0.5rem !important;
-        /* espaço entre as imagens */
-        padding-top: 0rem !important;
-        /* espaço acima do vídeo, bem pequeno */
-        padding-right: 0.5rem !important;
-        /* lateral direita */
-        padding-bottom: 0.5rem !important;
-        /* parte de baixo (já estava bom) */
-        padding-left: 0.5rem !important;
-        /* lateral esquerda */
-        width: 100% !important;
-        margin-bottom: 0 !important;
-    }
+/* ========== GALERIA MOBILE (ATÉ 480px) ========== */
+.galeria-feed {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 0.5rem !important;
+    padding: 0.5rem !important;
+    width: 100% !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+}
 
-    /* VÍDEO – sem cortes, tamanho original */
-    .galeria-item.item-video {
-        grid-column: span 2 !important;
-        width: 100% !important;
-        height: auto !important;
-        max-height: none !important;
-        overflow: visible !important;
-    }
+.galeria-item {
+    width: 100% !important;
+    height: 70vh !important;
+    overflow: hidden !important;
+}
 
-    .galeria-item.item-video video {
-        width: 100% !important;
-        height: auto !important;
-        max-height: none !important;
-        object-fit: contain !important;
-        display: block !important;
-    }
+.galeria-item video,
+.galeria-item img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+}
 
-    /* IMAGENS – altura controlada */
-    .galeria-item {
-        width: 100% !important;
-        height: auto !important;
-        max-height: 600px !important;
-        /* ← ajuste a altura das imagens se quiser */
-        overflow: hidden !important;
-    }
-
-    .galeria-item img {
-        width: 100% !important;
-        height: auto !important;
-        max-height: 100% !important;
-        object-fit: contain !important;
-        display: block !important;
-    }
-
-    .galeria-item.tall {
-        grid-row: span 1 !important;
-    }
+.galeria-item.tall,
+.galeria-item.wide {
+    grid-row: span 1 !important;
+    grid-column: span 1 !important;
+}
 
     .galeria-item.wide {
         grid-column: span 1 !important;
