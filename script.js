@@ -78,7 +78,6 @@ let videoFullscreenAtual = null;
 // Listener global para restaurar mute ao sair do fullscreen
 function onFullscreenChange() {
     if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-        // Saiu do fullscreen
         if (videoFullscreenAtual) {
             videoFullscreenAtual.muted = true;
             videoFullscreenAtual = null;
@@ -90,36 +89,68 @@ document.addEventListener('fullscreenchange', onFullscreenChange);
 document.addEventListener('webkitfullscreenchange', onFullscreenChange);
 
 document.querySelectorAll('.galeria-item').forEach(item => {
-    item.addEventListener('click', () => {
-        // Se o item contém um vídeo, abrimos diretamente em fullscreen COM SOM
+    // Garantir que o clique funcione mesmo se o usuário tocar diretamente no vídeo
+    item.addEventListener('click', function(e) {
         const video = item.querySelector('video');
+        const img = item.querySelector('img');
+
         if (video) {
+            e.preventDefault();  // Evita qualquer comportamento padrão do navegador
+
             // Reinicia o vídeo do começo
             video.currentTime = 0;
-            // Habilita o som
+            // Desmuta para tocar com som no fullscreen
             video.muted = false;
-            // Guarda referência para restaurar mute ao sair
             videoFullscreenAtual = video;
-            
-            // Entra em fullscreen
+
+            // Tenta fullscreen padrão (Android, desktop)
             if (video.requestFullscreen) {
-                video.requestFullscreen();
-            } else if (video.webkitRequestFullscreen) { /* Safari */
+                video.requestFullscreen().catch(() => {});
+            } else if (video.webkitRequestFullscreen) {
                 video.webkitRequestFullscreen();
-            } else if (video.msRequestFullscreen) { /* IE11 */
+            } else if (video.webkitEnterFullscreen) {
+                // iOS (Safari) – método específico para vídeos
+                video.webkitEnterFullscreen();
+            } else if (video.msRequestFullscreen) {
                 video.msRequestFullscreen();
             }
-            
-            // Reproduz com áudio (o clique do usuário permite)
-            video.play().catch(err => console.warn('Reprodução com som bloqueada:', err));
+
+            // Inicia a reprodução (o fullscreen pode ativar automaticamente o play, mas é seguro chamar)
+            video.play().catch(err => console.warn('Reprodução bloqueada:', err));
             return;
         }
 
-        // Caso contrário, é imagem → abre o lightbox normalmente
-        const idProjeto = parseInt(item.dataset.projeto, 10);
-        const projeto = projetos[idProjeto];
-        if (projeto && projeto.imagens.length > 0) {
-            abrirLightboxProjeto(projeto.imagens, 0);
+        if (img) {
+            // Comportamento normal do lightbox para imagens
+            const idProjeto = parseInt(item.dataset.projeto, 10);
+            const projeto = projetos[idProjeto];
+            if (projeto && projeto.imagens.length > 0) {
+                abrirLightboxProjeto(projeto.imagens, 0);
+            }
+        }
+    });
+
+    // Fallback para dispositivos que não disparam 'click' corretamente
+    item.addEventListener('touchend', function(e) {
+        // Se já tratado pelo click, ignorar (evita duplo processamento)
+        if (e.defaultPrevented) return;
+        const video = item.querySelector('video');
+        if (video) {
+            e.preventDefault();
+            video.currentTime = 0;
+            video.muted = false;
+            videoFullscreenAtual = video;
+
+            if (video.requestFullscreen) {
+                video.requestFullscreen().catch(() => {});
+            } else if (video.webkitRequestFullscreen) {
+                video.webkitRequestFullscreen();
+            } else if (video.webkitEnterFullscreen) {
+                video.webkitEnterFullscreen();
+            } else if (video.msRequestFullscreen) {
+                video.msRequestFullscreen();
+            }
+            video.play().catch(err => console.warn('Reprodução bloqueada:', err));
         }
     });
 });

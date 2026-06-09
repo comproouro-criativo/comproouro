@@ -372,13 +372,15 @@ video,
 
 /* ========== NOVO OVERLAY COM TEXTO DO PROJETO (substitui o "+") ========== */
 .galeria-item::after {
-    content: attr(data-title);                /* pega o texto do atributo HTML */
+    content: attr(data-title);
+    /* pega o texto do atributo HTML */
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.55);          /* escurecimento leve */
+    background: rgba(0, 0, 0, 0.55);
+    /* escurecimento leve */
     color: #f6f6f6;
     display: flex;
     align-items: center;
@@ -1311,6 +1313,35 @@ body {
    ============================================================ */
 @media (max-width: 480px) {
 
+    /* ========== MOBILE: BARRA INFERIOR FIXA COM NOME DO PROJETO ========== */
+    .galeria-item::after {
+        content: attr(data-title);
+        /* mantém o texto do atributo */
+        position: absolute;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        /* altura definida pelo conteúdo */
+        color: #f6f6f6;
+        font-size: 0.45rem;
+        /* letra pequena */
+        font-weight: 900;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        padding: 0.4rem 0.9rem;
+        opacity: 0.6 !important;
+        /* sempre visível */
+        pointer-events: none;
+        white-space: normal;
+        word-break: break-word;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        line-height: 1.2;
+    }
 
     /* =========================================
        NOVA BARRA SUPERIOR MOBILE (LOGO + FLN + 2026)
@@ -1530,6 +1561,8 @@ body {
     .sub-header-portfolio a {
         font-size: 0.62rem;
         margin-top: -0.7rem;
+        margin-bottom: -0.7rem;
+
     }
 
     .split-texto h2 {
@@ -1962,64 +1995,75 @@ body {
         }
     }
 
-/* ========== GALERIA MOBILE (ATÉ 480px) – TOPO DO VÍDEO REDUZIDO, TÍTULO COM ESPAÇO ========== */
-.galeria-feed {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.5rem !important;                     /* espaço entre as imagens */
-    padding-top: 0rem !important;              /* espaço acima do vídeo, bem pequeno */
-    padding-right: 0.5rem !important;            /* lateral direita */
-    padding-bottom: 0.5rem !important;           /* parte de baixo (já estava bom) */
-    padding-left: 0.5rem !important;             /* lateral esquerda */
-    width: 100% !important;
-    margin-bottom: 0 !important;
-}
+    /* ========== GALERIA MOBILE (ATÉ 480px) – TOPO DO VÍDEO REDUZIDO, TÍTULO COM ESPAÇO ========== */
+    .galeria-feed {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.5rem !important;
+        /* espaço entre as imagens */
+        padding-top: 0rem !important;
+        /* espaço acima do vídeo, bem pequeno */
+        padding-right: 0.5rem !important;
+        /* lateral direita */
+        padding-bottom: 0.5rem !important;
+        /* parte de baixo (já estava bom) */
+        padding-left: 0.5rem !important;
+        /* lateral esquerda */
+        width: 100% !important;
+        margin-bottom: 0 !important;
+    }
 
-/* VÍDEO – sem cortes, tamanho original */
-.galeria-item.item-video {
-    grid-column: span 2 !important;
-    width: 100% !important;
-    height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-}
-.galeria-item.item-video video {
-    width: 100% !important;
-    height: auto !important;
-    max-height: none !important;
-    object-fit: contain !important;
-    display: block !important;
-}
+    /* VÍDEO – sem cortes, tamanho original */
+    .galeria-item.item-video {
+        grid-column: span 2 !important;
+        width: 100% !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
 
-/* IMAGENS – altura controlada */
-.galeria-item {
-    width: 100% !important;
-    height: auto !important;
-    max-height: 600px !important;               /* ← ajuste a altura das imagens se quiser */
-    overflow: hidden !important;
-}
-.galeria-item img {
-    width: 100% !important;
-    height: auto !important;
-    max-height: 100% !important;
-    object-fit: contain !important;
-    display: block !important;
-}
+    .galeria-item.item-video video {
+        width: 100% !important;
+        height: auto !important;
+        max-height: none !important;
+        object-fit: contain !important;
+        display: block !important;
+    }
 
-.galeria-item.tall {
-    grid-row: span 1 !important;
-}
-.galeria-item.wide {
-    grid-column: span 1 !important;
-}
+    /* IMAGENS – altura controlada */
+    .galeria-item {
+        width: 100% !important;
+        height: auto !important;
+        max-height: 600px !important;
+        /* ← ajuste a altura das imagens se quiser */
+        overflow: hidden !important;
+    }
 
-/* Restaura o respiro superior da seção (título e links) */
-#portfolio {
-    padding-top: 3rem !important;     /* ← espaço acima do título "Projetos" */
-    padding-bottom: 0 !important;     /* mantém o que já funcionou embaixo */
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-}
+    .galeria-item img {
+        width: 100% !important;
+        height: auto !important;
+        max-height: 100% !important;
+        object-fit: contain !important;
+        display: block !important;
+    }
+
+    .galeria-item.tall {
+        grid-row: span 1 !important;
+    }
+
+    .galeria-item.wide {
+        grid-column: span 1 !important;
+    }
+
+    /* Restaura o respiro superior da seção (título e links) */
+    #portfolio {
+        padding-top: 3rem !important;
+        /* ← espaço acima do título "Projetos" */
+        padding-bottom: 0 !important;
+        /* mantém o que já funcionou embaixo */
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
 
     /* ============================================================
    TABLET PEQUENO PORTRAIT — 600px a 768px
@@ -2501,7 +2545,8 @@ body {
     transition: opacity 0.20s ease;
     will-change: opacity;
     outline: none;
-    border-radius: 4px; /* Opcional, para acabamento */
+    border-radius: 4px;
+    /* Opcional, para acabamento */
 }
 
 /* Responsivo para o vídeo no celular */
@@ -2522,7 +2567,7 @@ body {
     transition: opacity 0.20s ease;
     will-change: opacity;
     outline: none;
-    border-radius: 4px; 
+    border-radius: 4px;
 }
 
 @media (max-width: 768px) {
