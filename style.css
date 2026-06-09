@@ -1962,6 +1962,68 @@ body {
    ============================================================ */
     @media (min-width: 600px) and (max-width: 768px) and (orientation: portrait) {
 
+/* ========== GALERIA MOBILE REDESENHADA ========== */
+/* Insira isto dentro do @media (max-width: 480px) */
+
+.galeria-feed {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 colunas: cada uma = 50% de largura */
+    gap: 0.8rem;
+    /* Espaçamento simétrico entre itens */
+    padding: 0 0.8rem;
+    /* Padding simétrico nas laterais */
+    width: 100%;
+    margin-bottom: 0;
+}
+
+/* VÍDEO: ocupa 2 colunas, 100% de largura, altura proporcional */
+.galeria-item.item-video {
+    grid-column: span 2;
+    /* Ocupa as 2 colunas inteiras */
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    /* Mantém proporção original 16:9 */
+    height: auto;
+}
+
+.galeria-item.item-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* IMAGENS: 50% de largura cada, mantêm tamanho original */
+.galeria-item {
+    width: 100%;
+    /* Ocupa a coluna inteira (50% da tela, pois grid tem 2 colunas) */
+    height: auto;
+    /* Altura automática conforme a proporção original da imagem */
+    overflow: hidden;
+}
+
+.galeria-item img {
+    width: 100%;
+    /* Ajusta à largura disponível (50% da tela) */
+    height: auto;
+    /* Mantém a proporção original da imagem */
+    object-fit: contain;
+    /* Mostra a imagem inteira sem cortar */
+    display: block;
+}
+
+/* Remove modificadores de tamanho do desktop */
+.galeria-item.tall {
+    grid-row: span 1;
+    /* Volta para 1 linha */
+    height: auto;
+}
+
+.galeria-item.wide {
+    grid-column: span 1;
+    /* Volta para 1 coluna */
+    height: auto;
+}
 
         .split-container {
             flex-direction: row;
