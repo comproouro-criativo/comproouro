@@ -346,12 +346,11 @@ video,
 .galeria-feed {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: minmax(250px, 1fr);
     gap: 0.6rem;
     padding: 0;
-    grid-auto-flow: auto;
     width: 100%;
     margin-bottom: -2rem;
+    align-items: start;
 }
 
 .galeria-item {
@@ -1196,10 +1195,6 @@ body {
         font-size: 0.7rem;
     }
 
-    .galeria-feed img:last-child:nth-child(odd) {
-        grid-column: 1 / -1;
-    }
-
     #servicos {
         padding-top: 60px !important;
         /* Aumente este valor (ex: 100px, 120px, 140px) até ficar ao seu gosto */
@@ -1221,12 +1216,6 @@ body {
     .secao h2 {
         font-size: 1.5rem;
         letter-spacing: 3px;
-    }
-
-    .galeria-feed {
-        grid-template-columns: repeat(2, 1fr);
-        grid-auto-rows: 180px;
-        gap: 0.4rem;
     }
 
     .split-container {
@@ -1309,11 +1298,6 @@ body {
         font-size: 0.72rem;
     }
 
-    .galeria-feed {
-        grid-template-columns: repeat(2, 1fr);
-        grid-auto-rows: minmax(180px, 1fr);
-        gap: 0.4rem;
-    }
 }
 
 /* ============================================================
@@ -1557,13 +1541,6 @@ body {
 
     }
 
-    @media (max-width: 380px) {
-        .galeria-feed {
-            grid-template-columns: 1fr;
-            grid-auto-rows: auto;
-        }
-    }
-
     .split-img {
         height: auto;
     }
@@ -1675,14 +1652,6 @@ body {
         overflow: hidden;
     }
 
-    .galeria-feed {
-        grid-template-columns: repeat(2, fr);
-        grid-auto-rows: 120px;
-        gap: 0.6rem;
-        margin-top: 0rem;
-        margin-bottom: -1.6rem;
-    }
-
     /* Regras específicas para desktop (acima de 768px) */
     @media (min-width: 769px) {
         .rodape {
@@ -1745,10 +1714,6 @@ body {
         .header-center nav a {
             font-size: 0.75rem;
             letter-spacing: 1.6px;
-        }
-
-        .galeria-feed {
-            grid-auto-rows: auto;
         }
 
         .split-container {
@@ -1997,12 +1962,6 @@ body {
    ============================================================ */
     @media (min-width: 600px) and (max-width: 768px) and (orientation: portrait) {
 
-        .galeria-feed {
-            grid-template-columns: repeat(3, 1fr);
-            grid-auto-rows: 190px;
-            gap: 0.6rem;
-            padding: 0;
-        }
 
         .split-container {
             flex-direction: row;
