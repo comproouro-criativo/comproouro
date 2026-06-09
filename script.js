@@ -8,28 +8,17 @@ window.addEventListener('load', () => {
 (function () {
     const video = document.querySelector('.video-destaque video');
     if (!video) return;
+    
+    // Garante que os atributos estejam setados
     video.muted = true;
     video.playsInline = true;
-
-    function tentarPlay() {
-        const promise = video.play();
-        if (promise !== undefined) {
-            promise.catch(() => {
-                const desbloqueio = () => {
-                    video.play().catch(() => { });
-                    document.removeEventListener('touchstart', desbloqueio);
-                    document.removeEventListener('click', desbloqueio);
-                };
-                document.addEventListener('touchstart', desbloqueio, { once: true, passive: true });
-                document.addEventListener('click', desbloqueio, { once: true });
-            });
-        }
-    }
-
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-        tentarPlay();
-    } else {
-        document.addEventListener('DOMContentLoaded', tentarPlay, { once: true });
+    
+    // Confia no autoplay nativo (HTML já cuida disso)
+    // Apenas como fallback em caso de bloqueio:
+    if (video.paused) {
+        video.play().catch(() => {
+            // Silencioso - o usuário vai desbloquear ao interagir
+        });
     }
 })();
 
@@ -79,66 +68,27 @@ let pauseListener = null;
 
 // Função que insiste em manter o vídeo tocando mudo
 function keepPlaying(video) {
-    if (!video) return;
+    if (!video || video.paused === false) return; // Já está tocando
 
-    // Limpa tentativas anteriores para não acumular
-    if (retryTimer) clearTimeout(retryTimer);
-    if (pauseListener) {
-        video.removeEventListener('pause', pauseListener);
-        pauseListener = null;
-    }
-
-    const tryPlay = () => {
-        if (video.paused) {
-            video.play().then(() => {
-                // Conseguiu! Cancela qualquer retry pendente
-                if (retryTimer) {
-                    clearTimeout(retryTimer);
-                    retryTimer = null;
-                }
-                if (pauseListener) {
-                    video.removeEventListener('pause', pauseListener);
-                    pauseListener = null;
-                }
-            }).catch(() => {
-                // Ainda bloqueado, agenda nova tentativa
-                retryTimer = setTimeout(tryPlay, 200);
-            });
-        }
-    };
-
-    // Primeira tentativa imediata
-    tryPlay();
-
-    // Também escuta o evento 'pause' que pode ocorrer logo após sair do fullscreen
-    pauseListener = () => {
-        video.play().catch(() => { });
-    };
-    video.addEventListener('pause', pauseListener, { once: true });
+    // Tenta play uma única vez
+    video.play().catch(() => {
+        // Se bloqueado, espera pela próxima interação do usuário
+    });
 }
 
 // Listener global de fullscreen (desktop / Android)
 function onFullscreenChange() {
-    if (document.fullscreenElement || document.webkitFullscreenElement) {
-        // Entrou em fullscreen
-        if (videoFullscreenAtual &&
-            (document.fullscreenElement === videoFullscreenAtual ||
-                document.webkitFullscreenElement === videoFullscreenAtual)) {
-            videoFullscreenAtual.muted = false;
-            // Garante que esteja tocando (caso tenha pausado por algum motivo)
-            videoFullscreenAtual.play().catch(() => { });
-        }
-    } else {
-        // Saiu do fullscreen
-        if (videoFullscreenAtual) {
-            videoFullscreenAtual.muted = true;
-            videoFullscreenAtual.loop = true;
-            // Força o play imediatamente
-            videoFullscreenAtual.play().catch(() => {
-                keepPlaying(videoFullscreenAtual);
-            });
-            videoFullscreenAtual = null;
-        }
+    const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement;
+    
+    if (isFullscreen && videoFullscreenAtual) {
+        videoFullscreenAtual.muted = false;
+        videoFullscreenAtual.play().catch(() => {});
+    } else if (videoFullscreenAtual) {
+        videoFullscreenAtual.muted = true;
+        videoFullscreenAtual.loop = true;
+        // Apenas tenta play, sem callbacks complexos
+        videoFullscreenAtual.play().catch(() => {});
+        videoFullscreenAtual = null;
     }
 }
 
@@ -400,17 +350,22 @@ function atualizarImagemLightbox(instant = false) {
     lightboxImg.style.opacity = '0';
     if (lightboxVideo) lightboxVideo.style.opacity = '0';
 
-    setTimeout(() => {
-        if (isVideo) {
-            lightboxImg.style.display = 'none';
-            lightboxVideo.style.display = 'block';
-            lightboxVideo.muted = true;  // ← ADICIONE ISTO
-            lightboxVideo.loop = true;    // ← ADICIONE ISTO
-            lightboxVideo.querySelector('source').src = imgSrc;
-            lightboxVideo.load();
+setTimeout(() => {
+    if (isVideo) {
+        lightboxImg.style.display = 'none';
+        lightboxVideo.style.display = 'block';
+        lightboxVideo.muted = true;
+        lightboxVideo.loop = true;
+        lightboxVideo.autoplay = true;  // ← ADICIONE
+        lightboxVideo.playsInline = true;  // ← ADICIONE
+        lightboxVideo.querySelector('source').src = imgSrc;
+        lightboxVideo.load();
+        // Aguarda um pouco antes de tentar play
+        setTimeout(() => {
             lightboxVideo.play().catch(() => { });
-            lightboxVideo.style.opacity = '1';
-        } else {
+        }, 100);
+        lightboxVideo.style.opacity = '1';
+    } else {
             if (lightboxVideo) {
                 lightboxVideo.style.display = 'none';
                 lightboxVideo.pause();
@@ -456,10 +411,10 @@ function fecharLightbox() {
     imagensGaleriaGlobal = [];
     imagemAtualIndex = 0;
 
-    // NOVO: Pausa e descarrega o vídeo para economizar processamento e internet
-if (lightboxVideo) {
-    lightboxVideo.pause();
-}
+    if (lightboxVideo) {
+        lightboxVideo.pause();
+        lightboxVideo.currentTime = 0;  // ← RESETA PARA O COMEÇO
+    }
 
     const container = document.getElementById('lightboxThumbnails');
     if (container) container.innerHTML = '';
@@ -870,35 +825,26 @@ document.addEventListener('touchstart', function () {
 
 /* ========== Gerenciamento inteligente e otimizado do vídeo Sobre Nós ========== */
 document.addEventListener('DOMContentLoaded', () => {
-    const secaoSobre = document.getElementById('quem-somos');
     const videoSobre = document.getElementById('video-sobre');
+    if (!videoSobre) return;
 
-    if (!secaoSobre || !videoSobre) return;
+    // Garante que os atributos HTML funcionem
+    videoSobre.muted = true;
+    videoSobre.loop = true;
+    videoSobre.playsInline = true;
 
-    // Monitora a visibilidade da seção no viewport do usuário
-    const observerVideo = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Se os metadados do vídeo não foram inicializados, força o carregamento inicial
-                if (videoSobre.readyState === 0) {
-                    videoSobre.load();
-                }
-                // Executa a reprodução assíncrona de forma segura contra bloqueios de navegadores
-                videoSobre.play().catch(() => {
-                    /* Fallback silencioso - resolvido pelo uso mandatório da tag 'muted' */
-                });
-            } else {
-                // Fora da tela? Pausa imediatamente o vídeo economizando processamento de hardware
-                if (!videoSobre.paused) {
+    // Simples Intersection Observer só para pausar fora da tela
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting && !videoSobre.paused) {
                     videoSobre.pause();
                 }
-            }
-        });
-    }, {
-        root: null,        // Usa o viewport padrão do navegador
-        rootMargin: '0px',
-        threshold: 0.1     // Gatilho ativa assim que 10% da seção desponta na tela
-    });
+                // Não força play aqui - deixa o autoplay HTML fazer
+            });
+        },
+        { threshold: 0.1 }
+    );
 
-    observerVideo.observe(secaoSobre);
+    observer.observe(videoSobre);
 });
