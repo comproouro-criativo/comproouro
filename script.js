@@ -52,7 +52,7 @@ const projetos = [
             'imagens/elvis.jpg',
             'imagens/elvis1.jpg',
             'imagens/elvis2.jpg',
-               'imagens/elvis3.jpg'
+            'imagens/elvis3.jpg'
         ]
     },
     // [Posição 2] - O projeto do Vídeo (Deve ser o ÚLTIMO da lista)
@@ -63,7 +63,7 @@ const projetos = [
         ]
     },
 
-        {
+    {
         nome: 'Modelo',
         imagens: [
             'imagens/modelo.jpg',
@@ -112,7 +112,7 @@ function keepPlaying(video) {
 
     // Também escuta o evento 'pause' que pode ocorrer logo após sair do fullscreen
     pauseListener = () => {
-        video.play().catch(() => {});
+        video.play().catch(() => { });
     };
     video.addEventListener('pause', pauseListener, { once: true });
 }
@@ -123,16 +123,20 @@ function onFullscreenChange() {
         // Entrou em fullscreen
         if (videoFullscreenAtual &&
             (document.fullscreenElement === videoFullscreenAtual ||
-             document.webkitFullscreenElement === videoFullscreenAtual)) {
+                document.webkitFullscreenElement === videoFullscreenAtual)) {
             videoFullscreenAtual.muted = false;
             // Garante que esteja tocando (caso tenha pausado por algum motivo)
-            videoFullscreenAtual.play().catch(() => {});
+            videoFullscreenAtual.play().catch(() => { });
         }
     } else {
         // Saiu do fullscreen
         if (videoFullscreenAtual) {
             videoFullscreenAtual.muted = true;
-            keepPlaying(videoFullscreenAtual);
+            videoFullscreenAtual.loop = true;
+            // Força o play imediatamente
+            videoFullscreenAtual.play().catch(() => {
+                keepPlaying(videoFullscreenAtual);
+            });
             videoFullscreenAtual = null;
         }
     }
@@ -142,7 +146,7 @@ document.addEventListener('fullscreenchange', onFullscreenChange);
 document.addEventListener('webkitfullscreenchange', onFullscreenChange);
 
 // Suporte a iOS (player nativo)
-document.addEventListener('webkitendfullscreen', function() {
+document.addEventListener('webkitendfullscreen', function () {
     if (videoFullscreenAtual) {
         videoFullscreenAtual.muted = true;
         keepPlaying(videoFullscreenAtual);
@@ -151,7 +155,7 @@ document.addEventListener('webkitendfullscreen', function() {
 }, false);
 
 document.querySelectorAll('.galeria-item').forEach(item => {
-    item.addEventListener('click', function(e) {
+    item.addEventListener('click', function (e) {
         const video = item.querySelector('video');
         const img = item.querySelector('img');
 
@@ -163,7 +167,7 @@ document.querySelectorAll('.galeria-item').forEach(item => {
 
             // Desmuta para ter som na tela cheia
             video.muted = false;
-            video.play().catch(() => {});
+            video.play().catch(() => { });
 
             // Fullscreen adequado
             if (video.webkitEnterFullscreen) {
@@ -377,8 +381,8 @@ function atualizarImagemLightbox(instant = false) {
         if (isVideo) {
             lightboxImg.style.display = 'none';
             lightboxVideo.style.display = 'block';
-lightboxVideo.querySelector('source').src = imgSrc;
-lightboxVideo.load();            lightboxVideo.play().catch(() => { });
+            lightboxVideo.querySelector('source').src = imgSrc;
+            lightboxVideo.load(); lightboxVideo.play().catch(() => { });
             lightboxVideo.style.opacity = '1';
         } else {
             if (lightboxVideo) {
@@ -400,8 +404,11 @@ lightboxVideo.load();            lightboxVideo.play().catch(() => { });
         if (isVideo) {
             lightboxImg.style.display = 'none';
             lightboxVideo.style.display = 'block';
-lightboxVideo.querySelector('source').src = imgSrc;
-lightboxVideo.load();            lightboxVideo.play().catch(() => { });
+            lightboxVideo.muted = true;  // ← ADICIONE ISTO
+            lightboxVideo.loop = true;    // ← ADICIONE ISTO
+            lightboxVideo.querySelector('source').src = imgSrc;
+            lightboxVideo.load();
+            lightboxVideo.play().catch(() => { });
             lightboxVideo.style.opacity = '1';
         } else {
             if (lightboxVideo) {
@@ -450,10 +457,9 @@ function fecharLightbox() {
     imagemAtualIndex = 0;
 
     // NOVO: Pausa e descarrega o vídeo para economizar processamento e internet
-    if (lightboxVideo) {
-        lightboxVideo.pause();
-        lightboxVideo.src = '';
-    }
+if (lightboxVideo) {
+    lightboxVideo.pause();
+}
 
     const container = document.getElementById('lightboxThumbnails');
     if (container) container.innerHTML = '';
