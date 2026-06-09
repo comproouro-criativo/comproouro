@@ -68,12 +68,20 @@ let pauseListener = null;
 
 // Função que insiste em manter o vídeo tocando mudo
 function keepPlaying(video) {
-    if (!video || video.paused === false) return; // Já está tocando
+    if (!video) return;
+    if (!video.paused) return; // Já está tocando, não faz nada
 
-    // Tenta play uma única vez
-    video.play().catch(() => {
-        // Se bloqueado, espera pela próxima interação do usuário
-    });
+    // Tenta play com 1 retry apenas (não acumula)
+    const attempt = () => {
+        video.play().catch(() => {
+            // Se falhar, tenta UMA única vez mais após 300ms
+            setTimeout(() => {
+                video.play().catch(() => { });
+            }, 300);
+        });
+    };
+    
+    attempt();
 }
 
 // Listener global de fullscreen (desktop / Android)
@@ -81,13 +89,24 @@ function onFullscreenChange() {
     const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement;
     
     if (isFullscreen && videoFullscreenAtual) {
+        // Entrou em fullscreen
         videoFullscreenAtual.muted = false;
         videoFullscreenAtual.play().catch(() => {});
     } else if (videoFullscreenAtual) {
+        // SAIU do fullscreen - CRÍTICO para mobile
         videoFullscreenAtual.muted = true;
         videoFullscreenAtual.loop = true;
-        // Apenas tenta play, sem callbacks complexos
-        videoFullscreenAtual.play().catch(() => {});
+        
+        // Força o play imediatamente com retry
+        keepPlaying(videoFullscreenAtual);
+        
+        // Aguarda um pouco e tenta novamente se ainda estiver pausado
+        setTimeout(() => {
+            if (videoFullscreenAtual && videoFullscreenAtual.paused) {
+                videoFullscreenAtual.play().catch(() => {});
+            }
+        }, 500);
+        
         videoFullscreenAtual = null;
     }
 }
@@ -99,8 +118,18 @@ document.addEventListener('webkitfullscreenchange', onFullscreenChange);
 document.addEventListener('webkitendfullscreen', function () {
     if (videoFullscreenAtual) {
         videoFullscreenAtual.muted = true;
-        keepPlaying(videoFullscreenAtual);
-        videoFullscreenAtual = null;
+        videoFullscreenAtual.loop = true;
+        
+        // Tenta play imediatamente
+        videoFullscreenAtual.play().catch(() => {});
+        
+        // E novamente após 500ms se ainda pausado
+        setTimeout(() => {
+            if (videoFullscreenAtual && videoFullscreenAtual.paused) {
+                videoFullscreenAtual.play().catch(() => {});
+            }
+            videoFullscreenAtual = null;
+        }, 500);
     }
 }, false);
 
@@ -331,8 +360,17 @@ function atualizarImagemLightbox(instant = false) {
         if (isVideo) {
             lightboxImg.style.display = 'none';
             lightboxVideo.style.display = 'block';
+            lightboxVideo.muted = true;
+            lightboxVideo.loop = true;
+            lightboxVideo.autoplay = true;
+            lightboxVideo.playsInline = true;
             lightboxVideo.querySelector('source').src = imgSrc;
-            lightboxVideo.load(); lightboxVideo.play().catch(() => { });
+            lightboxVideo.load();
+            
+            // Aguarda carregamento antes de play
+            setTimeout(() => {
+                lightboxVideo.play().catch(() => { });
+            }, 150);
             lightboxVideo.style.opacity = '1';
         } else {
             if (lightboxVideo) {
@@ -825,26 +863,41 @@ document.addEventListener('touchstart', function () {
 
 /* ========== Gerenciamento inteligente e otimizado do vídeo Sobre Nós ========== */
 document.addEventListener('DOMContentLoaded', () => {
+    const secaoSobre = document.getElementById('quem-somos');
     const videoSobre = document.getElementById('video-sobre');
-    if (!videoSobre) return;
 
-    // Garante que os atributos HTML funcionem
+    if (!secaoSobre || !videoSobre) return;
+
+    // Força os atributos
     videoSobre.muted = true;
     videoSobre.loop = true;
     videoSobre.playsInline = true;
+    videoSobre.autoplay = true;
+    videoSobre.preload = 'metadata';
 
-    // Simples Intersection Observer só para pausar fora da tela
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting && !videoSobre.paused) {
+    // Observer para pausar/resumir
+    const observerVideo = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Na tela - carrega e toca
+                if (videoSobre.readyState === 0) {
+                    videoSobre.load();
+                }
+                if (videoSobre.paused) {
+                    videoSobre.play().catch(() => { });
+                }
+            } else {
+                // Fora da tela - pausa apenas
+                if (!videoSobre.paused) {
                     videoSobre.pause();
                 }
-                // Não força play aqui - deixa o autoplay HTML fazer
-            });
-        },
-        { threshold: 0.1 }
-    );
+            }
+        });
+    }, {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    });
 
-    observer.observe(videoSobre);
+    observerVideo.observe(secaoSobre);
 });
