@@ -1956,74 +1956,70 @@ body {
         }
     }
 
+/* ========== GALERIA MOBILE (ATÉ 480px) – TOPO DO VÍDEO REDUZIDO, TÍTULO COM ESPAÇO ========== */
+.galeria-feed {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;                     /* espaço entre as imagens */
+    padding-top: 0rem !important;              /* espaço acima do vídeo, bem pequeno */
+    padding-right: 0.5rem !important;            /* lateral direita */
+    padding-bottom: 0.5rem !important;           /* parte de baixo (já estava bom) */
+    padding-left: 0.5rem !important;             /* lateral esquerda */
+    width: 100% !important;
+    margin-bottom: 0 !important;
+}
+
+/* VÍDEO – sem cortes, tamanho original */
+.galeria-item.item-video {
+    grid-column: span 2 !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+.galeria-item.item-video video {
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
+/* IMAGENS – altura controlada */
+.galeria-item {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 600px !important;               /* ← ajuste a altura das imagens se quiser */
+    overflow: hidden !important;
+}
+.galeria-item img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+
+.galeria-item.tall {
+    grid-row: span 1 !important;
+}
+.galeria-item.wide {
+    grid-column: span 1 !important;
+}
+
+/* Restaura o respiro superior da seção (título e links) */
+#portfolio {
+    padding-top: 3rem !important;     /* ← espaço acima do título "Projetos" */
+    padding-bottom: 0 !important;     /* mantém o que já funcionou embaixo */
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
 
     /* ============================================================
    TABLET PEQUENO PORTRAIT — 600px a 768px
    ============================================================ */
     @media (min-width: 600px) and (max-width: 768px) and (orientation: portrait) {
 
-/* ========== GALERIA MOBILE REDESENHADA ========== */
-/* Insira isto dentro do @media (max-width: 480px) */
-
-.galeria-feed {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* 2 colunas: cada uma = 50% de largura */
-    gap: 0.8rem;
-    /* Espaçamento simétrico entre itens */
-    padding: 0 0.8rem;
-    /* Padding simétrico nas laterais */
-    width: 100%;
-    margin-bottom: 0;
-}
-
-/* VÍDEO: ocupa 2 colunas, 100% de largura, altura proporcional */
-.galeria-item.item-video {
-    grid-column: span 2;
-    /* Ocupa as 2 colunas inteiras */
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    /* Mantém proporção original 16:9 */
-    height: auto;
-}
-
-.galeria-item.item-video video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* IMAGENS: 50% de largura cada, mantêm tamanho original */
-.galeria-item {
-    width: 100%;
-    /* Ocupa a coluna inteira (50% da tela, pois grid tem 2 colunas) */
-    height: auto;
-    /* Altura automática conforme a proporção original da imagem */
-    overflow: hidden;
-}
-
-.galeria-item img {
-    width: 100%;
-    /* Ajusta à largura disponível (50% da tela) */
-    height: auto;
-    /* Mantém a proporção original da imagem */
-    object-fit: contain;
-    /* Mostra a imagem inteira sem cortar */
-    display: block;
-}
-
-/* Remove modificadores de tamanho do desktop */
-.galeria-item.tall {
-    grid-row: span 1;
-    /* Volta para 1 linha */
-    height: auto;
-}
-
-.galeria-item.wide {
-    grid-column: span 1;
-    /* Volta para 1 coluna */
-    height: auto;
-}
 
         .split-container {
             flex-direction: row;
