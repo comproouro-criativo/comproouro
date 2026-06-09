@@ -406,10 +406,12 @@ video,
 }
 
 /* Leve escurecimento adicional da imagem (mantido, porém mais intenso) */
-.galeria-item:hover img,
-.galeria-item:hover video {
-    filter: brightness(0.8) contrast(1);
-    transform: scale(0.99);
+@media (hover: hover) {
+    .galeria-item:hover img,
+    .galeria-item:hover video {
+        filter: brightness(0.8) contrast(1);
+        transform: scale(0.99);
+    }
 }
 
 /* ============================================================
@@ -1314,34 +1316,30 @@ body {
 @media (max-width: 480px) {
 
     /* ========== MOBILE: BARRA INFERIOR FIXA COM NOME DO PROJETO ========== */
-    .galeria-item::after {
-        content: attr(data-title);
-        /* mantém o texto do atributo */
-        position: absolute;
-        top: auto;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: auto;
-        /* altura definida pelo conteúdo */
-        color: #f6f6f6;
-        font-size: 0.45rem;
-        /* letra pequena */
-        font-weight: 900;
-        letter-spacing: 5px;
-        text-transform: uppercase;
-        padding: 0.4rem 0.9rem;
-        opacity: 0.6 !important;
-        /* sempre visível */
-        pointer-events: none;
-        white-space: normal;
-        word-break: break-word;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        line-height: 1.2;
-    }
+.galeria-item::after {
+    content: attr(data-title);
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    color: #f6f6f6;
+    font-size: 0.45rem;
+    font-weight: 900;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    padding: 0.3rem 0.9rem;
+    opacity: 0.6 !important;
+    pointer-events: none;
+    white-space: normal;
+    word-break: break-word;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.2;
+}
 
     /* =========================================
        NOVA BARRA SUPERIOR MOBILE (LOGO + FLN + 2026)

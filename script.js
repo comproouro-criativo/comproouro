@@ -75,11 +75,14 @@ const projetos = [
 /* ========== SISTEMA DE PASTAS – CLIQUE NAS CAPAS (IMG + VÍDEO) ========== */
 let videoFullscreenAtual = null;
 
-// Listener global para restaurar mute ao sair do fullscreen
+// Listener global para restaurar mute e retomar autoplay ao sair do fullscreen
 function onFullscreenChange() {
     if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        // Saiu do fullscreen
         if (videoFullscreenAtual) {
             videoFullscreenAtual.muted = true;
+            // Retoma a reprodução automaticamente (em loop mudo)
+            videoFullscreenAtual.play().catch(err => console.warn('Falha ao retomar reprodução:', err));
             videoFullscreenAtual = null;
         }
     }
