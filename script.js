@@ -72,13 +72,52 @@ const projetos = [
     },
 ];
 
-/* ========== SISTEMA DE PASTAS - NOVO ========== */
-const capasImagens = document.querySelectorAll('.galeria-feed img');
+/* ========== SISTEMA DE PASTAS – CLIQUE NAS CAPAS (IMG + VÍDEO) ========== */
+let videoFullscreenAtual = null;
 
-// Abrir lightbox DIRETO ao clicar na capa
-capasImagens.forEach((img, index) => {
-    img.addEventListener('click', () => {
-        const projeto = projetos[index];
+// Listener global para restaurar mute ao sair do fullscreen
+function onFullscreenChange() {
+    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        // Saiu do fullscreen
+        if (videoFullscreenAtual) {
+            videoFullscreenAtual.muted = true;
+            videoFullscreenAtual = null;
+        }
+    }
+}
+
+document.addEventListener('fullscreenchange', onFullscreenChange);
+document.addEventListener('webkitfullscreenchange', onFullscreenChange);
+
+document.querySelectorAll('.galeria-item').forEach(item => {
+    item.addEventListener('click', () => {
+        // Se o item contém um vídeo, abrimos diretamente em fullscreen COM SOM
+        const video = item.querySelector('video');
+        if (video) {
+            // Reinicia o vídeo do começo
+            video.currentTime = 0;
+            // Habilita o som
+            video.muted = false;
+            // Guarda referência para restaurar mute ao sair
+            videoFullscreenAtual = video;
+            
+            // Entra em fullscreen
+            if (video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if (video.webkitRequestFullscreen) { /* Safari */
+                video.webkitRequestFullscreen();
+            } else if (video.msRequestFullscreen) { /* IE11 */
+                video.msRequestFullscreen();
+            }
+            
+            // Reproduz com áudio (o clique do usuário permite)
+            video.play().catch(err => console.warn('Reprodução com som bloqueada:', err));
+            return;
+        }
+
+        // Caso contrário, é imagem → abre o lightbox normalmente
+        const idProjeto = parseInt(item.dataset.projeto, 10);
+        const projeto = projetos[idProjeto];
         if (projeto && projeto.imagens.length > 0) {
             abrirLightboxProjeto(projeto.imagens, 0);
         }
@@ -276,8 +315,8 @@ function atualizarImagemLightbox(instant = false) {
         if (isVideo) {
             lightboxImg.style.display = 'none';
             lightboxVideo.style.display = 'block';
-            lightboxVideo.src = imgSrc;
-            lightboxVideo.play().catch(() => { });
+lightboxVideo.querySelector('source').src = imgSrc;
+lightboxVideo.load();            lightboxVideo.play().catch(() => { });
             lightboxVideo.style.opacity = '1';
         } else {
             if (lightboxVideo) {
@@ -299,8 +338,8 @@ function atualizarImagemLightbox(instant = false) {
         if (isVideo) {
             lightboxImg.style.display = 'none';
             lightboxVideo.style.display = 'block';
-            lightboxVideo.src = imgSrc;
-            lightboxVideo.play().catch(() => { });
+lightboxVideo.querySelector('source').src = imgSrc;
+lightboxVideo.load();            lightboxVideo.play().catch(() => { });
             lightboxVideo.style.opacity = '1';
         } else {
             if (lightboxVideo) {
