@@ -24,16 +24,7 @@ window.addEventListener('load', () => {
 
 /* ========== DADOS DOS PROJETOS ========== */
 const projetos = [
-    // [Posição 0] - Seu primeiro projeto
-    {
-        nome: 'Projeto 1',
-        imagens: [
-            'imagens/back.jpg',
-            'imagens/back1.jpg',
-            'imagens/back2.jpg',
-            'imagens/back3.jpg'
-        ]
-    },
+
     // [Posição 1] - Seu segundo projeto (Exemplo: Noiva)
     {
         nome: 'Projeto 2',

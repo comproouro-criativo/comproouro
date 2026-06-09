@@ -410,7 +410,6 @@ video,
     .galeria-item:hover img,
     .galeria-item:hover video {
         filter: brightness(0.8) contrast(1);
-        transform: scale(0.99);
     }
 }
 
