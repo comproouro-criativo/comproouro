@@ -866,6 +866,17 @@ document.addEventListener('DOMContentLoaded', () => {
     videoSobre.autoplay = true;
     videoSobre.preload = 'metadata';
 
+    // --- INÍCIO DA CORREÇÃO DA PISCADA PRETA (SEAMLESS LOOP) ---
+    // Impede o apagão de buffer forçando o retorno milissegundos antes do fim
+    videoSobre.addEventListener('timeupdate', function() {
+        // Se faltar menos de 0.15 segundos para acabar o vídeo
+        if (this.duration && (this.duration - this.currentTime < 0.15)) {
+            this.currentTime = 0.05; // Volta pro início (0.05 evita engasgo no frame zero)
+            this.play(); // Garante que continue rodando
+        }
+    });
+    // --- FIM DA CORREÇÃO ---
+
     // Observer para pausar/resumir
     const observerVideo = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
