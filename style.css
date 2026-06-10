@@ -792,7 +792,7 @@ body {
 
 .lista-servicos li {
     font-size: 0.72rem;
-    font-weight: 800;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #fffcf6cc;
@@ -858,7 +858,7 @@ body {
 .faq-pergunta span:first-child {
     font-size: 0.72rem;
     /* Ajustado sutilmente para manter o equilíbrio visual */
-    font-weight: 800;
+    font-weight: 500;
     /* Peso Brutalista máximo */
     text-transform: uppercase;
     /* Força todas as perguntas em Caixa Alta */
@@ -889,7 +889,7 @@ body {
 
 .faq-resposta p {
     font-size: 0.82rem;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.7;
     color: #fffcf6aa;
     padding-bottom: 1rem;
@@ -921,7 +921,7 @@ body {
     width: 100%;
     font-family: inherit;
     font-size: 0.78rem;
-    font-weight: 800;
+    font-weight: 500;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #fffcf666;
@@ -1532,6 +1532,7 @@ body {
 
     .social-links-sobre {
         gap: 1.8rem;
+        margin-top: -30px;
         /* antes 2.5rem */
     }
 
@@ -1672,7 +1673,7 @@ body {
 
 
     .quem-somos-split {
-        padding-top: 4rem;
+        padding-top: 1rem;
         padding-bottom: 2rem;
         margin-top: -3em;
         /* menor no celular */
