@@ -8,11 +8,11 @@ window.addEventListener('load', () => {
 (function () {
     const video = document.querySelector('.video-destaque video');
     if (!video) return;
-    
+
     // Garante que os atributos estejam setados
     video.muted = true;
     video.playsInline = true;
-    
+
     // Confia no autoplay nativo (HTML já cuida disso)
     // Apenas como fallback em caso de bloqueio:
     if (video.paused) {
@@ -71,33 +71,33 @@ function keepPlaying(video) {
             }, 300);
         });
     };
-    
+
     attempt();
 }
 
 // Listener global de fullscreen (desktop / Android)
 function onFullscreenChange() {
     const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement;
-    
+
     if (isFullscreen && videoFullscreenAtual) {
         // Entrou em fullscreen
         videoFullscreenAtual.muted = false;
-        videoFullscreenAtual.play().catch(() => {});
+        videoFullscreenAtual.play().catch(() => { });
     } else if (videoFullscreenAtual) {
         // SAIU do fullscreen - CRÍTICO para mobile
         videoFullscreenAtual.muted = true;
         videoFullscreenAtual.loop = true;
-        
+
         // Força o play imediatamente com retry
         keepPlaying(videoFullscreenAtual);
-        
+
         // Aguarda um pouco e tenta novamente se ainda estiver pausado
         setTimeout(() => {
             if (videoFullscreenAtual && videoFullscreenAtual.paused) {
-                videoFullscreenAtual.play().catch(() => {});
+                videoFullscreenAtual.play().catch(() => { });
             }
         }, 500);
-        
+
         videoFullscreenAtual = null;
     }
 }
@@ -110,14 +110,14 @@ document.addEventListener('webkitendfullscreen', function () {
     if (videoFullscreenAtual) {
         videoFullscreenAtual.muted = true;
         videoFullscreenAtual.loop = true;
-        
+
         // Tenta play imediatamente
-        videoFullscreenAtual.play().catch(() => {});
-        
+        videoFullscreenAtual.play().catch(() => { });
+
         // E novamente após 500ms se ainda pausado
         setTimeout(() => {
             if (videoFullscreenAtual && videoFullscreenAtual.paused) {
-                videoFullscreenAtual.play().catch(() => {});
+                videoFullscreenAtual.play().catch(() => { });
             }
             videoFullscreenAtual = null;
         }, 500);
@@ -357,7 +357,7 @@ function atualizarImagemLightbox(instant = false) {
             lightboxVideo.playsInline = true;
             lightboxVideo.querySelector('source').src = imgSrc;
             lightboxVideo.load();
-            
+
             // Aguarda carregamento antes de play
             setTimeout(() => {
                 lightboxVideo.play().catch(() => { });
@@ -379,22 +379,22 @@ function atualizarImagemLightbox(instant = false) {
     lightboxImg.style.opacity = '0';
     if (lightboxVideo) lightboxVideo.style.opacity = '0';
 
-setTimeout(() => {
-    if (isVideo) {
-        lightboxImg.style.display = 'none';
-        lightboxVideo.style.display = 'block';
-        lightboxVideo.muted = true;
-        lightboxVideo.loop = true;
-        lightboxVideo.autoplay = true;  // ← ADICIONE
-        lightboxVideo.playsInline = true;  // ← ADICIONE
-        lightboxVideo.querySelector('source').src = imgSrc;
-        lightboxVideo.load();
-        // Aguarda um pouco antes de tentar play
-        setTimeout(() => {
-            lightboxVideo.play().catch(() => { });
-        }, 100);
-        lightboxVideo.style.opacity = '1';
-    } else {
+    setTimeout(() => {
+        if (isVideo) {
+            lightboxImg.style.display = 'none';
+            lightboxVideo.style.display = 'block';
+            lightboxVideo.muted = true;
+            lightboxVideo.loop = true;
+            lightboxVideo.autoplay = true;  // ← ADICIONE
+            lightboxVideo.playsInline = true;  // ← ADICIONE
+            lightboxVideo.querySelector('source').src = imgSrc;
+            lightboxVideo.load();
+            // Aguarda um pouco antes de tentar play
+            setTimeout(() => {
+                lightboxVideo.play().catch(() => { });
+            }, 100);
+            lightboxVideo.style.opacity = '1';
+        } else {
             if (lightboxVideo) {
                 lightboxVideo.style.display = 'none';
                 lightboxVideo.pause();
@@ -861,18 +861,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Força os atributos
     videoSobre.muted = true;
-    videoSobre.loop = true;
     videoSobre.playsInline = true;
     videoSobre.autoplay = true;
-    videoSobre.preload = 'metadata';
 
-    // --- INÍCIO DA CORREÇÃO DA PISCADA PRETA (SEAMLESS LOOP) ---
-    // Impede o apagão de buffer forçando o retorno milissegundos antes do fim
-    videoSobre.addEventListener('timeupdate', function() {
-        // Se faltar menos de 0.15 segundos para acabar o vídeo
-        if (this.duration && (this.duration - this.currentTime < 0.15)) {
-            this.currentTime = 0.05; // Volta pro início (0.05 evita engasgo no frame zero)
-            this.play(); // Garante que continue rodando
+    // MUDANÇA 1: Usar 'auto' permite ao navegador manter o vídeo todo na memória RAM
+    videoSobre.preload = 'auto';
+
+    // MUDANÇA 2: Desativamos o loop nativo do HTML para remover a piscada
+    videoSobre.loop = false;
+
+    // NOVO: Sistema de Loop Perfeito (Seamless Loop)
+    // Interceptamos o vídeo pouco antes do milissegundo final
+    videoSobre.addEventListener('timeupdate', function () {
+        // Quando o tempo chegar muito perto do final (0.1 segundos restando)
+        if (this.duration && this.currentTime >= this.duration - 0.1) {
+            // Volta para um valor um pouco maior que zero para evitar o lag do frame 0
+            this.currentTime = 0.05;
+            this.play().catch(() => { });
         }
     });
     // --- FIM DA CORREÇÃO ---
@@ -881,12 +886,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const observerVideo = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Na tela - carrega e toca
-                if (videoSobre.readyState === 0) {
-                    videoSobre.load();
-                }
+                // Na tela - apenas garante o play sem forçar reload
                 if (videoSobre.paused) {
-                    videoSobre.play().catch(() => { });
+                    // Adicionamos um erro silencioso no console apenas para facilitar debug futuro
+                    videoSobre.play().catch(e => console.log("Aguardando interação para play automático"));
                 }
             } else {
                 // Fora da tela - pausa apenas
