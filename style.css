@@ -407,6 +407,7 @@ video,
 
 /* Leve escurecimento adicional da imagem (mantido, porém mais intenso) */
 @media (hover: hover) {
+
     .galeria-item:hover img,
     .galeria-item:hover video {
         filter: brightness(0.8) contrast(1);
@@ -552,7 +553,7 @@ video,
     object-fit: cover;
     z-index: 1;
     pointer-events: none;
-    
+
     /* NOVO: Aceleração de hardware gráfica para evitar a tela preta no loop */
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
@@ -560,6 +561,17 @@ video,
     -webkit-backface-visibility: hidden;
     perspective: 1000px;
     background-color: transparent;
+}
+
+/* ========== CONTROLE DOS VÍDEOS SOBRE NÓS ========== */
+.video-sobre-mobile {
+    display: none !important;
+    /* Esconde o vertical no computador */
+}
+
+.video-sobre-desktop {
+    display: block !important;
+    /* Garante que o horizontal aparece no computador */
 }
 
 /* Filtro gradiente de contraste */
@@ -1314,6 +1326,18 @@ body {
         font-size: 0.72rem;
     }
 
+    /* Inverte os vídeos no celular */
+    .video-sobre-desktop {
+        display: none !important;
+        /* Esconde o horizontal no celular */
+    }
+
+    .video-sobre-mobile {
+        display: block !important;
+        /* Mostra o vertical no celular */
+    }
+
+
 }
 
 /* ============================================================
@@ -1322,30 +1346,30 @@ body {
 @media (max-width: 480px) {
 
     /* ========== MOBILE: BARRA INFERIOR FIXA COM NOME DO PROJETO ========== */
-.galeria-item::after {
-    content: attr(data-title);
-    position: absolute;
-    top: auto;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    color: #f6f6f6;
-    font-size: 0.45rem;
-    font-weight: 900;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    padding: 0.3rem 0.9rem;
-    opacity: 0.9 !important;
-    pointer-events: none;
-    white-space: normal;
-    word-break: break-word;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    line-height: 1.2;
-}
+    .galeria-item::after {
+        content: attr(data-title);
+        position: absolute;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        color: #f6f6f6;
+        font-size: 0.50rem;
+        font-weight: 1000;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        padding: 0.3rem 0.9rem;
+        opacity: 0.6 !important;
+        pointer-events: none;
+        white-space: normal;
+        word-break: break-word;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        line-height: 1.4;
+    }
 
     /* =========================================
        NOVA BARRA SUPERIOR MOBILE (LOGO + FLN + 2026)
@@ -1398,15 +1422,17 @@ body {
         text-align: center;
         white-space: nowrap;
         font-size: 0.7rem;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         color: #ffffffb5;
     }
 
     /* Dentro de @media (max-width: 480px) */
     .quem-somos-conteudo {
-        max-width: 345px;
+        max-width: 465px;
         /* diminui a largura máxima da caixa */
-        width: 88.8%;
+        width: 83%;
+        opacity: 0.74;
+
         /* deixa um respiro extra nas laterais */
     }
 
@@ -1440,9 +1466,9 @@ body {
         max-width: none;
         gap: 0.5rem;
         padding: 0.45rem 1rem;
-        margin-bottom: -5rem;
-        margin-top: 10rem;
-        opacity: 0.8;
+        margin-bottom: -12rem;
+        margin-top: 19rem;
+        opacity: 0.6;
         border-width: 1.8px;
         border-color: rgba(255, 252, 246, 0.8);
         /* ← borda com opacidade 0.8 */
@@ -1680,9 +1706,8 @@ body {
 
 
     .quem-somos-split {
-        padding-top: 1rem;
-        padding-bottom: 2rem;
-        margin-top: -3em;
+        padding-top: -1rem;
+        padding-bottom: 12rem;
         /* menor no celular */
         margin-bottom: -1rem;
     }
@@ -2000,36 +2025,37 @@ body {
         }
     }
 
-/* ========== GALERIA MOBILE (ATÉ 480px) ========== */
-.galeria-feed {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 0.5rem !important;
-    padding: 0.5rem !important;
-    width: 100% !important;
-    margin: 0 !important;
-    box-sizing: border-box !important;
-}
+    /* ========== GALERIA MOBILE (ATÉ 480px) ========== */
+    .galeria-feed {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 1.04rem !important;
+        padding: 0.4rem !important;
+        width: 100% !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+    }
 
-.galeria-item {
-    width: 100% !important;
-    height: 70vh !important;
-    overflow: hidden !important;
-}
+    .galeria-item {
+        width: 100% !important;
+        margin-top: -10px;
+        height: 35vh !important;
+        overflow: hidden !important;
+    }
 
-.galeria-item video,
-.galeria-item img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    display: block !important;
-}
+    .galeria-item video,
+    .galeria-item img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+    }
 
-.galeria-item.tall,
-.galeria-item.wide {
-    grid-row: span 1 !important;
-    grid-column: span 1 !important;
-}
+    .galeria-item.tall,
+    .galeria-item.wide {
+        grid-row: span 1 !important;
+        grid-column: span 1 !important;
+    }
 
     .galeria-item.wide {
         grid-column: span 1 !important;
@@ -2413,13 +2439,17 @@ body {
 
     .lightbox-seta svg {
         display: none;
-        /* esconde o SVG no mobile */
     }
 
-
     .lightbox-fechar {
-        display: none;
-
+        display: block;
+        /* Faz o botão voltar a aparecer */
+        top: 15px;
+        /* Ajusta a distância do topo para a tela do celular */
+        right: 20px;
+        /* Ajusta a distância da lateral */
+        font-size: 38px;
+        /* Deixa o X num tamanho excelente para o toque do dedo */
     }
 }
 

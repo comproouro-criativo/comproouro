@@ -78,51 +78,68 @@ function keepPlaying(video) {
 // Listener global de fullscreen (desktop / Android)
 function onFullscreenChange() {
     const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement;
-
+    
     if (isFullscreen && videoFullscreenAtual) {
         // Entrou em fullscreen
         videoFullscreenAtual.muted = false;
         videoFullscreenAtual.play().catch(() => { });
     } else if (videoFullscreenAtual) {
-        // SAIU do fullscreen - CRÍTICO para mobile
-        videoFullscreenAtual.muted = true;
-        videoFullscreenAtual.loop = true;
+        // SAIU do fullscreen - Correção Crítica
+        const videoSalvo = videoFullscreenAtual; // Isola a referência léxica
+        
+        videoSalvo.muted = true;
+        videoSalvo.loop = true;
 
-        // Força o play imediatamente com retry
-        keepPlaying(videoFullscreenAtual);
+        // Força o play imediato
+        videoSalvo.play().catch(() => { });
 
-        // Aguarda um pouco e tenta novamente se ainda estiver pausado
+        // Retries escalonados: Evita o bloqueio da animação nativa do SO
         setTimeout(() => {
-            if (videoFullscreenAtual && videoFullscreenAtual.paused) {
-                videoFullscreenAtual.play().catch(() => { });
+            videoSalvo.play().catch(() => { });
+        }, 150);
+
+        setTimeout(() => {
+            if (videoSalvo.paused) {
+                videoSalvo.play().catch(() => { });
             }
         }, 500);
 
-        videoFullscreenAtual = null;
+        // Limpeza segura da variável global
+        videoFullscreenAtual = null; 
     }
 }
 
 document.addEventListener('fullscreenchange', onFullscreenChange);
 document.addEventListener('webkitfullscreenchange', onFullscreenChange);
 
-// Suporte a iOS (player nativo)
-document.addEventListener('webkitendfullscreen', function () {
-    if (videoFullscreenAtual) {
-        videoFullscreenAtual.muted = true;
-        videoFullscreenAtual.loop = true;
+// Suporte a iOS (player nativo) - Correção de Event Delegation
+document.addEventListener('webkitendfullscreen', function (e) {
+    // Alvo exato do evento, evitando depender da global que pode estar assíncrona
+    const video = e.target;
+    
+    if (video && video.tagName === 'VIDEO') {
+        video.muted = true;
+        video.loop = true;
 
-        // Tenta play imediatamente
-        videoFullscreenAtual.play().catch(() => { });
+        // Play imediato
+        video.play().catch(() => { });
 
-        // E novamente após 500ms se ainda pausado
+        // Agendamento de segurança para o player nativo do iOS
         setTimeout(() => {
-            if (videoFullscreenAtual && videoFullscreenAtual.paused) {
-                videoFullscreenAtual.play().catch(() => { });
+            video.play().catch(() => { });
+        }, 150);
+
+        setTimeout(() => {
+            if (video.paused) {
+                video.play().catch(() => { });
             }
-            videoFullscreenAtual = null;
         }, 500);
     }
-}, false);
+    
+    if (videoFullscreenAtual) {
+        videoFullscreenAtual = null;
+    }
+}, true); // ← CORREÇÃO: "true" ativa a fase de captura do evento
 
 document.querySelectorAll('.galeria-item').forEach(item => {
     item.addEventListener('click', function (e) {
@@ -855,47 +872,52 @@ document.addEventListener('touchstart', function () {
 /* ========== Gerenciamento inteligente e otimizado do vídeo Sobre Nós ========== */
 document.addEventListener('DOMContentLoaded', () => {
     const secaoSobre = document.getElementById('quem-somos');
-    const videoSobre = document.getElementById('video-sobre');
+    
+    // 1. CORREÇÃO: Agora selecionamos corretamente os vídeos de desktop e mobile
+    const videosSobre = document.querySelectorAll('#video-sobre-desktop, #video-sobre-mobile');
 
-    if (!secaoSobre || !videoSobre) return;
+    if (!secaoSobre || videosSobre.length === 0) return;
 
-    // Força os atributos
-    videoSobre.muted = true;
-    videoSobre.playsInline = true;
-    videoSobre.autoplay = true;
+    videosSobre.forEach(video => {
+        // Força os atributos
+        video.muted = true;
+        video.playsInline = true;
+        video.autoplay = true;
+        video.preload = 'auto';
+        
+        // Desativamos o loop nativo do HTML para evitar a tela preta
+        video.loop = false;
 
-    // MUDANÇA 1: Usar 'auto' permite ao navegador manter o vídeo todo na memória RAM
-    videoSobre.preload = 'auto';
-
-    // MUDANÇA 2: Desativamos o loop nativo do HTML para remover a piscada
-    videoSobre.loop = false;
-
-    // NOVO: Sistema de Loop Perfeito (Seamless Loop)
-    // Interceptamos o vídeo pouco antes do milissegundo final
-    videoSobre.addEventListener('timeupdate', function () {
-        // Quando o tempo chegar muito perto do final (0.1 segundos restando)
-        if (this.duration && this.currentTime >= this.duration - 0.1) {
-            // Volta para um valor um pouco maior que zero para evitar o lag do frame 0
-            this.currentTime = 0.05;
-            this.play().catch(() => { });
+        // 2. CORREÇÃO DA PISCADA: O requestAnimationFrame tem precisão altíssima (60fps) 
+        // para interceptar o frame final de forma contínua, sem falhas como o 'timeupdate'.
+        function loopPerfeito() {
+            // Se faltar 0.15s para acabar, reseta para o começo suavemente
+            if (video.duration && video.currentTime >= video.duration - 0.15) {
+                video.currentTime = 0.05; // Pula o frame zero absoluto para evitar lag
+                video.play().catch(() => {});
+            }
+            requestAnimationFrame(loopPerfeito);
         }
+        requestAnimationFrame(loopPerfeito);
     });
-    // --- FIM DA CORREÇÃO ---
 
-    // Observer para pausar/resumir
+    // 3. Atualização do Observer para pausar/resumir TODOS os vídeos da seção
     const observerVideo = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Na tela - apenas garante o play sem forçar reload
-                if (videoSobre.paused) {
-                    // Adicionamos um erro silencioso no console apenas para facilitar debug futuro
-                    videoSobre.play().catch(e => console.log("Aguardando interação para play automático"));
-                }
+                // Na tela - play em todos os vídeos que estiverem pausados
+                videosSobre.forEach(video => {
+                    if (video.paused) {
+                        video.play().catch(() => {});
+                    }
+                });
             } else {
-                // Fora da tela - pausa apenas
-                if (!videoSobre.paused) {
-                    videoSobre.pause();
-                }
+                // Fora da tela - pausa em todos para economizar memória
+                videosSobre.forEach(video => {
+                    if (!video.paused) {
+                        video.pause();
+                    }
+                });
             }
         });
     }, {
