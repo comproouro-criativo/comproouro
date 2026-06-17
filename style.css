@@ -87,6 +87,14 @@ video,
     display: block;
 }
 
+/* Vídeo principal – estados padrão (desktop) */
+.video-principal-desktop {
+    display: block !important;
+}
+.video-principal-mobile {
+    display: none !important;
+}
+
 /* ========== LOGO CENTRAL NO VÍDEO (DESKTOP) ========== */
 .video-logo {
     position: absolute;
@@ -1336,16 +1344,6 @@ body {
         display: block !important;
         /* Mostra o vertical no celular */
     }
-
-    .video-principal-mobile {
-        display: none !important;
-    }
-
-    .video-principal-desktop {
-        display: block !important;
-    }
-
-
 }
 
 /* ============================================================
@@ -1379,14 +1377,13 @@ body {
         line-height: 1.4;
     }
 
-    @media (max-width: 480px) {
     .video-principal-desktop {
         display: none !important;
     }
     .video-principal-mobile {
         display: block !important;
     }
-}
+
     /* =========================================
        NOVA BARRA SUPERIOR MOBILE (LOGO + FLN + 2026)
        ========================================= */
