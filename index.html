@@ -20,13 +20,21 @@
                 <a href="#servicos">Direção</a>
                 <a href="#quem-somos">Sobre nós</a>
             </nav>
-        </header>
-        <video playsinline muted autoplay loop preload="metadata" disablepictureinpicture disableremoteplayback
-            webkit-playsinline>
-            <source src="videos/meuvideo.mp4" type="video/mp4">
-        </video>
-        <div class="video-info esquerda desktop-only">Florianópolis <span class="middot-maior">&middot;</span> Brasil
-        </div>
+    </header>
+
+    <!-- Versão horizontal (desktop) -->
+    <video class="video-principal-desktop" playsinline muted autoplay loop preload="metadata" 
+        disablepictureinpicture disableremoteplayback webkit-playsinline>
+        <source src="videos/meuvideo.mp4" type="video/mp4">
+    </video>
+
+    <!-- Versão vertical (mobile) -->
+    <video class="video-principal-mobile" playsinline muted autoplay loop preload="metadata" 
+        disablepictureinpicture disableremoteplayback webkit-playsinline>
+        <source src="videos/meuvideovertical.mp4" type="video/mp4">
+    </video>
+
+    <div class="video-info esquerda desktop-only">Florianópolis <span class="middot-maior">&middot;</span> Brasil</div>
 
         <div class="topbar-mobile mobile-only">
             <span class="topbar-txt">FLN</span>
