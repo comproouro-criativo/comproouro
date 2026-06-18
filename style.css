@@ -260,7 +260,7 @@ video,
     width: max-content;
     will-change: transform;
     /* Executa a animação linear contínua. Podes alterar '25s' para ajustar a velocidade */
-    animation: marcas-ticker-dir 75s linear infinite;
+    animation: marcas-ticker-dir 195s linear infinite;
 }
 
 .marcas-marquee-track img {
