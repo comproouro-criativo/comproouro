@@ -91,6 +91,7 @@ video,
 .video-principal-desktop {
     display: block !important;
 }
+
 .video-principal-mobile {
     display: none !important;
 }
@@ -240,46 +241,52 @@ video,
     margin-top: -1rem;
 }
 
-.sub-header-portfolio {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-    margin: 0 5% 1rem;
-    padding: 1rem 0;
-}
-
-.sub-header-portfolio a {
-    text-decoration: none;
-    color: #2c2c2cae;
-    font-size: 0.78rem;
-    font-weight: 400;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    position: relative;
-    padding-bottom: 4px;
-    transition: color 0.3s ease, transform 0.3s ease;
-    white-space: nowrap;
-}
-
-.sub-header-portfolio a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 1.4px;
-    background-color: currentColor;
-    transition: width 0.4s ease;
-}
-
-.sub-header-portfolio a:hover {
-    color: #2c2c2c;
-    transform: scale(1.08);
-}
-
-.sub-header-portfolio a:hover::after {
+/* ========== CARROSSEL DE MARCAS (LOOP INFINITO ESQUERDA -> DIREITA) ========== */
+.marcas-marquee-wrapper {
     width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 1.5rem 0;
+    margin: 1rem 0 2.5rem 0;
+    background: transparent;
+    pointer-events: none;
+    /* Impede que o utilizador arraste ou selecione as imagens por acidente */
+}
+
+.marcas-marquee-track {
+    display: flex;
+    white-space: nowrap;
+    width: max-content;
+    will-change: transform;
+    /* Executa a animação linear contínua. Podes alterar '25s' para ajustar a velocidade */
+    animation: marcas-ticker-dir 75s linear infinite;
+}
+
+.marcas-marquee-track img {
+    height: 70px;
+    /* Altura ideal fixa para uniformizar os tamanhos das marcas */
+    width: auto;
+    margin-bottom: -1rem;
+
+    object-fit: contain;
+    padding: 0 4rem;
+    /* Margem e espaçamento lateral entre cada logótipo */
+    filter: grayscale(100%);
+    /* Converte para preto e branco para combinar com o design */
+    opacity: 0.88;
+    /* Integração suave com a cor de fundo do portfólio */
+}
+
+/* Movimento matemático calculado para 3 grupos repetidos da esquerda para a direita */
+@keyframes marcas-ticker-dir {
+    0% {
+        transform: translate3d(-33.3333%, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
 }
 
 /* ---------- Seções gerais ---------- */
@@ -589,10 +596,10 @@ video,
     left: 0;
     width: 100%;
     height: 100%;
-background: linear-gradient(180deg,
-        rgba(28, 28, 28, 0.0) 0%,
-        rgba(0, 0, 0, 0.01) 50%,
-        rgba(28, 28, 28, 0.0) 100%);
+    background: linear-gradient(180deg,
+            rgba(28, 28, 28, 0.0) 0%,
+            rgba(0, 0, 0, 0.01) 50%,
+            rgba(28, 28, 28, 0.0) 100%);
     z-index: 2;
 }
 
@@ -1380,6 +1387,7 @@ body {
     .video-principal-desktop {
         display: none !important;
     }
+
     .video-principal-mobile {
         display: block !important;
     }
@@ -2072,6 +2080,20 @@ body {
 
     .galeria-item.wide {
         grid-column: span 1 !important;
+    }
+
+    .marcas-marquee-track img {
+        height: 50px;
+        /* Altura ideal fixa para uniformizar os tamanhos das marcas */
+        width: auto;
+        margin-bottom: -1rem;
+        object-fit: contain;
+        padding: 0 2.3rem;
+        /* Margem e espaçamento lateral entre cada logótipo */
+        filter: grayscale(100%);
+        /* Converte para preto e branco para combinar com o design */
+        opacity: 0.88;
+        /* Integração suave com a cor de fundo do portfólio */
     }
 
     /* Restaura o respiro superior da seção (título e links) */
