@@ -2088,7 +2088,7 @@ body {
         width: auto;
         margin-bottom: -1rem;
         object-fit: contain;
-        padding: 0 2.3rem;
+        padding: 0 2.05rem;
         /* Margem e espaçamento lateral entre cada logótipo */
         filter: grayscale(100%);
         /* Converte para preto e branco para combinar com o design */
