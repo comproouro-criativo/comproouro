@@ -2086,7 +2086,8 @@ body {
         height: 50px;
         /* Altura ideal fixa para uniformizar os tamanhos das marcas */
         width: auto;
-        margin-bottom: -1rem;
+        margin-bottom: -1.7rem;
+        margin-top: -0.7rem;
         object-fit: contain;
         padding: 0 2.05rem;
         /* Margem e espaçamento lateral entre cada logótipo */
