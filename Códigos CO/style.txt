@@ -1,0 +1,2602 @@
+/* ============================================================
+   COMPRO OURO — style.css
+   Fonte: Acherus Grotesque (Regular)
+   Paleta: #fffcf6 fundo · #2c2c2c texto · #888 secundário
+   Scroll único e sempre livre – corrigido
+   ============================================================ */
+
+/* ---------- Importação da Fonte ---------- */
+@font-face {
+    font-family: 'Acherus Grotesque';
+    src: url('fonts/AcherusGrotesque-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ---------- Reset e base ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+html {
+    scroll-behavior: smooth;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    overflow-x: clip;
+    /* background-color removido daqui */
+}
+
+body {
+    font-family: 'Acherus Grotesque', sans-serif;
+    background-color: #1c1c1c;
+    /* NOVO – fundo preto padrão */
+    color: #2c2c2c;
+    line-height: 1.9;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    min-height: 100vh;
+}
+
+img,
+video,
+.split-img img {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    max-width: 100%;
+    height: auto;
+}
+
+.galeria-feed img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ---------- Vídeo destaque ---------- */
+.video-destaque {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.video-destaque video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Vídeo principal – estados padrão (desktop) */
+.video-principal-desktop {
+    display: block !important;
+}
+
+.video-principal-mobile {
+    display: none !important;
+}
+
+/* ========== LOGO CENTRAL NO VÍDEO (DESKTOP) ========== */
+.video-logo {
+    position: absolute;
+    bottom: 35px;
+    /* Ajuste: altura acima dos textos */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    pointer-events: none;
+    /* opcional: mantém clicável o que estiver atrás */
+}
+
+.video-logo img {
+    height: 60px;
+    /* Ajuste o tamanho do seu logo */
+    width: auto;
+    display: block;
+    opacity: 0.50;
+    transition: opacity 0.3s ease;
+    filter: brightness(0) invert(1);
+    /* Força o logo a ficar branco */
+}
+
+.video-logo img:hover {
+    opacity: 1;
+}
+
+/* ============================================================ */
+
+/* ============================================================
+   TEXTOS SOBRE O VÍDEO
+   ============================================================ */
+.video-info {
+    position: absolute;
+    bottom: 2.5rem;
+    color: #ffffffb5;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    z-index: 15;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.esquerda {
+    left: 5%;
+}
+
+.direita {
+    right: 5%;
+}
+
+.middot-maior {
+    font-size: 1.2rem;
+    vertical-align: middle;
+    line-height: 0;
+}
+
+.registro {
+    font-size: 0.55rem;
+    font-weight: 400;
+    vertical-align: super;
+    line-height: 1;
+}
+
+/* ============================================================
+   HEADER PRINCIPAL
+   ============================================================ */
+.header-center {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-weight: 700;
+    opacity: 0.8;
+    letter-spacing: 2px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 2.5rem 5% 1rem;
+    z-index: 20;
+}
+
+.header-center nav {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.header-center nav a {
+    text-decoration: none;
+    color: #ffffffb5;
+    font-size: 0.8rem;
+    font-weight: 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 5px;
+    transition: color 0.3s ease, transform 0.3s ease;
+    white-space: nowrap;
+}
+
+.header-center nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1.4px;
+    background-color: currentColor;
+    transition: width 0.4s ease;
+}
+
+@media (hover: hover) {
+    .header-center nav a:hover {
+        color: #ffffff;
+        transform: scale(1.1);
+        /* valor correto */
+    }
+}
+
+.header-center nav a:hover::after {
+    width: 100%;
+}
+
+/* ============================================================
+   SUB-HEADER PORTFÓLIO
+   ============================================================ */
+#portfolio {
+    max-width: 100%;
+    padding: 4rem 0.6rem 2.7rem 0.6rem;
+    background: #fffcf6;
+    position: relative;
+    /* necessário para o pseudo-elemento */
+}
+
+#portfolio h2 {
+    padding: 0 5%;
+    margin-bottom: 1rem;
+    margin-top: -1rem;
+}
+
+.sub-header-portfolio {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 0 5% 1rem;
+    padding: 1rem 0;
+}
+
+.sub-header-portfolio a {
+    text-decoration: none;
+    color: #2c2c2cae;
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 4px;
+    transition: color 0.3s ease, transform 0.3s ease;
+    white-space: nowrap;
+}
+
+.sub-header-portfolio a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1.4px;
+    background-color: currentColor;
+    transition: width 0.4s ease;
+}
+
+.sub-header-portfolio a:hover {
+    color: #2c2c2c;
+    transform: scale(1.08);
+}
+
+.sub-header-portfolio a:hover::after {
+    width: 100%;
+}
+
+/* ---------- Seções gerais ---------- */
+.secao {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem 5% 0 5%;
+    /* topo 1rem, resto igual */
+    text-align: center;
+    background: #fffcf6;
+}
+
+.secao h2 {
+    font-size: 2rem;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    margin-top: -1rem;
+}
+
+.secao p {
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    margin-bottom: 2rem;
+    margin-top: -0.5rem;
+    line-height: 1.85;
+    color: #444;
+}
+
+/* ---------- Botão (e-mail) ---------- */
+.botao {
+    display: inline-block;
+    background: #2c2c2c;
+    color: #fff;
+    padding: 13px 32px;
+    text-decoration: none;
+    border-radius: 0;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 0rem;
+    margin-bottom: 2rem;
+    transition: background 0.3s ease, transform 0.15s ease;
+    cursor: pointer;
+    user-select: none;
+    word-break: break-all;
+    max-width: 100%;
+}
+
+.botao:hover {
+    background: #555;
+    transform: scale(1.08);
+}
+
+.botao:active {
+    transform: scale(0.95);
+    background: #555;
+}
+
+.ou {
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.6px;
+    color: #888;
+    margin-top: -0.2rem;
+}
+
+/* ---------- Galeria Feed (com ícone de carrossel) ---------- */
+.galeria-feed {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.6rem;
+    padding: 0;
+    width: 100%;
+    margin-bottom: -2rem;
+    align-items: start;
+}
+
+.galeria-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+
+.tall {
+    grid-row: span 2;
+}
+
+.wide {
+    grid-column: span 2;
+}
+
+/* ========== NOVO OVERLAY COM TEXTO DO PROJETO (substitui o "+") ========== */
+.galeria-item::after {
+    content: attr(data-title);
+    /* pega o texto do atributo HTML */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    /* escurecimento leve */
+    color: #f6f6f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Acherus Grotesque', sans-serif;
+    font-weight: 400;
+    font-size: 5rem;
+    letter-spacing: 11.5px;
+    text-transform: uppercase;
+    line-height: 1.5;
+    padding: 1rem;
+    box-sizing: border-box;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.galeria-item:hover::after {
+    opacity: 0.5;
+}
+
+/* Leve escurecimento adicional da imagem (mantido, porém mais intenso) */
+@media (hover: hover) {
+
+    .galeria-item:hover img,
+    .galeria-item:hover video {
+        filter: brightness(0.8) contrast(1);
+    }
+}
+
+/* ============================================================
+   REDES SOCIAIS
+   ============================================================ */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin: -1rem 0 -5rem;
+}
+
+.social-links a {
+    text-decoration: none;
+    color: #2c2c2cae;
+    transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #2c2c2c;
+    transform: scale(1.2);
+}
+
+.social-links a:active {
+    transform: translateY(2px);
+    /* "desce" levemente ao clicar */
+    opacity: 0.7;
+}
+
+.social-icon {
+    width: 1.9rem;
+    height: 1.9rem;
+    display: block;
+    fill: currentColor;
+    transition: inherit;
+}
+
+
+
+/* ---------- Animação fade-in ---------- */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================================
+   RODAPÉ – BARRA COM TEXTO ROLANTE
+   ============================================================ */
+.rodape {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: transparent;
+    /* sem fundo preto */
+    padding: 0.3rem 0;
+    margin: 0;
+    overflow: hidden;
+    z-index: 4;
+    /* acima do vídeo (1) e overlay (2) */
+}
+
+.rodape-ticker-wrapper {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    /* Evita bugs de toque ou seleção arrastando o letreiro no mobile */
+    pointer-events: none;
+}
+
+.rodape-ticker-track {
+    display: flex;
+    white-space: nowrap;
+    width: max-content;
+
+    /* Força o celular a usar a placa de vídeo para renderizar o texto (Evita sumir) */
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+
+    /* Ajuste o tempo aqui se achar necessário (ex: 35s, 40s) */
+    animation: rodape-ticker 75s linear infinite;
+}
+
+.ticker-item {
+    display: inline-block;
+    color: #ffffff;
+    font-size: 0.55rem;
+    opacity: 0.85;
+    font-weight: 400;
+    letter-spacing: 0.9px;
+    padding-right: 4rem;
+    /* Garante estabilidade visual em telas retina de celulares */
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Novo cálculo matemático perfeito para múltiplos clones */
+@keyframes rodape-ticker {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        /* Move exatamente a fração correspondente para o loop invisível */
+        transform: translate3d(-33.3333%, 0, 0);
+    }
+}
+
+/* ---------- Seção "Sobre nós" com Vídeo Integrado ---------- */
+.quem-somos-split {
+    position: relative;
+    margin-top: -7px;
+    max-width: 100%;
+    height: 100vh;
+    /* altura fixa = tela cheia */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 3rem 5%;
+    overflow: hidden;
+    background-color: #1c1c1c;
+    transition: opacity 0.6s ease;
+}
+
+/* Força o vídeo a se comportar como background cobrindo 100% do espaço */
+.quem-somos-split video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    pointer-events: none;
+
+    /* NOVO: Aceleração de hardware gráfica para evitar a tela preta no loop */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    background-color: transparent;
+}
+
+/* ========== CONTROLE DOS VÍDEOS SOBRE NÓS ========== */
+.video-sobre-mobile {
+    display: none !important;
+    /* Esconde o vertical no computador */
+}
+
+.video-sobre-desktop {
+    display: block !important;
+    /* Garante que o horizontal aparece no computador */
+}
+
+/* Filtro gradiente de contraste */
+.video-overlay-sobre {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg,
+            rgba(28, 28, 28, 0.0) 0%,
+            rgba(0, 0, 0, 0.01) 50%,
+            rgba(28, 28, 28, 0.0) 100%);
+    z-index: 2;
+}
+
+/* Caixa de conteúdo textual flutuando acima do vídeo */
+.quem-somos-conteudo {
+    position: relative;
+    z-index: 3;
+    max-width: 430px;
+    width: 90%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* CORREÇÃO: Força as letras a ficarem claras por cima do vídeo */
+.quem-somos-conteudo h2 {
+    color: #fffcf6 !important;
+    font-size: 2.2rem;
+    opacity: 0.7;
+    margin-bottom: 2rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.quem-somos-conteudo p {
+    color: rgba(255, 252, 246, 0.9) !important;
+    font-size: 0.69rem;
+    /* Tamanho ajustado para compensar o Capslock */
+    font-weight: 700;
+    /* Negrito brutalista */
+    text-transform: uppercase;
+    /* CAIXA ALTA ATIVADA */
+    letter-spacing: 1.5px;
+    /* Espaçamento essencial para leitura em Caps */
+    opacity: 0.7;
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+    text-align: left;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+/* Container inferior para os ícones e botão de voltar */
+.quem-somos-rodape {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    width: 100%;
+}
+
+/* Ícones de redes sociais dentro do vídeo */
+.social-links-sobre {
+    display: flex;
+    justify-content: center;
+    gap: 2.2rem;
+}
+
+.social-links-sobre a {
+    color: #fffcf6;
+    opacity: 0.6;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: inline-flex;
+}
+
+/* Efeito hover apenas para dispositivos com mouse */
+@media (hover: hover) {
+    .social-links-sobre a:hover {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Feedback de toque (active) para todos os dispositivos */
+.social-links-sobre a:active {
+    transform: translateY(2px);
+    opacity: 0.7;
+}
+
+/* ---------- Botão "Voltar ao Início" (estilo pill expansível) ---------- */
+.btn-voltar-inicio {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    background: transparent;
+    border: 2px solid #fffcf6;
+    color: #fffcf6;
+    border-radius: 40px;
+    padding: 0.55rem 0.7rem;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all 0.45s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 2.8rem;
+    /* só a seta visível inicialmente */
+    margin-top: 4rem;
+    /* mantenha o valor que você definiu */
+    margin-bottom: -3rem;
+    /* mantenha o valor que você definiu */
+
+    font-family: 'Acherus Grotesque', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+@media (hover: hover) {
+    .btn-voltar-inicio:hover {
+        opacity: 1;
+        max-width: 15rem;
+        padding-right: 1.2rem;
+        gap: 0.6rem;
+        background: transparent;
+        color: #fffcf6;
+        border-color: #fffcf6;
+    }
+}
+
+/* Ícone (seta) */
+.btn-voltar-inicio-icone {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.btn-voltar-inicio:hover .btn-voltar-inicio-icone {
+    transform: translateY(-2.7px);
+}
+
+/* Texto escondido que aparece no hover */
+.btn-voltar-inicio-texto {
+    margin-left: 0;
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    transition: all 0.65s ease;
+    font-size: 0.5rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.btn-voltar-inicio:hover .btn-voltar-inicio-texto {
+    opacity: 1;
+    width: auto;
+    margin-left: 0.2rem;
+}
+
+/* Garante que o corpo da página tenha altura mínima de 100% da tela */
+body {
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Faz a seção do vídeo crescer para ocupar o espaço necessário */
+#quem-somos {
+    flex: 1;
+    /* Isso força a seção a empurrar tudo para baixo */
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* O rodapé agora ficará naturalmente no final da página */
+.rodape {
+    width: 100%;
+    background-color: #1c1c1c;
+    /* Garante que a cor siga o padrão do site */
+    padding: 5px 0;
+    margin-top: auto;
+    /* O truque do flexbox: empurra o rodapé para o final */
+    z-index: 10;
+}
+
+/* ============================================================
+   SEÇÃO SERVIÇOS & FAQ
+   ============================================================ */
+.servicos-faq {
+    max-width: 100%;
+    padding: 5rem 0;
+    margin: 0 0 0rem;
+    background-color: #1c1c1c;
+}
+
+.sf-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 5%;
+    text-align: left;
+}
+
+.sf-titulo {
+    font-size: 1.7rem;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 1.8rem;
+    padding-bottom: 0;
+    color: #fffcf6;
+    white-space: nowrap;
+}
+
+/* ---------- Coluna de Serviços ---------- */
+.sf-servicos {
+    flex: 1;
+}
+
+.lista-servicos {
+    list-style: none;
+    padding: 0;
+}
+
+.lista-servicos li {
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fffcf6cc;
+    line-height: 1.45;
+    transition: color 0.25s ease, padding-left 0.25s ease;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+    /* Garante a mesma altura exata do FAQ */
+    padding: 0.5rem 0;
+    border-bottom: 1.8px solid rgba(255, 255, 255, 0.15);
+    /* Linha divisória simétrica */
+}
+
+/* NOVO: Adiciona a linha de topo apenas no primeiro item, espelhando o FAQ */
+.lista-servicos li:first-child {
+    border-top: 1.8px solid rgba(255, 255, 255, 0.15);
+}
+
+@media (hover: hover) {
+    .lista-servicos li:hover {
+        color: #fff;
+        padding-left: 6px;
+    }
+}
+
+/* ---------- Coluna FAQ ---------- */
+.sf-faq {
+    flex: 1;
+}
+
+.faq-item {
+    border-bottom: 1.8px solid rgba(255, 255, 255, 0.15);
+}
+
+.faq-item:first-of-type {
+    border-top: 1.8px solid rgba(255, 255, 255, 0.15);
+}
+
+.faq-pergunta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+    gap: 1rem;
+    transition: opacity 0.25s ease;
+    min-height: 50px;
+    padding: 0.5rem 0;
+}
+
+@media (hover: hover) {
+    .faq-pergunta:hover {
+        opacity: 0.6;
+    }
+}
+
+.faq-pergunta span:first-child {
+    font-size: 0.72rem;
+    /* Ajustado sutilmente para manter o equilíbrio visual */
+    font-weight: 500;
+    /* Peso Brutalista máximo */
+    text-transform: uppercase;
+    /* Força todas as perguntas em Caixa Alta */
+    letter-spacing: 1px;
+    /* Espaçamento elegante entre as letras maiúsculas */
+    color: #fffcf6;
+    line-height: 1.45;
+}
+
+.faq-icone {
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: #fffcf6;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: color 0.25s ease;
+    width: 18px;
+    text-align: center;
+    user-select: none;
+}
+
+.faq-resposta {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 1.1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+}
+
+.faq-resposta p {
+    font-size: 0.82rem;
+    font-weight: 500;
+    line-height: 1.7;
+    color: #fffcf6aa;
+    padding-bottom: 1rem;
+    margin: 0;
+}
+
+.faq-item.ativo .faq-resposta {
+    max-height: 400px;
+    opacity: 1;
+}
+
+.faq-item.ativo .faq-icone {
+    color: #fff;
+}
+
+/* ---------- Wrapper e botão expandir ---------- */
+.expandir-wrapper {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 1.4s cubic-bezier(0.25, 0, 0.1, 1);
+}
+
+.btn-expandir {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fffcf666;
+    cursor: pointer;
+    transition: color 0.25s ease;
+    min-height: 50px;
+    padding: 0.5rem 0;
+}
+
+@media (hover: hover) {
+    .btn-expandir:hover {
+        color: #fffcf6;
+    }
+}
+
+.btn-expandir-texto {
+    display: inline-block;
+    transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-expandir-icone {
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1;
+    transition: transform 0.4s ease,
+        opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-expandir.expandido .btn-expandir-icone {
+    transform: rotate(45deg);
+}
+
+/* ---------- Foco por seção ---------- */
+.video-destaque,
+.secao,
+.quem-somos-split,
+.servicos-faq,
+.rodape {
+    transition: opacity 0.6s ease;
+}
+
+.video-destaque.dimmed,
+.secao.dimmed,
+.quem-somos-split.dimmed,
+.servicos-faq.dimmed,
+.rodape.dimmed {
+    opacity: 0.35;
+}
+
+/* ---------- Telefone copiável ---------- */
+.telefone {
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    color: #1c1c1c;
+    text-shadow: 0.5px 0 0 #1c1c1c;
+    transition: opacity 0.3s ease, transform 0.15s ease, text-shadow 0.3s ease;
+}
+
+.telefone:hover {
+    opacity: 0.8;
+    transform: scale(1.03);
+    text-shadow: 0.5px 0 0 #1c1c1c;
+}
+
+.telefone:active {
+    transform: scale(0.95);
+}
+
+/* Refinamento de justificação (desktop + mobile) */
+.secao p,
+.split-texto p,
+.faq-resposta p {
+    text-align: justify;
+    text-justify: inter-word;
+    word-spacing: -0.02em;
+}
+
+#contato p {
+    text-align: center;
+}
+
+
+
+#contato .ou {
+    text-align: center;
+    text-justify: auto;
+    word-spacing: normal;
+}
+
+/* ============================================================
+   SEÇÃO CONTATO – FULL WIDTH
+   ============================================================ */
+#contato {
+    max-width: none;
+    /* ocupa toda a largura */
+    width: 100%;
+    margin-top: 0rem;
+    /* margem superior aumentada – ajuste o valor (ex: 10rem, 12rem…) */
+    margin-bottom: 2rem;
+    /* margem inferior mantida como estava (padrão da .secao) */
+    padding: 4rem 5%;
+    /* respiro interno */
+    background: #fffcf6;
+    /* fundo branco */
+}
+
+/* Mostrar/ocultar versões desktop e mobile */
+.desktop-only {
+    display: inline;
+}
+
+.mobile-only {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    .desktop-only {
+        display: none;
+    }
+
+    .mobile-only {
+        display: inline;
+    }
+}
+
+
+/* Animação: fade in → visível → fade out → invisível */
+@keyframes alternarMarcas {
+    0% {
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    /* 0,4s para aparecer */
+    40% {
+        opacity: 1;
+    }
+
+    /* permanece visível 1,2s */
+    50% {
+        opacity: 0;
+    }
+
+    /* 0,4s para sumir */
+    100% {
+        opacity: 0;
+    }
+}
+
+/* ============================================================
+   SETA DE VOLTAR AO TOPO – MODERNA (PILL EXPANSÍVEL)
+   ============================================================ */
+.scroll-top-container {
+    text-align: center;
+    margin: 1.5rem 0 -3.5rem;
+    /* margem inferior bem reduzida */
+}
+
+.scroll-top-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    background: transparent;
+    border: 1.2px solid #2c2c2c;
+    color: #2c2c2c;
+    border-radius: 40px;
+    padding: 0.55rem 0.7rem;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 2.8rem;
+    /* inicialmente só mostra o ícone */
+}
+
+.scroll-top-icon {
+    flex-shrink: 0;
+    transition: transform 2.8s ease;
+}
+
+.scroll-top-label {
+    margin-left: 0;
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    transition: all 0.65s ease;
+    font-size: 0.5rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.scroll-top-btn:hover {
+    opacity: 1;
+    max-width: 15rem;
+    /* expande para mostrar o texto */
+    padding-right: 1.2rem;
+    gap: 0.6rem;
+    background: #2c2c2c;
+    color: #fffcf6;
+    border-color: #2c2c2c;
+}
+
+.scroll-top-btn:hover .scroll-top-label {
+    opacity: 1;
+    width: auto;
+    margin-left: 0.2rem;
+}
+
+.scroll-top-btn:hover .scroll-top-icon {
+    transform: translateY(-2px);
+}
+
+.scroll-top-btn:active {
+    transform: scale(0.96);
+}
+
+/* Efeito de clique (active) */
+.btn-voltar-inicio:active {
+    transform: scale(0.95);
+    opacity: 0.9;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.header-center nav a {
+    text-decoration: none;
+    color: #ffffffb5;
+    font-size: 0.8rem;
+    font-weight: 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 5px;
+    transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+    white-space: nowrap;
+}
+
+
+.header-center nav a:hover::after {
+    width: 100%;
+}
+
+/* Efeito de clique (todos os dispositivos) */
+.header-center nav a:active {
+    transform: translateY(2px);
+    /* "desce" levemente */
+    opacity: 0.7;
+}
+
+
+/* ============================================================
+   RESPONSIVO – TABLET (≤ 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+    .header-center {
+        padding: 2rem 3% 0.8rem;
+    }
+
+    .copyright-linha2 {
+        display: block;
+    }
+
+    .header-center nav a {
+        font-size: 0.75rem;
+        letter-spacing: 1.5px;
+        font-weight: 700;
+        color: #ffffffa3;
+    }
+
+    .sub-header-portfolio a {
+        font-size: 0.7rem;
+    }
+
+    #servicos {
+        padding-top: 60px !important;
+        /* Aumente este valor (ex: 100px, 120px, 140px) até ficar ao seu gosto */
+    }
+
+    .secao p,
+    .split-texto p,
+    .faq-resposta p {
+        text-align: justify;
+        text-justify: inter-word;
+        word-spacing: -0.02em;
+    }
+
+    .video-info {
+        font-size: 0.7rem;
+        bottom: 2rem;
+    }
+
+    .secao h2 {
+        font-size: 1.5rem;
+        letter-spacing: 3px;
+    }
+
+    .split-container {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .split-texto,
+    .split-img {
+        width: 100%;
+    }
+
+    .split-img {
+        height: auto;
+    }
+
+    .split-texto {
+        padding: 2rem 0 0;
+        text-align: center;
+    }
+
+    .split-texto h2 {
+        text-align: center;
+        font-size: 1.6rem;
+    }
+
+    .split-texto p {
+        font-size: 0.95rem;
+    }
+
+    .btn-expandir {
+        justify-content: center;
+    }
+
+    .sf-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 2.5rem;
+    }
+
+    .sf-servicos,
+    .sf-faq {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .lista-servicos li {
+        justify-content: center;
+    }
+
+    .servicos-faq {
+        padding: 3rem 0;
+    }
+
+    .faq-pergunta span:first-child {
+        font-size: 0.82rem;
+    }
+
+    .faq-resposta p {
+        font-size: 0.8rem;
+    }
+
+    .social-links {
+        gap: 2rem;
+    }
+
+    .social-icon {
+        width: 2.1rem;
+        height: 2.1rem;
+    }
+
+    .botao {
+        padding: 12px 26px;
+        font-size: 0.75rem;
+    }
+
+    .rodape .copyright {
+        font-size: 0.72rem;
+    }
+
+    /* Inverte os vídeos no celular */
+    .video-sobre-desktop {
+        display: none !important;
+        /* Esconde o horizontal no celular */
+    }
+
+    .video-sobre-mobile {
+        display: block !important;
+        /* Mostra o vertical no celular */
+    }
+}
+
+/* ============================================================
+   RESPONSIVO – SMARTPHONE (≤ 480px)
+   ============================================================ */
+@media (max-width: 480px) {
+
+    /* ========== MOBILE: BARRA INFERIOR FIXA COM NOME DO PROJETO ========== */
+    .galeria-item::after {
+        content: attr(data-title);
+        position: absolute;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        color: #f6f6f6;
+        font-size: 0.50rem;
+        font-weight: 1000;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        padding: 0.3rem 0.9rem;
+        opacity: 0.6 !important;
+        pointer-events: none;
+        white-space: normal;
+        word-break: break-word;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        line-height: 1.4;
+    }
+
+    .video-principal-desktop {
+        display: none !important;
+    }
+
+    .video-principal-mobile {
+        display: block !important;
+    }
+
+    /* =========================================
+       NOVA BARRA SUPERIOR MOBILE (LOGO + FLN + 2026)
+       ========================================= */
+    .topbar-mobile {
+        position: absolute;
+        top: 3.2rem;
+        /* Distância do topo da tela */
+        left: 10%;
+        /* Respiro lateral */
+        right: 10%;
+        /* Respiro lateral */
+        display: flex;
+        justify-content: space-between;
+        /* Joga um item pra cada canto e um no meio */
+        align-items: center;
+        z-index: 20;
+        /* Mantém acima do vídeo */
+        pointer-events: none;
+        /* Permite clicar no vídeo atrás, se necessário */
+    }
+
+    .topbar-txt {
+        color: #ffffffb5;
+        /* Mesma cor do seu header atual */
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+        opacity: 0.7;
+
+        font-weight: bolder;
+    }
+
+    .topbar-logo {
+        height: 50px;
+        /* Ajuste a altura do logo aqui */
+        width: auto;
+        opacity: 0.5;
+        filter: brightness(0) invert(1);
+        /* Garante que o logo fique branco */
+    }
+
+    /* ---------- Reposicionamento dos textos do vídeo ---------- */
+    .video-info {
+        position: absolute;
+        z-index: 15;
+        pointer-events: none;
+        text-transform: uppercase;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        white-space: nowrap;
+        font-size: 0.7rem;
+        letter-spacing: 0.5px;
+        color: #ffffffb5;
+    }
+
+    /* Dentro de @media (max-width: 480px) */
+    .quem-somos-conteudo {
+        max-width: 465px;
+        /* diminui a largura máxima da caixa */
+        width: 83%;
+        opacity: 0.74;
+
+        /* deixa um respiro extra nas laterais */
+    }
+
+    .video-info.direita {
+        top: 3.5rem;
+        bottom: auto;
+        right: auto;
+        font-size: 0.82rem;
+        opacity: 0.55;
+        font-weight: bolder;
+
+
+        /* Tamanho do COMPRO OURO® */
+    }
+
+
+    .video-info.esquerda {
+        top: 5.1rem;
+        bottom: auto;
+        right: auto;
+
+        font-weight: bolder;
+        font-size: 0.58rem;
+        opacity: 0.55;
+
+        /* Tamanho do Florianópolis */
+    }
+
+    /* Botão Voltar ao Início – mobile menor e com efeito de clique */
+    .btn-voltar-inicio {
+        max-width: none;
+        gap: 0.5rem;
+        padding: 0.45rem 1rem;
+        margin-bottom: -12rem;
+        margin-top: 19rem;
+        opacity: 0.6;
+        border-width: 1.8px;
+        border-color: rgba(255, 252, 246, 0.8);
+        /* ← borda com opacidade 0.8 */
+
+        transition: transform 0.15s ease, opacity 0.3s ease;
+    }
+
+    .btn-voltar-inicio-texto {
+        opacity: 0.8;
+        width: auto;
+        margin-left: 0.2rem;
+        font-size: 0.5rem;
+        letter-spacing: 0.6px;
+    }
+
+    /* Ícone menor */
+    .btn-voltar-inicio-icone {
+        width: 16px;
+        height: 16px;
+        opacity: 0.8;
+
+    }
+
+    /* Efeito de clique (active) */
+    .btn-voltar-inicio:active {
+        transform: scale(0.95);
+        opacity: 0.9;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+
+    /* ---------- Header mobile: CENTRALIZADO na tela ---------- */
+    .header-center {
+        position: absolute;
+        top: 460px;
+        bottom: 0px;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        /* centraliza verticalmente */
+        justify-content: center;
+        /* centraliza horizontalmente */
+        padding: 0 0%;
+        /* pequeno respiro lateral */
+        z-index: 20;
+        opacity: 0.9;
+
+    }
+
+
+    /* ---------- Rodapé menor no mobile ---------- */
+    .rodape {
+        padding: 0.25rem 0;
+        /* barra mais fina */
+
+    }
+
+    .ticker-item {
+        font-size: 0.43rem;
+        /* texto menor */
+        letter-spacing: 0.6px;
+        padding-right: 2.5rem;
+        /* espaço reduzido entre as repetições */
+    }
+
+    .header-center nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* centraliza os itens no container */
+        gap: 2rem;
+        margin-bottom: 49px;
+    }
+
+    .header-center nav a {
+        text-decoration: none;
+        color: #ffffffb5;
+        opacity: 0.7;
+        font-size: 0.79rem;
+        font-weight: 0;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        position: relative;
+        padding-bottom: 5px;
+        transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+        white-space: nowrap;
+    }
+
+    .header-center nav a:hover {
+        color: #ffffff;
+        transform: scale(1.08);
+    }
+
+    .social-links-sobre {
+        gap: 1.8rem;
+        margin-top: -30px;
+        /* antes 2.5rem */
+    }
+
+    .header-center nav a:hover::after {
+        width: 100%;
+    }
+
+    /* Efeito de clique (todos os dispositivos) */
+    .header-center nav a:active {
+        transform: translateY(2px);
+        /* "desce" levemente */
+        opacity: 0.7;
+    }
+
+    .copyright-linha2 {
+        display: block;
+    }
+
+    .btn-expandir {
+        justify-content: center;
+        font-size: 0.63rem;
+    }
+
+    .sub-header-portfolio a {
+        font-size: 0.62rem;
+        margin-top: -0.7rem;
+        margin-bottom: -0.7rem;
+
+    }
+
+    .split-texto h2 {
+        margin-top: -3rem;
+    }
+
+    .secao h2 {
+        font-size: 1.3rem;
+        letter-spacing: 2.5px;
+    }
+
+    .secao p {
+        font-size: 0.59rem;
+        letter-spacing: 1.8px;
+
+    }
+
+    .split-img {
+        height: auto;
+    }
+
+    .split-texto {
+        padding: 1.5rem 0 0;
+    }
+
+    .split-texto h2 {
+        font-size: 1.4rem;
+        letter-spacing: 3px;
+    }
+
+    .split-texto p {
+        font-size: 0.9rem;
+    }
+
+    .servicos-faq {
+        padding: 2.5rem 0;
+    }
+
+    .sf-titulo {
+        font-size: 1.3rem;
+        letter-spacing: 2.5px;
+    }
+
+    .lista-servicos li {
+        font-size: 0.62rem;
+        min-height: 44px;
+        letter-spacing: 1.2px;
+    }
+
+    .faq-pergunta span:first-child {
+        font-size: 0.63rem;
+    }
+
+    .faq-resposta p {
+        font-size: 0.69rem;
+        letter-spacing: 1.2px;
+    }
+
+    .faq-icone {
+        font-size: 1.2rem;
+        width: 16px;
+    }
+
+    .social-links {
+        gap: 1.5rem;
+    }
+
+    .social-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+
+    }
+
+
+    .botao {
+        padding: 10px 22px;
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+    }
+
+    .telefone {
+        font-size: 0.9rem;
+    }
+
+    .rodape .copyright {
+        font-size: 0.68rem;
+    }
+
+    .secao {
+        margin-bottom: 3rem;
+    }
+
+    /* Remove a margem preta do portfólio no mobile e usa padding branco */
+    #portfolio {
+        margin-bottom: 0;
+        padding-top: 3rem;
+        /* ← novo: reduz o espaço acima do título "Projetos" */
+        padding-bottom: 2.3rem;
+        /* mantém o respiro inferior branco */
+    }
+
+    #contato {
+        padding-top: 2rem;
+        /* antes era 4rem (herdado) */
+        padding-bottom: 1.5rem;
+        /* antes era 4rem */
+        margin-bottom: 2rem;
+        /* antes era 2rem */
+    }
+
+
+    .quem-somos-split {
+        padding-top: -1rem;
+        padding-bottom: 12rem;
+        /* menor no celular */
+        margin-bottom: -1rem;
+    }
+
+    /* Rodapé geral (vale para todos os tamanhos, mas o mobile já tem suas próprias regras) */
+    .rodape {
+        background: #1c1c1c;
+        padding: 0.3rem 0;
+        margin-top: 0;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    /* Regras específicas para desktop (acima de 768px) */
+    @media (min-width: 769px) {
+        .rodape {
+            padding: 0.15rem 0;
+            /* barra mais fina só no desktop */
+            margin-top: 0;
+            /* ajuste se necessário */
+        }
+
+        .rodape-ticker-track {
+            animation: rodape-ticker 15s linear infinite;
+            /* opcional: velocidade diferente */
+        }
+
+        .ticker-item {
+            font-size: 0.5rem;
+            /* texto menor, se quiser */
+        }
+    }
+
+    /* Botão voltar ao topo sempre visível no mobile */
+    .scroll-top-btn {
+        opacity: 1;
+        max-width: 15rem;
+        /* expande o botão */
+        padding-right: 1.2rem;
+        gap: 0.6rem;
+        background: #2c2c2c;
+        color: #fffcf6;
+        border-color: #2c2c2c;
+    }
+
+    .scroll-top-container {
+        margin-bottom: 0.5rem;
+        margin-top: 1.5rem;
+        /* diminua para o valor que desejar */
+    }
+
+    .scroll-top-btn .scroll-top-label {
+        opacity: 1;
+        width: auto;
+        margin-left: 0.2rem;
+    }
+
+    .scroll-top-btn .scroll-top-icon {
+        transform: translateY(-2px);
+    }
+
+
+
+    /* ============================================================
+   TABLET MÉDIO — 769px a 1024px
+   ============================================================ */
+    @media (min-width: 769px) and (max-width: 1024px) {
+
+        .header-center nav {
+            max-width: 820px;
+        }
+
+        .header-center nav a {
+            font-size: 0.75rem;
+            letter-spacing: 1.6px;
+        }
+
+        .split-container {
+            min-height: 58vh;
+        }
+
+        .split-img {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+            max-height: 520px;
+        }
+
+        .split-img img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            max-height: 520px;
+        }
+
+        .sf-container {
+            gap: 2.5rem;
+            padding: 0 4%;
+        }
+
+        .sf-titulo {
+            font-size: 1.65rem;
+            letter-spacing: 3px;
+            white-space: normal;
+        }
+
+        .lista-servicos li {
+            font-size: 0.84rem;
+        }
+
+        .faq-pergunta span:first-child {
+            font-size: 0.83rem;
+        }
+
+        .split-texto h2 {
+            font-size: 1.75rem;
+        }
+
+        .split-texto p {
+            font-size: 0.94rem;
+        }
+    }
+
+    /* ============================================================
+   LANDSCAPE MOBILE — comportamento igual ao desktop
+   Ativa quando a tela está deitada e a altura é pequena (celular)
+   ============================================================ */
+    @media (orientation: landscape) and (max-height: 500px) {
+
+        /* Header volta ao topo, horizontal */
+        .header-center {
+            position: absolute;
+            top: 0;
+            bottom: auto;
+            left: 0;
+            right: auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            padding: 2.5rem 5% 1rem;
+        }
+
+        .header-center nav {
+            flex-direction: row;
+            gap: 0;
+        }
+
+        .header-center nav a {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            font-weight: 400;
+            color: #ffffffb5;
+            text-align: left;
+        }
+
+        /* Sublinhado nasce da esquerda, como no desktop */
+        .header-center nav a::after {
+            left: 0;
+            transform: none;
+        }
+
+        /* Textos do vídeo voltam às posições desktop */
+        .video-info {
+            position: absolute;
+            bottom: 2.5rem;
+            left: auto;
+            top: auto;
+            transform: none;
+            text-align: left;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .video-info.esquerda {
+            left: 5%;
+            top: auto;
+            bottom: 2.5rem;
+            font-size: 0.8rem;
+        }
+
+        .video-info.direita {
+            right: 5%;
+            left: auto;
+            top: auto;
+            bottom: 2.5rem;
+            font-size: 0.8rem;
+        }
+
+
+        /* Seções com tamanhos desktop */
+        .secao h2 {
+            font-size: 1.7rem;
+            letter-spacing: 4px;
+        }
+
+        .secao p {
+            font-size: 1rem;
+        }
+
+        /* ---------- Split (Sobre nós) lado a lado ---------- */
+        .split-container {
+            flex-direction: row;
+            min-height: 70vh;
+        }
+
+        .split-texto,
+        .split-img {
+            width: 50%;
+        }
+
+        .split-img {
+            height: auto;
+            max-height: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .split-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            max-height: none;
+        }
+
+        .split-texto {
+            padding: 3rem 5% 0;
+            text-align: left;
+        }
+
+        .split-texto h2 {
+            font-size: 1.3rem;
+            letter-spacing: 2.5px;
+            text-align: left;
+        }
+
+        .split-texto p {
+            font-size: 0.9rem;
+        }
+
+        .sf-container {
+            flex-direction: row;
+            align-items: flex-start;
+            text-align: left;
+            gap: 4rem;
+        }
+
+        .sf-servicos,
+        .sf-faq {
+            width: auto;
+            max-width: none;
+            margin: 0;
+        }
+
+        .lista-servicos li {
+            justify-content: flex-start;
+            font-size: 0.88rem;
+            min-height: 50px;
+        }
+
+        .sf-titulo {
+            font-size: 1.7rem;
+            letter-spacing: 4px;
+        }
+
+        .faq-pergunta span:first-child {
+            font-size: 0.85rem;
+        }
+
+        .faq-resposta p {
+            font-size: 0.82rem;
+        }
+
+        .faq-icone {
+            font-size: 1.4rem;
+            width: 18px;
+        }
+
+        .btn-expandir {
+            justify-content: flex-start;
+        }
+
+        .scroll-top-btn {
+            opacity: 0.5;
+            max-width: 2.8rem;
+            padding-right: 0.7rem;
+            gap: 0;
+            background: transparent;
+            color: #2c2c2c;
+            border-color: #2c2c2c;
+        }
+
+        .scroll-top-btn .scroll-top-label {
+            opacity: 0;
+            width: 0;
+            margin-left: 0;
+        }
+
+        .scroll-top-btn .scroll-top-icon {
+            transform: none;
+        }
+
+        .rodape {
+            padding: 0.15rem 0;
+            margin-top: 0;
+        }
+
+        .ticker-item {
+            font-size: 0.5rem;
+            letter-spacing: 0.9px;
+            padding-right: 4rem;
+        }
+    }
+
+    /* ========== GALERIA MOBILE (ATÉ 480px) ========== */
+    .galeria-feed {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 1.04rem !important;
+        padding: 0.4rem !important;
+        width: 100% !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .galeria-item {
+        width: 100% !important;
+        margin-top: -10px;
+        height: 35vh !important;
+        overflow: hidden !important;
+    }
+
+    .galeria-item video,
+    .galeria-item img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+    }
+
+    .galeria-item.tall,
+    .galeria-item.wide {
+        grid-row: span 1 !important;
+        grid-column: span 1 !important;
+    }
+
+    .galeria-item.wide {
+        grid-column: span 1 !important;
+    }
+
+    /* Restaura o respiro superior da seção (título e links) */
+    #portfolio {
+        padding-top: 3rem !important;
+        /* ← espaço acima do título "Projetos" */
+        padding-bottom: 0 !important;
+        /* mantém o que já funcionou embaixo */
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* ============================================================
+   TABLET PEQUENO PORTRAIT — 600px a 768px
+   ============================================================ */
+    @media (min-width: 600px) and (max-width: 768px) and (orientation: portrait) {
+
+
+        .split-container {
+            flex-direction: row;
+            min-height: 52vh;
+        }
+
+        .split-texto,
+        .split-img {
+            width: 50%;
+        }
+
+        .split-img {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: visible;
+            height: auto;
+            max-height: 420px;
+        }
+
+        .split-img img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            max-height: 420px;
+        }
+
+        .split-texto {
+            padding: 2rem 4% 0;
+            text-align: left;
+        }
+
+        .split-texto h2 {
+            text-align: left;
+            font-size: 1.45rem;
+            letter-spacing: 3px;
+        }
+
+        .split-texto p {
+            font-size: 0.9rem;
+        }
+
+        .sf-container {
+            flex-direction: row;
+            text-align: left;
+            align-items: flex-start;
+            gap: 2rem;
+        }
+
+        .sf-servicos,
+        .sf-faq {
+            width: auto;
+            max-width: none;
+            margin: 0;
+        }
+
+        .sf-titulo {
+            font-size: 1.4rem;
+            letter-spacing: 2.5px;
+            white-space: normal;
+        }
+
+        .lista-servicos li {
+            justify-content: flex-start;
+            font-size: 0.82rem;
+        }
+
+        .btn-expandir {
+            justify-content: flex-start;
+        }
+
+        .scroll-top-btn {
+            opacity: 0.5;
+            max-width: 2.8rem;
+            padding-right: 0.7rem;
+            gap: 0;
+            background: transparent;
+            color: #2c2c2c;
+            border-color: #2c2c2c;
+        }
+
+        .scroll-top-btn .scroll-top-label {
+            opacity: 0;
+            width: 0;
+            margin-left: 0;
+        }
+
+        .scroll-top-btn .scroll-top-icon {
+            transform: none;
+        }
+    }
+
+    /* ============================================================
+   DESKTOP GRANDE — acima de 1200px
+   ============================================================ */
+    @media (min-width: 1200px) {
+
+        .split-container {
+            min-height: 60vh;
+            max-height: 700px;
+        }
+
+        .split-img {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            max-height: 700px;
+        }
+
+        .split-img img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            max-height: 700px;
+        }
+    }
+
+    /* ========== SISTEMA DE PASTAS - GALERIA ========== */
+
+    .galeria-container {
+        position: relative;
+        width: 100%;
+    }
+
+    .galeria-feed {
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .galeria-feed.fade-out {
+        opacity: 0;
+        transform: scale(0.95);
+        pointer-events: none;
+    }
+
+    .projeto-interno {
+        animation: fadeInUp 0.5s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .voltar-capas {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: none;
+        border: 1px solid #333;
+        color: #333;
+        padding: 10px 20px;
+        font-size: 14px;
+        cursor: pointer;
+        margin-bottom: 30px;
+        transition: all 0.3s ease;
+        font-family: inherit;
+        letter-spacing: 0.5px;
+    }
+
+    .voltar-capas:hover {
+        background: #333;
+        color: #fff;
+    }
+
+    .projeto-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .projeto-grid img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        cursor: pointer;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .projeto-grid img:hover {
+        transform: scale(1.02);
+        opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+        .projeto-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .projeto-grid img {
+            height: 160px;
+        }
+
+        .voltar-capas {
+            width: 100%;
+            justify-content: center;
+            padding: 15px;
+            font-size: 16px;
+        }
+    }
+}
+
+/* ========== LIGHTBOX COMPLETO (REGRAS ÚNICAS) ========== */
+
+.lightbox {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease,
+        background 0.35s ease,
+        backdrop-filter 0.35s ease,
+        -webkit-backdrop-filter 0.35s ease;
+    will-change: opacity, background;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+}
+
+.lightbox.ativa {
+    opacity: 1;
+    pointer-events: auto;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.lightbox-fechar {
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    font-size: 42px;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    z-index: 10002;
+    transition: opacity 0.25s ease;
+    line-height: 1;
+    opacity: 0;
+}
+
+.lightbox.ativa .lightbox-fechar {
+    opacity: 1;
+}
+
+.lightbox-fechar:hover {
+    opacity: 1;
+    color: #fff;
+}
+
+/* Container central */
+.lightbox-conteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 92vw;
+    max-height: 94vh;
+    position: relative;
+    z-index: 1;
+    transform: scale(0.95);
+    opacity: 0;
+    transition: transform 0.35s ease,
+        opacity 0.35s ease;
+    will-change: transform, opacity;
+}
+
+.lightbox.ativa .lightbox-conteudo {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* IMAGEM PRINCIPAL */
+.lightbox-imagem {
+    max-width: 100%;
+    max-height: 87vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: opacity 0.20s ease;
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.7);
+    display: block;
+    will-change: opacity;
+}
+
+/* SETAS DE NAVEGAÇÃO - INVISÍVEIS MAS FUNCIONAIS */
+.lightbox-seta {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    max-width: 200px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10001;
+    display: flex;
+    margin-left: 40px;
+    margin-right: 40px;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+    padding: 0;
+    opacity: 1;
+    outline: none;
+    color: rgba(255, 255, 255, 0.7);
+    /* cor padrão = mesma do × */
+    -webkit-tap-highlight-color: transparent;
+}
+
+.lightbox-seta svg {
+    display: block;
+    /* exibe os ícones */
+}
+
+.lightbox-seta:hover {
+    color: #ffffff;
+}
+
+.lightbox-seta-esquerda {
+    left: 0;
+    justify-content: flex-start;
+}
+
+.lightbox-seta-direita {
+    right: 0;
+    justify-content: flex-end;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .lightbox-conteudo {
+        max-width: 96vw;
+        max-height: 96vh;
+    }
+
+    .lightbox-imagem {
+        max-height: 70vh;
+    }
+
+    /* Remove qualquer estilo específico das setas no mobile */
+    .lightbox-seta {
+        width: 50%;
+        max-width: 150px;
+        color: transparent;
+    }
+
+    .lightbox-seta svg {
+        display: none;
+    }
+
+    .lightbox-fechar {
+        display: block;
+        /* Faz o botão voltar a aparecer */
+        top: 15px;
+        /* Ajusta a distância do topo para a tela do celular */
+        right: 20px;
+        /* Ajusta a distância da lateral */
+        font-size: 38px;
+        /* Deixa o X num tamanho excelente para o toque do dedo */
+    }
+}
+
+/* ========== LIGHTBOX: INDICADORES (DOTS DE COR SÓLIDA SEM IMAGEM) ========== */
+.lightbox-thumbnails {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px !important;
+    /* Espaçamento entre as bolinhas */
+    margin-top: 16px !important;
+    padding: 8px 20px !important;
+    flex-wrap: nowrap !important;
+    list-style: none !important;
+    overflow-x: auto !important;
+    max-width: 85vw !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+
+    /* Controla a aparição suave ao abrir o lightbox */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.lightbox-thumbnails::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* Mostra as bolinhas quando o lightbox abrir */
+.lightbox.ativa .lightbox-thumbnails {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Bolinha individual: Totalmente sólida, sem renderizar a imagem original */
+.lightbox-thumb {
+    width: 8px !important;
+    /* Tamanho ideal para visualização estável */
+    height: 8px !important;
+    min-width: 8px !important;
+    max-width: 8px !important;
+    min-height: 8px !important;
+    max-height: 8px !important;
+    border-radius: 50% !important;
+    /* Força o círculo perfeito */
+
+    /* COR SÓLIDA das bolinhas inativas (Cinza escuro/médio para contrastar no fundo escuro) */
+    background: #666666 !important;
+
+    cursor: pointer !important;
+    border: none !important;
+    flex-shrink: 0 !important;
+    display: block !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    filter: none !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+    /* O TRUQUE: Remove e esconde completamente o conteúdo da imagem (<img src>) */
+    object-position: -9999px -9999px !important;
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E") !important;
+}
+
+/* Hover nos computadores */
+.lightbox-thumb:hover {
+    background: #999999 !important;
+}
+
+/* Bolinha da foto ativa: Cor sólida Branca e levemente maior */
+.lightbox-thumb.active {
+    background: #ffffff !important;
+    /* Branco Sólido */
+    transform: scale(1.25) !important;
+}
+
+/* ========== Efeito de Imersão Bidirecional (Ativo em Todos os Modos — Desktop, Tablet, Mobile) ========== */
+#portfolio,
+#servicos,
+#quem-somos {
+    will-change: opacity, transform;
+    transition: none !important;
+}
+
+/* Agora TODAS as seções começam invisíveis para o script controlar desde o topo com o vídeo */
+#portfolio,
+#servicos,
+#quem-somos {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ========== VÍDEO NA GALERIA E LIGHTBOX ========== */
+
+/* Estilos da tag de vídeo no Lightbox (herdando o visual da imagem) */
+.lightbox-video {
+    max-width: 100%;
+    max-height: 87vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.7);
+    transition: opacity 0.20s ease;
+    will-change: opacity;
+    outline: none;
+    border-radius: 4px;
+    /* Opcional, para acabamento */
+}
+
+/* Responsivo para o vídeo no celular */
+@media (max-width: 768px) {
+    .lightbox-video {
+        max-height: 70vh;
+    }
+}
+
+
+.lightbox-video {
+    max-width: 100%;
+    max-height: 87vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.7);
+    transition: opacity 0.20s ease;
+    will-change: opacity;
+    outline: none;
+    border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    .lightbox-video {
+        max-height: 70vh;
+    }
+}

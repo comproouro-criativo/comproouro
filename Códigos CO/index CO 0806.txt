@@ -21,19 +21,10 @@
                 <a href="#quem-somos">Sobre nós</a>
             </nav>
         </header>
-
-        <!-- Versão horizontal (desktop) -->
-        <video class="video-principal-desktop" playsinline muted autoplay loop preload="metadata"
-            disablepictureinpicture disableremoteplayback webkit-playsinline>
+        <video playsinline muted autoplay loop preload="metadata" disablepictureinpicture disableremoteplayback
+            webkit-playsinline>
             <source src="videos/meuvideo.mp4" type="video/mp4">
         </video>
-
-        <!-- Versão vertical (mobile) -->
-        <video class="video-principal-mobile" playsinline muted autoplay loop preload="metadata" disablepictureinpicture
-            disableremoteplayback webkit-playsinline>
-            <source src="videos/meuvideovertical.mp4" type="video/mp4">
-        </video>
-
         <div class="video-info esquerda desktop-only">Florianópolis <span class="middot-maior">&middot;</span> Brasil
         </div>
 
@@ -51,232 +42,15 @@
             <span class="desktop-only">ESTÚDIO CRIATIVO</span>
         </div>
     </section>
-
     <section id="portfolio" class="secao fade-in">
         <h2>Projetos</h2>
-
-        <div class="marcas-marquee-wrapper">
-            <div class="marcas-marquee-track">
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                         <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-                         <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-
-                <img src="imagens/lgcidades.png" alt="LG Cidades">
-                <img src="imagens/lgmenzoil.png" alt="Menzoil">
-                <img src="imagens/sorria.png" alt="Sorria">
-                
-            </div>
+        <div class="sub-header-portfolio">
+            <a href="#">Moda</a>
+            <a href="#">Esportes</a>
+            <a href="#">Marca Pessoal</a>
         </div>
 
         <div class="galeria-feed" id="galeriaCapas">
-
             <div class="galeria-item item-video" data-title="MENZOIL X CIDADES INVISÍVEIS" data-projeto="2"
                 style="grid-column: span 4; height: 70vh;">
                 <video playsinline muted autoplay loop preload="metadata" webkit-playsinline disablepictureinpicture
@@ -285,18 +59,11 @@
                 </video>
             </div>
 
-            <div class="galeria-item item-video" data-title="THE LAUGHING HEART"
-    style="grid-column: span 4; height: 70vh;">
-    <video playsinline muted autoplay loop preload="metadata" webkit-playsinline disablepictureinpicture
-        style="width: 100%; height: 100%; object-fit: cover; display: block;">
-        <source src="videos/wilson.mp4" type="video/mp4">
-    </video>
-</div>
-
-            <div class="galeria-item" data-title="SMOOTH PATTERNS X ELVIS SANTOS" data-projeto="0"
-                style="grid-column: span 4; height: 70vh;">
-                <img src="imagens/elvis1.jpg" alt="Projeto Elvis" loading="lazy" decoding="async" width="400"
-                    height="600">
+            <div class="galeria-item wide" data-title="GUILHER BACK" data-projeto="0" style="height: 110vh;">
+                <img src="imagens/back.jpg" alt="Projeto 1" loading="lazy" decoding="async" width="400" height="600">
+            </div>
+            <div class="galeria-item wide" data-title="SMOOTH X ELVIS" data-projeto="1" style="height: 110vh;">
+                <img src="imagens/elvis.jpg" alt="Projeto 2" loading="lazy" decoding="async" width="400" height="600">
             </div>
         </div>
 
@@ -458,15 +225,9 @@
             </div>
     </section>
     <section id="quem-somos" class="secao quem-somos-split fade-in">
-
-        <video id="video-sobre-desktop" class="video-sobre-desktop" muted playsinline autoplay preload="auto"
-            webkit-playsinline disablepictureinpicture>
+        <video id="video-sobre" muted loop playsinline autoplay preload="metadata" webkit-playsinline
+            disablepictureinpicture>
             <source src="videos/sobre.mp4" type="video/mp4">
-        </video>
-
-        <video id="video-sobre-mobile" class="video-sobre-mobile" muted playsinline autoplay preload="auto"
-            webkit-playsinline disablepictureinpicture>
-            <source src="videos/sobrevertical.mp4" type="video/mp4">
         </video>
 
         <div class="video-overlay-sobre"></div>
